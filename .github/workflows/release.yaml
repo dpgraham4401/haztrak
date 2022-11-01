@@ -1,11 +1,11 @@
 on:
   push:
-    branches:
-      - "*"
+    # branches:
+    #   - "*"
     # branches:
     #   - "main"
-    # tags:
-    #   - "v*"
+    tags:
+      - "v*"
 
 jobs:
   test-server:
