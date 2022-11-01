@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+      - "*"
+    # branches:
+    #   - "main"
+    # tags:
+    #   - "v*"
+
+jobs:
+  test-server:
+    uses: ./.github/workflows/test_server.yaml
+
+  test-client:
+    uses: ./.github/workflows/test_client.yaml
+
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@{latest-release}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Create Release
+      #   uses: mikepenz/action-gh-release@v0.2.0-a03 #softprops/action-gh-release
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          # artifacts: "release.tar.gz"
+          body: ${{steps.github_release.outputs.changelog}}
+          # token: ${{ secrets.YOUR_GITHUB_TOKEN }}
