@@ -29,6 +29,5 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          # artifacts: "release.tar.gz"
           body: ${{steps.github_release.outputs.changelog}}
-          # token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
