@@ -1,5 +1,5 @@
 asgiref==3.6.0
-Django==4.1.6
+Django==4.1.7
 django-celery-results==2.4.0
 djangorestframework==3.14.0
 django-cors-headers==3.13.0
