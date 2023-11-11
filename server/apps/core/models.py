@@ -82,6 +82,4 @@ class RcraProfile(CoreBaseModel):
     @property
     def has_api_credentials(self) -> bool:
         """Returns true if the use has Rcrainfo API credentials"""
-        if self.rcra_api_id and self.rcra_api_key:
-            return True
-        return False
+        return self.rcra_api_id is not None and self.rcra_api_key is not None

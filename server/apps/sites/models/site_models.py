@@ -40,10 +40,23 @@ class HaztrakOrg(models.Model):
     )
 
     @property
-    def has_rcrainfo_api_credentials(self) -> bool:
+    def rcrainfo_api_id_key(self) -> tuple[str, str] | None:
+        """Returns the RcraInfo API credentials for the admin user"""
+        try:
+            rcrainfo_profile = RcraProfile.objects.get(user=self.admin)
+            return rcrainfo_profile.rcra_api_id, rcrainfo_profile.rcra_api_key
+        except RcraProfile.DoesNotExist:
+            return None
+
+    @property
+    def is_rcrainfo_integrated(self) -> bool:
         """Returns True if the admin user has RcraInfo API credentials"""
-        rcrainfo_profile: RcraProfile = RcraProfile.objects.get(user=self.admin)
-        return rcrainfo_profile.has_api_credentials
+        profile_exists = RcraProfile.objects.filter(user=self.admin).exists()
+        if profile_exists:
+            rcrainfo_profile = RcraProfile.objects.get(user=self.admin)
+            return rcrainfo_profile.has_api_credentials
+        else:
+            return False
 
     def __str__(self):
         return f"{self.name}"
@@ -241,7 +254,7 @@ class HaztrakSite(SitesBaseModel):
     @property
     def admin_has_rcrainfo_api_credentials(self) -> bool:
         """Returns True if the admin user has RcraInfo API credentials"""
-        return self.org.has_rcrainfo_api_credentials
+        return self.org.is_rcrainfo_integrated
 
     def __str__(self):
         """Used in StringRelated fields in serializer classes"""

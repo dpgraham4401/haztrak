@@ -173,11 +173,12 @@ def contact_factory(db, site_phone_factory):
         email: Optional[str] = "testuser@haztrak.net",
         phone: Optional[RcraPhone] = None,
     ) -> Contact:
+        fake: Faker = Faker()
         contact = Contact.objects.create(
             first_name=first_name,
             middle_initial=middle_initial,
             last_name=last_name,
-            email=email,
+            email=email or fake.email(),
             phone=phone or site_phone_factory(),
         )
         return contact
@@ -191,14 +192,15 @@ def rcra_site_factory(db, address_factory, contact_factory):
 
     def create_rcra_site(
         epa_id: Optional[str] = None,
-        name: Optional[str] = "my rcra_site name",
+        name: Optional[str] = None,
         site_type: Optional[str] = "Generator",
         site_address: Optional[Address] = None,
         mail_address: Optional[Address] = None,
     ) -> RcraSite:
+        fake = Faker()
         return RcraSite.objects.create(
             epa_id=epa_id or f"VAD{''.join(random.choices(string.digits, k=9))}",
-            name=name,
+            name=name or fake.name(),
             site_type=site_type,
             site_address=site_address or address_factory(),
             mail_address=mail_address or address_factory(),
@@ -213,11 +215,13 @@ def haztrak_org_factory(db, rcra_profile_factory, user_factory):
     """Abstract factory for Haztrak Org model"""
 
     def create_org(
+        org_id: Optional[str] = None,
         name: Optional[str] = None,
         admin: Optional[HaztrakUser] = None,
     ) -> HaztrakOrg:
         fake = Faker()
         return HaztrakOrg.objects.create(
+            id=org_id or fake.uuid4(),
             name=name or fake.name(),
             admin=admin or user_factory(),
         )
@@ -231,12 +235,13 @@ def haztrak_site_factory(db, rcra_site_factory, haztrak_org_factory):
 
     def create_site(
         rcra_site: Optional[RcraSite] = None,
-        name: Optional[str] = "my site name",
+        name: Optional[str] = None,
         org: Optional[HaztrakOrg] = None,
     ) -> HaztrakSite:
+        fake = Faker()
         return HaztrakSite.objects.create(
             rcra_site=rcra_site or rcra_site_factory(),
-            name=name,
+            name=name or fake.name(),
             org=org or haztrak_org_factory(),
         )
 
