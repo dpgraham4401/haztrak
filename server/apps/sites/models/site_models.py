@@ -32,6 +32,18 @@ class HaztrakOrg(models.Model):
         primary_key=True,
         default=uuid.uuid4,
     )
+    admin = models.ForeignKey(
+        "core.HaztrakUser",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+
+    @property
+    def has_rcrainfo_api_credentials(self) -> bool:
+        """Returns True if the admin user has RcraInfo API credentials"""
+        if self.admin.rcra_profile.has_api_credentials:
+            return True
+        return False
 
     def __str__(self):
         return f"{self.name}"
