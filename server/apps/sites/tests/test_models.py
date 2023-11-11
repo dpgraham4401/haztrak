@@ -65,25 +65,19 @@ class TestHaztrakSiteModel:
         assert isinstance(haztrak_site, HaztrakSite)
 
     def test_returns_true_if_admin_has_provided_api_credentials(
-        self, haztrak_site_factory, rcra_profile_factory, user_factory
+        self, haztrak_site_factory, rcra_profile_factory, user_factory, haztrak_org_factory
     ):
         admin = user_factory(username="admin")
-        admin_rcrainfo_profile = rcra_profile_factory(
-            user=admin,
-            rcra_api_id="mock_id",
-            rcra_api_key="mock_key",
-        )
-        haztrak_profile = haztrak_site_factory(admin_rcrainfo_profile=admin_rcrainfo_profile)
-        assert haztrak_profile.admin_has_rcrainfo_api_credentials
+        rcra_profile_factory(rcra_api_id="mock", rcra_api_key="mock", user=admin)
+        org = haztrak_org_factory(admin=admin)
+        site = haztrak_site_factory(org=org)
+        assert site.admin_has_rcrainfo_api_credentials
 
     def test_returns_false_if_admin_has_not_provided_api_credentials(
-        self, haztrak_site_factory, rcra_profile_factory, user_factory
+        self, haztrak_site_factory, rcra_profile_factory, user_factory, haztrak_org_factory
     ):
         admin = user_factory(username="admin")
-        admin_rcrainfo_profile = rcra_profile_factory(
-            user=admin,
-            rcra_api_id=None,
-            rcra_api_key=None,
-        )
-        haztrak_profile = haztrak_site_factory(admin_rcrainfo_profile=admin_rcrainfo_profile)
-        assert not haztrak_profile.admin_has_rcrainfo_api_credentials
+        rcra_profile_factory(rcra_api_id=None, rcra_api_key=None, user=admin)
+        org = haztrak_org_factory(admin=admin)
+        site = haztrak_site_factory(org=org)
+        assert not site.admin_has_rcrainfo_api_credentials

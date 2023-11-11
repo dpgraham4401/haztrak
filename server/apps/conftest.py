@@ -9,6 +9,7 @@ import pytest
 import pytest_mock
 import responses
 from django.contrib.auth.models import User
+from faker import Faker
 from rest_framework.test import APIClient
 
 from apps.core.models import HaztrakProfile, HaztrakUser, RcraProfile  # type: ignore
@@ -19,6 +20,7 @@ from apps.sites.models import (  # type: ignore
     RcraPhone,
     RcraSite,
 )
+from apps.sites.models.site_models import HaztrakOrg
 from apps.trak.models import ManifestPhone  # type: ignore
 
 
@@ -46,18 +48,25 @@ def haztrak_json():
 
 
 @pytest.fixture
-def user_factory(db):
+def random_username() -> str:
+    """Fixture for generating random usernames"""
+    return "".join(random.choices(string.ascii_letters, k=9))
+
+
+@pytest.fixture
+def user_factory(db, random_username):
     """Abstract factory for Django's User model"""
 
     def create_user(
-        username: str = f"{''.join(random.choices(string.ascii_letters, k=9))}",
+        username: Optional[str] = None,
         first_name: Optional[str] = "John",
         last_name: Optional[str] = "Doe",
         email: Optional[str] = "testuser1@haztrak.net",
         password: Optional[str] = "password1",
     ) -> HaztrakUser:
+        fake = Faker()
         return HaztrakUser.objects.create_user(
-            username=username,
+            username=username or fake.name(),
             first_name=first_name,
             last_name=last_name,
             email=email,
@@ -200,18 +209,35 @@ def rcra_site_factory(db, address_factory, contact_factory):
 
 
 @pytest.fixture
-def haztrak_site_factory(db, rcra_site_factory):
+def haztrak_org_factory(db, rcra_profile_factory, user_factory):
+    """Abstract factory for Haztrak Org model"""
+
+    def create_org(
+        name: Optional[str] = None,
+        admin: Optional[HaztrakUser] = None,
+    ) -> HaztrakOrg:
+        fake = Faker()
+        return HaztrakOrg.objects.create(
+            name=name or fake.name(),
+            admin=admin or user_factory(),
+        )
+
+    yield create_org
+
+
+@pytest.fixture
+def haztrak_site_factory(db, rcra_site_factory, haztrak_org_factory):
     """Abstract factory for Haztrak Site model"""
 
     def create_site(
         rcra_site: Optional[RcraSite] = None,
         name: Optional[str] = "my site name",
-        admin_rcrainfo_profile: Optional[RcraProfile] = None,
+        org: Optional[HaztrakOrg] = None,
     ) -> HaztrakSite:
         return HaztrakSite.objects.create(
             rcra_site=rcra_site or rcra_site_factory(),
             name=name,
-            admin_rcrainfo_profile=admin_rcrainfo_profile,
+            org=org or haztrak_org_factory(),
         )
 
     yield create_site

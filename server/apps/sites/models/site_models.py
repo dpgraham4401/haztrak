@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.sites.models import Address, Contact
 from apps.sites.models.contact_models import RcraPhone
 
+from ...core.models import RcraProfile
 from .base_models import SitesBaseManager, SitesBaseModel
 
 logger = logging.getLogger(__name__)
@@ -41,9 +42,8 @@ class HaztrakOrg(models.Model):
     @property
     def has_rcrainfo_api_credentials(self) -> bool:
         """Returns True if the admin user has RcraInfo API credentials"""
-        if self.admin.rcra_profile.has_api_credentials:
-            return True
-        return False
+        rcrainfo_profile: RcraProfile = RcraProfile.objects.get(user=self.admin)
+        return rcrainfo_profile.has_api_credentials
 
     def __str__(self):
         return f"{self.name}"
