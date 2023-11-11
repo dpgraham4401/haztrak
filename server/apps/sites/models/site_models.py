@@ -216,6 +216,8 @@ class HaztrakSite(SitesBaseModel):
         verbose_name = "Haztrak Site"
         verbose_name_plural = "Haztrak Sites"
 
+    # ToDo: use UUIDField as primary key
+
     name = models.CharField(
         verbose_name="site alias",
         max_length=200,
@@ -231,18 +233,15 @@ class HaztrakSite(SitesBaseModel):
         null=True,
         blank=True,
     )
-    admin_rcrainfo_profile = models.ForeignKey(
-        "core.RcraProfile",
-        on_delete=models.SET_NULL,
-        null=True,
+    org = models.ForeignKey(
+        HaztrakOrg,
+        on_delete=models.CASCADE,
     )
 
     @property
     def admin_has_rcrainfo_api_credentials(self) -> bool:
         """Returns True if the admin user has RcraInfo API credentials"""
-        if self.admin_rcrainfo_profile.has_api_credentials:
-            return True
-        return False
+        return self.org.has_rcrainfo_api_credentials
 
     def __str__(self):
         """Used in StringRelated fields in serializer classes"""
