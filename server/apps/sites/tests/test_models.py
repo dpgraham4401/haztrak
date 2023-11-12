@@ -8,15 +8,21 @@ from apps.sites.models import Address, Contact, HaztrakSite
 
 @pytest.mark.django_db
 class TestAddressModel:
-    def test_address_model_saves(self, address_factory) -> None:
+    def test_address_factory_saves_instance(self, address_factory) -> None:
         """simply check the model saves given our factory's defaults"""
         address = address_factory()
         assert isinstance(address, Address)
 
-    def test_address_1_is_required(self, address_factory) -> None:
+    def test_address_1_is_required(self) -> None:
         """This is the only required field in the EPA schema"""
         with pytest.raises(IntegrityError):
-            address_factory(address1=None)
+            Address.objects.create(
+                address1=None,
+                city="test",
+                state="test",
+                zip="test",
+                country="test",
+            )
 
 
 @pytest.mark.django_db

@@ -62,30 +62,30 @@ def user_factory(db, faker):
 
     def create_user(
         username: Optional[str] = None,
-        first_name: Optional[str] = "John",
-        last_name: Optional[str] = "Doe",
-        email: Optional[str] = "testuser1@haztrak.net",
-        password: Optional[str] = "password1",
+        first_name: Optional[str] = None,
+        last_name: Optional[str] = None,
+        email: Optional[str] = None,
+        password: Optional[str] = None,
     ) -> HaztrakUser:
         return HaztrakUser.objects.create_user(
-            username=username or faker.name(),
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            password=password,
+            username=username or faker.user_name(),
+            first_name=first_name or faker.first_name(),
+            last_name=last_name or faker.last_name(),
+            email=email or faker.email(),
+            password=password or faker.password(),
         )
 
     yield create_user
 
 
 @pytest.fixture
-def rcra_profile_factory(db, user_factory):
+def rcra_profile_factory(db, user_factory, faker: Faker):
     """Abstract factory for Haztrak RcraProfile model"""
 
     def create_profile(
-        rcra_api_id: Optional[str] = "rcraApiId",
-        rcra_api_key: Optional[str] = "rcraApikey",
-        rcra_username: Optional[str] = "dpgraham4401",
+        rcra_api_id: Optional[str] = faker.pystr(),
+        rcra_api_key: Optional[str] = faker.pystr(),
+        rcra_username: Optional[str] = faker.pystr(),
         user: Optional[User] = None,
     ) -> RcraProfile:
         return RcraProfile.objects.create(
@@ -113,35 +113,35 @@ def haztrak_profile_factory(db, user_factory):
 
 
 @pytest.fixture
-def address_factory(db):
+def address_factory(db, faker: Faker):
     """Abstract factory for Haztrak Address model"""
 
     def create_address(
-        address1: Optional[str] = "Main st.",
-        street_number: Optional[str] = "123",
+        address1: Optional[str] = None,
+        street_number: Optional[str] = None,
         country: Optional[str] = "US",
-        city: Optional[str] = "Arlington",
+        city: Optional[str] = None,
     ) -> Address:
         return Address.objects.create(
-            address1=address1,
-            street_number=street_number,
+            address1=address1 or faker.street_name(),
+            street_number=street_number or faker.building_number(),
             country=country,
-            city=city,
+            city=city or faker.city(),
         )
 
     yield create_address
 
 
 @pytest.fixture
-def site_phone_factory(db):
+def site_phone_factory(db, faker: Faker):
     """Abstract factory for Haztrak ManifestPhone model"""
 
     def create_site_phone(
-        number: Optional[str] = "123-123-1234",
+        number: Optional[str] = None,
         extension: Optional[str] = "1234",
     ) -> RcraPhone:
         return RcraPhone.objects.create(
-            number=number,
+            number=number or faker.phone_number(),
             extension=extension,
         )
 
@@ -149,15 +149,15 @@ def site_phone_factory(db):
 
 
 @pytest.fixture
-def epa_phone_factory(db):
+def epa_phone_factory(db, faker):
     """Abstract factory for Haztrak ManifestPhone model"""
 
     def create_epa_phone(
-        number: Optional[str] = "123-123-1234",
+        number: Optional[str] = None,
         extension: Optional[str] = "1234",
     ) -> ManifestPhone:
         return ManifestPhone.objects.create(
-            number=number,
+            number=number or faker.phone_number(),
             extension=extension,
         )
 
