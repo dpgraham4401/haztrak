@@ -27,8 +27,8 @@ class RcrainfoService(RcrainfoClient):
         **kwargs,
     ):
         self.api_user = api_username
-        if RcraProfile.objects.filter(user__username=self.api_user).exists():
-            self.profile = RcraProfile.objects.get(user__username=self.api_user)
+        if RcraProfile.objects.filter(haztrak_profile__user__username=self.api_user).exists():
+            self.profile = RcraProfile.objects.get(haztrak_profile__user__username=self.api_user)
         else:
             self.profile = None
         if rcrainfo_env == "prod":

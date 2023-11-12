@@ -20,14 +20,16 @@ class TestHaztrakSiteListView:
         user_factory,
         haztrak_site_factory,
         rcra_site_factory,
+        haztrak_profile_factory,
     ):
         self.user = user_factory()
         self.client = api_client_factory(user=self.user)
-        self.profile = rcra_profile_factory(user=self.user)
+        self.rcra_profile = rcra_profile_factory()
+        self.profile = haztrak_profile_factory(user=self.user, rcrainfo_profile=self.rcra_profile)
         self.rcra_site = rcra_site_factory()
         self.user_site = haztrak_site_factory(rcra_site=self.rcra_site)
         self.user_site_permission = rcra_permission_factory(
-            site=self.rcra_site, profile=self.profile
+            site=self.rcra_site, profile=self.rcra_profile
         )
         self.other_site = haztrak_site_factory(rcra_site=rcra_site_factory(epa_id="VA12345678"))
 

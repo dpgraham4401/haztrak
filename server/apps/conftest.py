@@ -86,27 +86,27 @@ def rcra_profile_factory(db, user_factory, faker: Faker):
         rcra_api_id: Optional[str] = faker.pystr(),
         rcra_api_key: Optional[str] = faker.pystr(),
         rcra_username: Optional[str] = faker.pystr(),
-        user: Optional[User] = None,
     ) -> RcraProfile:
         return RcraProfile.objects.create(
             rcra_api_id=rcra_api_id,
             rcra_api_key=rcra_api_key,
             rcra_username=rcra_username,
-            user=user or user_factory(),
         )
 
     yield create_profile
 
 
 @pytest.fixture
-def haztrak_profile_factory(db, user_factory):
+def haztrak_profile_factory(db, user_factory, rcra_profile_factory):
     """Abstract factory for Haztrak RcraProfile model"""
 
     def create_profile(
         user: Optional[User] = None,
+        rcrainfo_profile: Optional[RcraProfile] = None,
     ) -> HaztrakProfile:
         return HaztrakProfile.objects.create(
             user=user or user_factory(),
+            rcrainfo_profile=rcrainfo_profile or rcra_profile_factory(),
         )
 
     yield create_profile

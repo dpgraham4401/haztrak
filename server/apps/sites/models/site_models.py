@@ -43,7 +43,7 @@ class HaztrakOrg(models.Model):
     def rcrainfo_api_id_key(self) -> tuple[str, str] | None:
         """Returns the RcraInfo API credentials for the admin user"""
         try:
-            rcrainfo_profile = RcraProfile.objects.get(user=self.admin)
+            rcrainfo_profile = RcraProfile.objects.get(haztrak_profile__user=self.admin)
             return rcrainfo_profile.rcra_api_id, rcrainfo_profile.rcra_api_key
         except RcraProfile.DoesNotExist:
             return None
@@ -51,9 +51,9 @@ class HaztrakOrg(models.Model):
     @property
     def is_rcrainfo_integrated(self) -> bool:
         """Returns True if the admin user has RcraInfo API credentials"""
-        profile_exists = RcraProfile.objects.filter(user=self.admin).exists()
+        profile_exists = RcraProfile.objects.filter(haztrak_profile__user=self.admin).exists()
         if profile_exists:
-            rcrainfo_profile = RcraProfile.objects.get(user=self.admin)
+            rcrainfo_profile = RcraProfile.objects.get(haztrak_profile__user=self.admin)
             return rcrainfo_profile.has_api_credentials
         else:
             return False

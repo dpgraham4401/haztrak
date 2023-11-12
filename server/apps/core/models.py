@@ -36,6 +36,13 @@ class HaztrakProfile(CoreBaseModel):
         on_delete=models.CASCADE,
         related_name="haztrak_profile",
     )
+    rcrainfo_profile = models.OneToOneField(
+        "RcraProfile",
+        on_delete=models.SET_NULL,
+        related_name="haztrak_profile",
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return f"{self.user.username}"
@@ -50,10 +57,6 @@ class RcraProfile(CoreBaseModel):
     class Meta:
         ordering = ["rcra_username"]
 
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
     rcra_api_key = models.CharField(
         max_length=128,
         null=True,
@@ -77,7 +80,7 @@ class RcraProfile(CoreBaseModel):
     email = models.EmailField()
 
     def __str__(self):
-        return f"{self.user.username}"
+        return f"{self.haztrak_profile.user.username}"
 
     @property
     def has_api_credentials(self) -> bool:
