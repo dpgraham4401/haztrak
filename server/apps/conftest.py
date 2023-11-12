@@ -3,7 +3,7 @@ import os
 import random
 import string
 from enum import Enum
-from typing import Dict, Optional
+from typing import Dict, Literal, Optional, Union
 
 import pytest
 import pytest_mock
@@ -169,16 +169,16 @@ def contact_factory(db, site_phone_factory, faker: Faker):
     """Abstract factory for Haztrak Contact model"""
 
     def create_contact(
-        first_name: Optional[str] = "test",
-        middle_initial: Optional[str] = "Q",
-        last_name: Optional[str] = "user",
-        email: Optional[str] = "testuser@haztrak.net",
+        first_name: Optional[str] = None,
+        middle_initial: Optional[str] = None,
+        last_name: Optional[str] = None,
+        email: Optional[str] = None,
         phone: Optional[RcraPhone] = None,
     ) -> Contact:
         contact = Contact.objects.create(
-            first_name=first_name,
-            middle_initial=middle_initial,
-            last_name=last_name,
+            first_name=first_name or faker.first_name(),
+            middle_initial=middle_initial or faker.pystr(max_chars=1),
+            last_name=last_name or faker.last_name(),
             email=email or faker.email(),
             phone=phone or site_phone_factory(),
         )
@@ -194,7 +194,7 @@ def rcra_site_factory(db, address_factory, contact_factory):
     def create_rcra_site(
         epa_id: Optional[str] = None,
         name: Optional[str] = None,
-        site_type: Optional[str] = "Generator",
+        site_type: Optional[Literal["Generator", "Transporter", "Tsdf"]] = "Generator",
         site_address: Optional[Address] = None,
         mail_address: Optional[Address] = None,
     ) -> RcraSite:
@@ -223,7 +223,7 @@ def haztrak_org_factory(db, rcra_profile_factory, user_factory, faker):
     ) -> HaztrakOrg:
         return HaztrakOrg.objects.create(
             id=org_id or faker.uuid4(),
-            name=name or faker.name(),
+            name=name or faker.company(),
             admin=admin or user_factory(),
         )
 
