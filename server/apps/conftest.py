@@ -10,6 +10,7 @@ import pytest_mock
 import responses
 from django.contrib.auth.models import User
 from faker import Faker
+from faker.providers import BaseProvider
 from rest_framework.test import APIClient
 
 from apps.core.models import HaztrakProfile, HaztrakUser, RcraProfile  # type: ignore
@@ -22,6 +23,14 @@ from apps.sites.models import (  # type: ignore
 )
 from apps.sites.models.site_models import HaztrakOrg
 from apps.trak.models import ManifestPhone  # type: ignore
+
+
+class SiteIDProvider(BaseProvider):
+    PREFIXES = ["VAT", "VAD", "TXD", "TXR", "TND", "TNR", "LAD", "LAR", "CAD", "CAR", "MAD", "MAR"]
+    NUMBERS = ["".join(random.choices(string.digits, k=9)) for _ in range(100)]
+
+    def site_id(self):
+        return f"{self.random_element(self.PREFIXES)}{self.random_element(self.NUMBERS)}"
 
 
 @pytest.fixture
@@ -179,7 +188,7 @@ def contact_factory(db, site_phone_factory, faker: Faker):
 
 
 @pytest.fixture
-def rcra_site_factory(db, address_factory, contact_factory, faker: Faker):
+def rcra_site_factory(db, address_factory, contact_factory):
     """Abstract factory for Haztrak RcraSite model"""
 
     def create_rcra_site(
@@ -189,9 +198,11 @@ def rcra_site_factory(db, address_factory, contact_factory, faker: Faker):
         site_address: Optional[Address] = None,
         mail_address: Optional[Address] = None,
     ) -> RcraSite:
+        fake = Faker()
+        fake.add_provider(SiteIDProvider)
         return RcraSite.objects.create(
-            epa_id=epa_id or f"VAD{''.join(random.choices(string.digits, k=9))}",
-            name=name or faker.name(),
+            epa_id=epa_id or fake.site_id(),
+            name=name or fake.name(),
             site_type=site_type,
             site_address=site_address or address_factory(),
             mail_address=mail_address or address_factory(),

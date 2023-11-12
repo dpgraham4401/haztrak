@@ -63,14 +63,10 @@ class HaztrakOrg(models.Model):
 
 
 class RcraSiteType(models.TextChoices):
-    """A hazardous waste rcra_site's type. Whether they are the rcra_site
-    that generates, transports, or treats the waste (Tsdf).
-    It's also possible they can be a broker although this is much less common"""
-
-    GENERATOR = "GEN", _("Generator")
-    TRANSPORTER = "TRA", _("Transporter")
-    TSDF = "TSD", _("Tsdf")
-    BROKER = "BRO", _("Broker")
+    GENERATOR = "Generator"
+    TRANSPORTER = "Transporter"
+    TSDF = "Tsdf"
+    BROKER = "Broker"
 
 
 class RcraSiteManager(SitesBaseManager):
@@ -145,12 +141,7 @@ class RcraSite(SitesBaseModel):
         max_length=20,
         null=True,
         blank=True,
-        choices=[
-            ("Tsdf", "Tsdf"),
-            ("Generator", "Generator"),
-            ("Transporter", "Transporter"),
-            ("Broker", "Broker"),
-        ],
+        choices=RcraSiteType.choices,
     )
     epa_id = models.CharField(
         verbose_name="EPA ID number",

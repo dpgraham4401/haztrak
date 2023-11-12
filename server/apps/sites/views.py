@@ -99,9 +99,12 @@ class RcraSiteSearchView(APIView):
             required=False,
             source="site_type",
             choices=[
-                ("transporter", "Transporter"),
-                ("tsdf", "designatedFacility"),
-                ("generator", "Generator"),
+                "transporter",
+                "Transporter",
+                "Tsdf",
+                "tsdf",
+                "Generator",
+                "generator",
             ],
         )
 
