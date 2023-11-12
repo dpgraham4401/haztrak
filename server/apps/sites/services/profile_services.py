@@ -8,7 +8,8 @@ from apps.sites.models import HaztrakSite, RcraSite, RcraSitePermissions  # type
 from apps.sites.serializers import RcraPermissionSerializer  # type: ignore
 
 from ...core.models import RcraProfile  # type: ignore
-from .site_services import RcraSiteService, SiteService, SiteServiceError  # type: ignore
+from .rcra_site_services import RcraSiteService
+from .site_services import SiteService, SiteServiceError  # type: ignore
 
 logger = logging.getLogger(__name__)
 

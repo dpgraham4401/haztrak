@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 
 from apps.sites.models import RcraSiteType  # type: ignore
-from apps.sites.views import SiteSearchView  # type: ignore
+from apps.sites.views import RcraSiteSearchView  # type: ignore
 
 
 class TestEpaSiteView:
@@ -29,7 +29,7 @@ class TestEpaSiteView:
         assert response.data["epaSiteId"] == generator.epa_id
 
 
-class TestEpaSiteSearchView:
+class TestRcraSiteSearchView:
     """
     Tests for the RcraSite Search endpoint
     """
@@ -51,14 +51,17 @@ class TestEpaSiteSearchView:
             self.URL,
             {  # The expected parameters & args
                 "epaId": generator.epa_id,
-                "name": "",
+                "siteName": "",
                 "siteType": generator.site_type,
             },
         )
         force_authenticate(request, user)
         # Act
-        response = SiteSearchView.as_view()(request)
+        response = RcraSiteSearchView.as_view()(request)
         # Assert
+        print(response.data)
+        assert response.headers["Content-Type"] == "application/json"
+        assert response.status_code == status.HTTP_200_OK
         assert len(response.data) > 0
         for handler_data in response.data:
             assert isinstance(handler_data, dict)
@@ -76,20 +79,18 @@ class TestEpaSiteSearchView:
             self.URL,
             {
                 "epaId": common_prefix,
-                "name": "",
+                "SiteName": "",
                 "siteType": RcraSiteType.TSDF,
             },
         )
         force_authenticate(request, user)
         # Act
-        response = SiteSearchView.as_view()(request)
+        response = RcraSiteSearchView.as_view()(request)
         # Assert
         for handler_data in response.data:
-            # ToDo: serialize based on display name
-            # assert handler_data["siteType"] == RcraSiteType.TSDF.name
             assert handler_data["siteType"] == RcraSiteType.TSDF
 
-    def test_endpoint_returns_json_formatted_data(self, user, generator) -> None:
+    def test_endpoint_returns_200_if_bad_query_params(self, user, generator) -> None:
         """Use APIClient to ensure our HTTP response meets spec"""
         # Arrange
         client = APIClient()
@@ -99,10 +100,10 @@ class TestEpaSiteSearchView:
             self.URL,
             {
                 "epaId": generator.epa_id,
-                "name": "",
-                "type": generator.site_type,
+                "SiteName": "",
+                "site": generator.site_type,  # misspelled
             },
         )
         # Assert
-        assert response.headers["Content-Type"] == "application/json"
         assert response.status_code == status.HTTP_200_OK
+        assert response.headers["Content-Type"] == "application/json"
