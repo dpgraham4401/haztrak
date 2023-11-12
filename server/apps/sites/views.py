@@ -95,7 +95,15 @@ class RcraSiteSearchView(APIView):
     class RcraSiteSearchSerializer(serializers.Serializer):
         epaId = serializers.CharField(required=False, source="epa_id")
         siteName = serializers.CharField(required=False, source="name")
-        siteType = serializers.CharField(required=False, source="site_type")
+        siteType = serializers.ChoiceField(
+            required=False,
+            source="site_type",
+            choices=[
+                ("transporter", "Transporter"),
+                ("tsdf", "designatedFacility"),
+                ("generator", "Generator"),
+            ],
+        )
 
     # @method_decorator(cache_page(60 * 15))
     def get(self, request, *args, **kwargs):
@@ -103,9 +111,7 @@ class RcraSiteSearchView(APIView):
         serializer = self.RcraSiteSearchSerializer(data=query_params)
         serializer.is_valid(raise_exception=True)
         rcra_sites = query_rcra_sites(**serializer.validated_data)
-        print("rcra_sites", rcra_sites)
-        data = self.serializer_class(rcra_sites, many=True).data
-        print("data", data)
+        data = RcraSiteSerializer(rcra_sites, many=True).data
         return Response(data, status=status.HTTP_200_OK)
 
 

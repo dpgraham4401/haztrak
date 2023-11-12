@@ -23,12 +23,17 @@ def query_rcra_sites(
 ) -> QuerySet[RcraSite]:
     """Query RcraSites from our Database"""
     queryset: QuerySet[RcraSite] = RcraSite.objects.all()
+    print("site_type", site_type)
     if epa_id is not None:
         queryset = queryset.filter(epa_id__icontains=epa_id)
+        print("epa ID", queryset)
     if name is not None:
+        print("name", queryset)
         queryset = queryset.filter(name__icontains=name)
     if site_type is not None:
+        print("ST", queryset)
         queryset = queryset.filter(site_type=site_type)
+    print(queryset)
     return queryset
 
 
