@@ -51,10 +51,8 @@ class HaztrakOrg(models.Model):
     @property
     def is_rcrainfo_integrated(self) -> bool:
         """Returns True if the admin user has RcraInfo API credentials"""
-        profile_exists = RcraProfile.objects.filter(haztrak_profile__user=self.admin).exists()
-        if profile_exists:
-            rcrainfo_profile = RcraProfile.objects.get(haztrak_profile__user=self.admin)
-            return rcrainfo_profile.has_api_credentials
+        if RcraProfile.objects.filter(haztrak_profile__user=self.admin).exists():
+            return RcraProfile.objects.get(haztrak_profile__user=self.admin).has_api_credentials
         else:
             return False
 
