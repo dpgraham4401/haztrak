@@ -83,9 +83,9 @@ def rcra_profile_factory(db, user_factory, faker: Faker):
     """Abstract factory for Haztrak RcraProfile model"""
 
     def create_profile(
-        rcra_api_id: Optional[str] = faker.pystr(),
-        rcra_api_key: Optional[str] = faker.pystr(),
-        rcra_username: Optional[str] = faker.pystr(),
+        rcra_api_id: Optional[str] = str(faker.uuid4()),
+        rcra_api_key: Optional[str] = faker.pystr(min_chars=15),
+        rcra_username: Optional[str] = faker.pystr(min_chars=12),
     ) -> RcraProfile:
         return RcraProfile.objects.create(
             rcra_api_id=rcra_api_id,

@@ -22,6 +22,7 @@ class HaztrakOrg(models.Model):
     class Meta:
         verbose_name = "Organization"
         verbose_name_plural = "Organizations"
+        ordering = ["name"]
 
     name = models.CharField(
         max_length=200,
