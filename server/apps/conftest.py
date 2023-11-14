@@ -137,11 +137,11 @@ def site_phone_factory(db, faker: Faker):
     """Abstract factory for Haztrak ManifestPhone model"""
 
     def create_site_phone(
-        number: Optional[str] = None,
+        number: Optional[str] = "202-505-5500",
         extension: Optional[str] = "1234",
     ) -> RcraPhone:
         return RcraPhone.objects.create(
-            number=number or faker.phone_number(),
+            number=number,
             extension=extension,
         )
 
