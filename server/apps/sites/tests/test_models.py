@@ -13,15 +13,15 @@ class TestAddressModel:
         address = address_factory()
         assert isinstance(address, Address)
 
-    def test_address_1_is_required(self) -> None:
+    def test_address_1_is_required(self, faker) -> None:
         """This is the only required field in the EPA schema"""
         with pytest.raises(IntegrityError):
             Address.objects.create(
                 address1=None,
-                city="test",
-                state="test",
-                zip="test",
-                country="test",
+                city="springfield",
+                state="TX",
+                zip=12345,
+                country="US",
             )
 
 
