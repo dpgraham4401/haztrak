@@ -127,11 +127,11 @@ class RcraSiteManager(SitesBaseManager):
 
 
 class RcraSite(SitesBaseModel):
-    """
-    RCRAInfo RcraSite model definition for entities on the uniform hazardous waste manifests
-    """
+    """RCRAInfo Site model (see 'Handler' which wraps this model with manifest specific data)"""
 
     class Meta:
+        verbose_name = "RCRAInfo Site"
+        verbose_name_plural = "RCRAInfo Sites"
         ordering = ["epa_id"]
 
     objects = RcraSiteManager()
@@ -179,7 +179,6 @@ class RcraSite(SitesBaseModel):
         null=True,
         blank=True,
     )
-
     gis_primary = models.BooleanField(
         verbose_name="GIS primary",
         null=True,
@@ -215,9 +214,9 @@ class HaztrakSite(SitesBaseModel):
     """
 
     class Meta:
-        ordering = ["rcra_site__epa_id"]
         verbose_name = "Haztrak Site"
         verbose_name_plural = "Haztrak Sites"
+        ordering = ["rcra_site__epa_id"]
 
     # ToDo: use UUIDField as primary key
 
@@ -262,7 +261,9 @@ class SitePermissions(SitesBaseModel):
     """The Role Based access a user has to a site"""
 
     class Meta:
-        verbose_name = "Site Permissions"
+        verbose_name = "Site Permission"
+        verbose_name_plural = "Site Permissions"
+        ordering = ["profile"]
 
     profile = models.ForeignKey(
         "core.HaztrakProfile",
@@ -288,10 +289,7 @@ class SitePermissions(SitesBaseModel):
 
 
 class RcraSitePermissions(SitesBaseModel):
-    """
-    RCRAInfo Site Permissions per module connected to a user's RcraProfile
-    and the corresponding HaztrakSite
-    """
+    """Per module permissions a user has in their RCRAInfo account"""
 
     CERTIFIER = "Certifier"
     PREPARER = "Preparer"
@@ -304,7 +302,8 @@ class RcraSitePermissions(SitesBaseModel):
     ]
 
     class Meta:
-        verbose_name = "RCRA Site Permission"
+        verbose_name = "RCRAInfo Permission"
+        verbose_name_plural = "RCRAInfo Permissions"
         ordering = ["site__epa_id"]
 
     site = models.ForeignKey(
@@ -341,7 +340,7 @@ class RcraSitePermissions(SitesBaseModel):
     )
 
     def __str__(self):
-        return f"{self.profile.user}: {self.site.epa_id}"
+        return f"{self.site.epa_id}"
 
     def clean(self):
         if self.site_manager:
@@ -349,5 +348,5 @@ class RcraSitePermissions(SitesBaseModel):
             for field_name in fields:
                 if getattr(self, field_name) != "Certifier":
                     raise ValidationError(
-                        f"The value for the '{field_name}' field must be set to 'Certifier'."
+                        f"If Site Manager, '{field_name}' field must be set to 'Certifier'."
                     )

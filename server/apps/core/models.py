@@ -24,12 +24,19 @@ class CoreBaseModel(models.Model):
 class HaztrakUser(AbstractUser):
     """Haztrak abstract user model. It simply inherits from Django's AbstractUser model."""
 
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+        ordering = ["username"]
+
     pass
 
 
 class HaztrakProfile(CoreBaseModel):
     class Meta:
         verbose_name = "Haztrak Profile"
+        ordering = ["user__username"]
+        default_related_name = "haztrak_profile"
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
