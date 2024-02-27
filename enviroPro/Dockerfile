@@ -4,7 +4,7 @@ FROM node:20-alpine as builder
 LABEL maintainer="graham.david@epa.gov"
 WORKDIR /app
 COPY . .
-RUN npm ci --silent
+RUN npm ci
 RUN npm run build
 
 
@@ -17,7 +17,7 @@ CMD ["npm", "run", "test"]
 FROM builder as dev
 WORKDIR /app
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 
 # Production
 FROM nginx:1.24.0-alpine as production

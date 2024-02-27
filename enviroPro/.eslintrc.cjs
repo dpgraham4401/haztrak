@@ -19,6 +19,12 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
+  settings: {
+    'import/extensions': ['.js', '.jsx', '.tsx', '.ts'],
+    'import/resolver': {
+      typescript: {},
+    },
+  },
 
   // Base config
   extends: ['eslint:recommended'],

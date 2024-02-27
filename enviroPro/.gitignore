@@ -1,6 +1,14 @@
-node_modules
-
 /.cache
 /build
 /public/build
+/node_modules
+/.pnp
+.pnp.js
+/coverage
+.DS_Store
 .env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+tsconfig.tsbuildinfo
