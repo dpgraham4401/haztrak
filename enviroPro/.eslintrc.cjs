@@ -25,7 +25,6 @@ module.exports = {
       typescript: {},
     },
   },
-
   // Base config
   extends: ['eslint:recommended'],
 
@@ -60,6 +59,9 @@ module.exports = {
       files: ['**/*.{ts,tsx}'],
       plugins: ['@typescript-eslint', 'import'],
       parser: '@typescript-eslint/parser',
+      rules: {
+        '@typescript-eslint/no-explicit-any': ['off'], // ToDo remove this
+      },
       settings: {
         'import/internal-regex': '^~/',
         'import/resolver': {

@@ -3,11 +3,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducers from '~/store/authSlice/auth.slice';
 import errorReducers from '~/store/errorSlice/error.slice';
 import notificationReducers from '~/store/notificationSlice/notification.slice';
+import { trakServiceApi } from '~/store/trakServiceApi/trakServiceApi';
 
 const rootReducer = combineReducers({
   auth: authReducers,
   error: errorReducers,
   notifications: notificationReducers,
+  [trakServiceApi.reducerPath]: trakServiceApi.reducer,
 });
 
 /**A utility function to initialize the store with preloaded state used for testing*/
