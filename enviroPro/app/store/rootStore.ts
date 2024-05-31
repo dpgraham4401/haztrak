@@ -2,12 +2,14 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducers from '~/store/authSlice/auth.slice';
 import errorReducers from '~/store/errorSlice/error.slice';
+import manifestReducers from '~/store/manifestSlice/manifest.slice';
 import notificationReducers from '~/store/notificationSlice/notification.slice';
 import { trakServiceApi } from '~/store/trakServiceApi/trakServiceApi';
 
 const rootReducer = combineReducers({
   auth: authReducers,
   error: errorReducers,
+  manifest: manifestReducers,
   notifications: notificationReducers,
   [trakServiceApi.reducerPath]: trakServiceApi.reducer,
 });
@@ -16,6 +18,7 @@ const rootReducer = combineReducers({
 const setupStore = (preloadedState?: Partial<RootState>) => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(trakServiceApi.middleware),
     preloadedState,
   });
 };

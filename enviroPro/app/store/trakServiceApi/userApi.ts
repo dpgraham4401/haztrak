@@ -1,3 +1,4 @@
+import { HaztrakSite } from '~/components/HaztrakSite';
 import { HaztrakUser } from '~/store/authSlice/auth.slice';
 import { trakServiceApi } from '~/store/trakServiceApi/trakServiceApi';
 
@@ -75,7 +76,7 @@ interface HaztrakOrgResponse {
 export interface HaztrakProfileResponse {
   user: string;
   sites: Array<{
-    site: any;
+    site: HaztrakSite;
     eManifest: HaztrakModulePermissions;
   }>;
   org?: HaztrakOrgResponse;

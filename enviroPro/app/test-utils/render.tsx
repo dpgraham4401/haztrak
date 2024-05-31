@@ -1,5 +1,5 @@
 import { render, RenderOptions } from '@testing-library/react';
-import React, { PropsWithChildren, ReactElement } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 import { FormProvider, useForm, UseFormProps } from 'react-hook-form';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -29,7 +29,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
  *});
  */
 export function renderWithProviders(
-  ui: React.ReactElement,
+  ui: ReactElement,
   {
     preloadedState = {}, // an object with partial slices of our redux state
     store = setupStore(preloadedState), // Automatically create a store instance if no store was passed in
