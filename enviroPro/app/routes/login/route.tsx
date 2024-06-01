@@ -1,8 +1,8 @@
-import logo from '/assets/img/haztrak-logos/low-resolution/svg/haztrak-low-resolution-logo-black-on-transparent-background.svg';
 import { ReactElement } from 'react';
 import { Container } from 'react-bootstrap';
 import { LoginForm } from '~/components/Auth';
 import { useTitle } from '~/hooks';
+import logo from './assets/haztrak-low-resolution-logo-black-on-transparent-background.svg';
 
 /**
  * Haztrak Login component, redirects if user is already logged in
