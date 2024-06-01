@@ -7,7 +7,7 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { MouseEventHandler, ReactElement, useState } from 'react';
+import { MouseEventHandler, ReactElement, useState } from 'react';
 import { Col, Dropdown, Row, useAccordionButton } from 'react-bootstrap';
 import { UseFieldArrayRemove, UseFieldArraySwap } from 'react-hook-form';
 

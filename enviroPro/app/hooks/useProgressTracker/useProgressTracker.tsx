@@ -1,5 +1,5 @@
 import { ThunkAction, UnknownAction } from '@reduxjs/toolkit';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   selectTask,
   selectTaskCompletion,
@@ -44,13 +44,17 @@ export function useProgressTracker<T>({
     useAppSelector(selectTask(taskId))?.status === 'FAILURE'
   );
 
-  const failTask = (queryError: any) => {
-    setInProgress(false);
-    dispatch(updateTask({ taskId: taskId, status: 'FAILURE', complete: true }));
-    setError('Task failed');
-    setError(queryError ?? 'Task failed');
-  };
+  const failTask = useCallback(
+    (queryError: any) => {
+      setInProgress(false);
+      dispatch(updateTask({ taskId: taskId, status: 'FAILURE', complete: true }));
+      setError('Task failed');
+      setError(queryError ?? 'Task failed');
+    },
+    [dispatch, taskId]
+  );
 
+  // @ts-expect-error - We skip the query if taskId is undefined
   const { data: queryData, error: queryError } = useGetTaskStatusQuery(taskId, {
     pollingInterval: pollingInterval ?? 3000,
     skip: !inProgress || taskId === undefined,
@@ -70,27 +74,27 @@ export function useProgressTracker<T>({
         dispatch(updateTask({ ...queryData, taskId: taskId }));
       }
     }
-  }, [queryData]);
+  }, [dispatch, failTask, queryData, taskId]);
 
   useEffect(() => {
     if (queryError) {
       failTask(queryError);
     }
-  }, [queryError]);
+  }, [failTask, queryError]);
 
   // If taskId defined, the task is not set to complete, mark inProgress as true
   useEffect(() => {
     if (!inProgress && !taskComplete && taskId !== undefined) {
       setInProgress(true);
     }
-  }, [taskId]);
+  }, [inProgress, taskComplete, taskId]);
 
   useEffect(() => {
     if (taskComplete) {
       if (reduxAction) dispatch(reduxAction);
       setInProgress(false);
     }
-  }, [taskComplete, taskId]);
+  }, [dispatch, reduxAction, taskComplete, taskId]);
 
   return { data, inProgress, error } as const;
 }

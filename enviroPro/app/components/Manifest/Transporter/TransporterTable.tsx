@@ -1,7 +1,7 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { faAngleRight, faCheck, faSignature } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Accordion, Button, Card, Col, Row, Table, useAccordionButton } from 'react-bootstrap';
 import { UseFieldArrayReturn } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';

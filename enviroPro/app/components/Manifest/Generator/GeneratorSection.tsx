@@ -37,7 +37,7 @@ export function GeneratorSection({ setupSign, signAble }: GeneratorSectionProps)
     if (data) {
       manifestForm.setValue('generator', data);
     }
-  }, [data]);
+  }, [data, manifestForm]);
 
   if (isLoading) {
     return <HtSpinner size="xl" center className="m-5" />;
@@ -54,10 +54,11 @@ export function GeneratorSection({ setupSign, signAble }: GeneratorSectionProps)
             searchParams.delete('generator');
             setSearchParams(searchParams);
           }}
-          children={'Clear Generator'}
           variant="outline-danger"
           horizontalAlign
-        ></HtButton>
+        >
+          Clear Generator
+        </HtButton>
       </>
     );
   }
@@ -104,9 +105,10 @@ export function GeneratorSection({ setupSign, signAble }: GeneratorSectionProps)
               onClick={() => {
                 setSearchConfigs({ siteType: 'generator', open: true });
               }}
-              children={'Add Generator'}
               variant="outline-primary"
-            />
+            >
+              Add Generator
+            </HtButton>
             <HtButton horizontalAlign onClick={toggleShowGeneratorForm} variant="outline-secondary">
               Enter Generator Information
             </HtButton>

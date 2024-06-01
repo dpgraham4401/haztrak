@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { LongRunningTask } from '~/store';
 import { useProgressTracker } from '~/hooks';
+import { LongRunningTask } from '~/store';
 
 export interface NotificationProps {
   task: LongRunningTask;
@@ -35,7 +35,7 @@ export function ProgressTracker({ task }: NotificationProps) {
         closeOnClick: true,
       });
     }
-  }, [data, inProgress, error, taskId]);
+  }, [data, inProgress, error, taskId, task.taskName]);
 
   return <></>;
 }

@@ -10,7 +10,7 @@ import {
   YAxis,
 } from 'recharts';
 
-const generatorStatusYAxis = ([dataMin, dataMax]: [number, number]): [number, number] => {
+const generatorStatusYAxis = ([, dataMax]: [number, number]): [number, number] => {
   const yMax = dataMax < 100 ? 120 : dataMax < 1000 ? 1200 : Math.ceil((dataMax * 1.5) / 100) * 100;
   return [0, yMax];
 };
@@ -109,7 +109,7 @@ export function GeneratorStatusAreaChart() {
           dataKey="day"
           type="number"
           domain={[1, days]}
-          tickFormatter={(value, index) => `${monthNumber + 1}/${value}`}
+          tickFormatter={(value) => `${monthNumber + 1}/${value}`}
         >
           <Label value="Date" position="bottom" />
         </XAxis>

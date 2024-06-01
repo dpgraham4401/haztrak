@@ -1,8 +1,6 @@
-import React from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
-import { useTitle } from 'hooks';
-import { HtSpinner } from 'components/UI';
 import { HaztrakLicense, SectionTitle } from 'components/Help';
+import { useTitle } from 'hooks';
+import { Col, Container, Row } from 'react-bootstrap';
 
 /**
  * Static page that talks about Haztrak's licensing, maybe versioning in future

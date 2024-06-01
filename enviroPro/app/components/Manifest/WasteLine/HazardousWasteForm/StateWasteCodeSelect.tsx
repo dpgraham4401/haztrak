@@ -10,6 +10,13 @@ interface StateWasteCodeSelectProps {
 export function StateWasteCodeSelect({ stateId, fieldName }: StateWasteCodeSelectProps) {
   const { control } = useFormContext();
 
+  const {
+    data: stateWasteCodes,
+    isLoading: stateLoading,
+    error: stateError,
+    // @ts-expect-error - skip if stateId is undefined
+  } = useGetStateWasteCodesQuery(stateId, { skip: !stateId });
+
   // If the generator/tsdf has yet to be added to the manifest, we can't retrieve state waste codes
   if (!stateId)
     return (
@@ -28,12 +35,6 @@ export function StateWasteCodeSelect({ stateId, fieldName }: StateWasteCodeSelec
         isDisabled={true}
       />
     );
-
-  const {
-    data: stateWasteCodes,
-    isLoading: stateLoading,
-    error: stateError,
-  } = useGetStateWasteCodesQuery(stateId);
 
   /**
    * This is a custom component we use to display waste codes so that the full

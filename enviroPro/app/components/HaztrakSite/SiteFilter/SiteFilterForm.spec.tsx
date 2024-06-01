@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
+import { userEvent } from '@testing-library/user-event';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { afterEach, describe, expect, test } from 'vitest';
 import { SiteFilterForm } from '~/components/HaztrakSite/SiteFilter/SiteFilterForm';
@@ -21,7 +21,7 @@ const mockSites = [mySite1, mySite2];
 
 const TestComponent = () => {
   const [filteredSites, setFilteredSites] = useState(mockSites);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const siteFilter = searchParams.get('q') ?? undefined;
   return (
     <div>

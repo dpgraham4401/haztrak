@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { RcraSite } from '~/components/RcraSite';
-import { HtForm } from '~/components/UI';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import Select from 'react-select';
+import { RcraSite } from '~/components/RcraSite';
+import { HtForm } from '~/components/UI';
 import { ProfileSlice, useGetProfileQuery } from '~/store';
 
 interface SiteSelectProps<T> {

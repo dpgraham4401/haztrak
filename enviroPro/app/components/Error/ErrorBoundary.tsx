@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ReactNode } from 'react';
 import { Alert, Button, Col, Container, Row } from 'react-bootstrap';
 
 interface Props {
@@ -22,7 +22,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   // Todo: do something with error info (e.g., send to new endpoint and log)
-  public componentDidCatch(error: Error, _errorInfo: ErrorInfo) {
+  public componentDidCatch(error: Error) {
     console.error('Haztrak error:', error);
   }
 
@@ -35,9 +35,11 @@ export class ErrorBoundary extends Component<Props, State> {
               <i className="text-danger h1 fas fa-bug"></i>
             </Row>
             <Row className="d-flex justify-content-center">
-              <h4 className="d-flex justify-content-center">Something's Broken</h4>
+              <h4 className="d-flex justify-content-center">Something`&apos;`s Broken</h4>
             </Row>
-            <Row className="d-flex justify-content-center">Don't worry, we're working on it!</Row>
+            <Row className="d-flex justify-content-center">
+              Don`&apos;`t worry, we`&apos;`re working on it!
+            </Row>
             <Row className="d-flex justify-content-center pt-4">
               <Alert key="danger" variant="danger">
                 {`${this.state.error}`}

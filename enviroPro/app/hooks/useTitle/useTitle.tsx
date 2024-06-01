@@ -15,12 +15,12 @@ export function useTitle(title: string, resetOnUnmount = false, excludeSuffix = 
 
   useEffect(() => {
     document.title = `${title}${excludeSuffix ? '' : ' | Haztrak'}`;
-  }, [title]);
+  }, [excludeSuffix, title]);
 
   useEffect(() => {
     if (typeof dynTitle === 'string')
       document.title = `${dynTitle}${excludeSuffix ? '' : ' | Haztrak'}`;
-  }, [dynTitle]);
+  }, [dynTitle, excludeSuffix]);
 
   useEffect(
     // run on unmount
@@ -29,7 +29,7 @@ export function useTitle(title: string, resetOnUnmount = false, excludeSuffix = 
         document.title = defaultTitle.current;
       }
     },
-    []
+    [resetOnUnmount]
   );
   return [dynTitle, setDynTitle] as const;
 }

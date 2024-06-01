@@ -14,14 +14,14 @@ export function useReadOnly(initialValue?: boolean) {
 
   useEffect(() => {
     if (readOnly !== undefined) dispatch(setManifestReadOnly(readOnly));
-  }, [readOnly]);
+  }, [dispatch, readOnly]);
 
   useEffect(() => {
     if (initialValue !== undefined) {
       dispatch(setManifestReadOnly(initialValue));
       setReadonly(initialValue);
     }
-  }, [initialValue]);
+  }, [dispatch, initialValue]);
 
   useEffect(() => {
     if (reduxReadOnly !== undefined) setReadonly(reduxReadOnly);

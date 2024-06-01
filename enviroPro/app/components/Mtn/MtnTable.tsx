@@ -16,14 +16,14 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ChangeEvent, useState } from 'react';
+import { Button, Col, Table } from 'react-bootstrap';
+import { Link, useSearchParams } from 'react-router-dom';
+import { z } from 'zod';
 import { MtnRowActions } from '~/components/Mtn/MtnRowActions';
 import { MtnSearchField } from '~/components/Mtn/MtnSearchField/MtnSearchField';
 import { MtnStatusField, StatusOption } from '~/components/Mtn/MtnStatusField/MtnStatusField';
 import { HtPageBtns, HtPageControls } from '~/components/UI';
-import React, { ChangeEvent, useState } from 'react';
-import { Button, Col, Table } from 'react-bootstrap';
-import { Link, useSearchParams } from 'react-router-dom';
-import { z } from 'zod';
 
 const mtnDetailsSchema = z.object({
   manifestTrackingNumber: z.string(),
@@ -114,7 +114,7 @@ const fuzzyFilter: FilterFn<MtnDetails> = (row, columnId, value, addMeta) => {
  * @param manifest
  */
 export function MtnTable({ manifests }: MtnTableProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [searchValue, setSearchValue] = useState(searchParams.get('mtn') ?? '');
   const table = useReactTable({

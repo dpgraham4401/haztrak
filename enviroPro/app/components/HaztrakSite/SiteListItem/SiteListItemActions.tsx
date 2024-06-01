@@ -1,6 +1,6 @@
 import { faEllipsisVertical, faEye, faFileLines } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { MouseEventHandler, ReactElement } from 'react';
+import { MouseEventHandler, ReactElement } from 'react';
 import { Col, Dropdown, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 

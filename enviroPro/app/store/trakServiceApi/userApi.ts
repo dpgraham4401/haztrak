@@ -24,7 +24,7 @@ export interface RcrainfoProfileSite {
   permissions: RcrainfoSitePermissions;
 }
 
-export interface HaztrakProfileSite {
+export interface HaztrakProfileSite extends HaztrakSite {
   permissions: HaztrakSitePermissions;
 }
 

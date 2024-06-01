@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { forwardRef, ReactElement } from 'react';
 import {
   Form,
   FormCheckProps,
@@ -14,31 +14,29 @@ export function HtForm(props: FormProps): ReactElement {
   return <Form {...props}>{props.children}</Form>;
 }
 
-HtForm.Group = function (props: FormGroupProps): ReactElement {
-  return (
-    <Form.Group {...props} className="mb-2">
-      {props.children}
-    </Form.Group>
-  );
-};
+// eslint-disable-next-line react/display-name
+HtForm.Group = (props: FormGroupProps): ReactElement => (
+  <Form.Group {...props} className="mb-2">
+    {props.children}
+  </Form.Group>
+);
 
-HtForm.InputGroup = function (props: InputGroupProps): ReactElement {
-  return (
-    <InputGroup {...props} className="mb-2">
-      {props.children}
-    </InputGroup>
-  );
-};
+// eslint-disable-next-line react/display-name
+HtForm.InputGroup = (props: InputGroupProps): ReactElement => (
+  <InputGroup {...props} className="mb-2">
+    {props.children}
+  </InputGroup>
+);
 
-HtForm.Label = function (props: FormLabelProps): ReactElement {
-  return (
-    <Form.Label {...props} className={`mb-0 fw-bold ${props.className}`}>
-      {props.children}
-    </Form.Label>
-  );
-};
+// eslint-disable-next-line react/display-name
+HtForm.Label = (props: FormLabelProps): ReactElement => (
+  <Form.Label {...props} className={`mb-0 fw-bold ${props.className}`}>
+    {props.children}
+  </Form.Label>
+);
 
-HtForm.Check = React.forwardRef<HTMLInputElement, FormCheckProps>(
+// eslint-disable-next-line react/display-name
+HtForm.Check = forwardRef<HTMLInputElement, FormCheckProps>(
   (props: FormCheckProps, ref: React.Ref<HTMLInputElement>) => {
     return (
       <Form.Check ref={ref} {...props}>
@@ -48,7 +46,8 @@ HtForm.Check = React.forwardRef<HTMLInputElement, FormCheckProps>(
   }
 );
 
-HtForm.Select = React.forwardRef<HTMLSelectElement, FormSelectProps>(
+// eslint-disable-next-line react/display-name
+HtForm.Select = forwardRef<HTMLSelectElement, FormSelectProps>(
   (props: FormSelectProps, ref: React.Ref<HTMLSelectElement>) => {
     return (
       <Form.Select ref={ref} {...props}>
@@ -58,8 +57,10 @@ HtForm.Select = React.forwardRef<HTMLSelectElement, FormSelectProps>(
   }
 );
 
-HtForm.Switch = React.forwardRef<HTMLInputElement, FormCheckProps>(
+// eslint-disable-next-line react/display-name
+HtForm.Switch = forwardRef<HTMLInputElement, FormCheckProps>(
   (props: FormCheckProps, ref: React.Ref<HTMLInputElement>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { children, dangerouslySetInnerHTML, ...rest } = props;
     return (
       <Form.Check ref={ref} {...rest} type="switch">

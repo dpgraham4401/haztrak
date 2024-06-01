@@ -19,9 +19,24 @@ export interface AuthSlice {
   error?: string;
 }
 
+// const initialState: AuthSlice = {
+//   user: { username: JSON.parse(localStorage.getItem('user') || 'null') || null, isLoading: false },
+//   token: JSON.parse(localStorage.getItem('token') || 'null') || null,
+//   loading: false,
+//   error: undefined,
+// };
 const initialState: AuthSlice = {
-  user: { username: JSON.parse(localStorage.getItem('user') || 'null') || null, isLoading: false },
-  token: JSON.parse(localStorage.getItem('token') || 'null') || null,
+  user: {
+    username:
+      typeof localStorage !== 'undefined'
+        ? JSON.parse(localStorage.getItem('user') || 'null')
+        : null,
+    isLoading: false,
+  },
+  token:
+    typeof localStorage !== 'undefined'
+      ? JSON.parse(localStorage.getItem('token') || 'null')
+      : null,
   loading: false,
   error: undefined,
 };

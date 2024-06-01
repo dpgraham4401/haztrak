@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import {
   Modal,
   ModalBody,
@@ -55,6 +55,7 @@ export function HtModal({
  * @example
  * <HtModal.Title title='sample title' />
  */
+// eslint-disable-next-line react/display-name
 HtModal.Title = function ({ title, ...otherProps }: HtModalTitleProps): ReactElement {
   return <ModalTitle {...otherProps}>{title}</ModalTitle>;
 };
@@ -66,6 +67,7 @@ HtModal.Title = function ({ title, ...otherProps }: HtModalTitleProps): ReactEle
  * @example
  * <HtModal.Header closeButton={true}>{children}</HtModal.Header>
  */
+// eslint-disable-next-line react/display-name
 HtModal.Header = function ({
   closeButton,
   children,
@@ -85,6 +87,7 @@ HtModal.Header = function ({
  * @example
  * <HtModal.Body>{children}</HtModal.Body>
  */
+// eslint-disable-next-line react/display-name
 HtModal.Body = function (props: ModalProps): ReactElement {
   return <ModalBody {...props}>{props.children}</ModalBody>;
 };
@@ -96,6 +99,7 @@ HtModal.Body = function (props: ModalProps): ReactElement {
  * @example
  * <HtModal.Footer>{children}</HtModal.Footer>
  */
+// eslint-disable-next-line react/display-name
 HtModal.Footer = function (props: ModalProps): ReactElement {
   return <ModalFooter {...props}>{props.children}</ModalFooter>;
 };

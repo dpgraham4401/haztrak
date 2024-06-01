@@ -1,9 +1,9 @@
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
-import { addTask, updateTask, useAppDispatch, useSyncEManifestMutation } from '~/store';
+import { useEffect, useState } from 'react';
 import { RcraApiUserBtn } from '~/components/Rcrainfo/buttons/RcraApiUserBtn/RcraApiUserBtn';
 import { useProgressTracker } from '~/hooks';
+import { addTask, updateTask, useAppDispatch, useSyncEManifestMutation } from '~/store';
 
 interface SyncManifestProps {
   siteId?: string;
@@ -30,7 +30,7 @@ export function SyncManifestBtn({
 
   useEffect(() => {
     if (setSyncInProgress) setSyncInProgress(inProgress);
-  }, [inProgress]);
+  }, [inProgress, setSyncInProgress]);
 
   useEffect(() => {
     if (data?.taskId) {
@@ -43,7 +43,7 @@ export function SyncManifestBtn({
       );
       setTaskId(data.taskId);
     }
-  }, [data]);
+  }, [data, dispatch, siteId]);
 
   useEffect(() => {
     if (error && taskId) {
@@ -54,7 +54,7 @@ export function SyncManifestBtn({
         })
       );
     }
-  }, [error]);
+  }, [dispatch, error, taskId]);
 
   return (
     <RcraApiUserBtn

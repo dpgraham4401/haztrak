@@ -25,7 +25,7 @@ export function TransporterSection({ setupSign }: TransporterSectionProps) {
 
   transporters.forEach((transporter, index) => {
     if (!transporter.clientKey) {
-      // @ts-ignore
+      // @ts-expect-error - transporters[index] is not recognized as field on Manifest type
       manifestForm.setValue(`transporters[${index}].clientKey`, uuidv4());
     }
   });
@@ -44,10 +44,11 @@ export function TransporterSection({ setupSign }: TransporterSectionProps) {
           onClick={() => {
             setSearchConfigs({ siteType: 'transporter', open: true });
           }}
-          children={'Add Transporter'}
           variant="outline-primary"
           horizontalAlign
-        />
+        >
+          Add Transporter
+        </HtButton>
       )}
       <ErrorMessage
         errors={errors}

@@ -1,7 +1,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Container } from 'react-bootstrap';
 
 interface HtSpinnerProps extends Omit<FontAwesomeIconProps, 'icon'> {

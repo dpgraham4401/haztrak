@@ -1,6 +1,6 @@
-import { HtSpinner } from '~/components/UI';
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { HtSpinner } from '~/components/UI';
 import { addAlert, useAppDispatch, useGetTaskStatusQuery } from '~/store';
 
 interface UpdateRcraProps {
@@ -16,11 +16,9 @@ interface UpdateRcraProps {
  */
 export function UpdateRcra({ taskId }: UpdateRcraProps) {
   const dispatch = useAppDispatch();
-  const [status, setStatus] = React.useState<'SUCCESS' | 'FAILURE' | 'PENDING' | undefined>(
-    undefined
-  );
+  const [status, setStatus] = useState<'SUCCESS' | 'FAILURE' | 'PENDING' | undefined>(undefined);
 
-  const { data, isLoading, error } = useGetTaskStatusQuery(taskId, {
+  const { data, error } = useGetTaskStatusQuery(taskId, {
     pollingInterval: 3000,
     skip: status === 'SUCCESS' || status === 'FAILURE',
   });
@@ -33,7 +31,7 @@ export function UpdateRcra({ taskId }: UpdateRcraProps) {
       dispatch(addAlert({ message: 'Error updating RCRAInfo', type: 'error' }));
       setStatus('FAILURE');
     }
-  }, [data, error]);
+  }, [data, dispatch, error]);
 
   if (status === 'SUCCESS') {
     let resp = data?.result;

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Container, Stack } from 'react-bootstrap';
 import { FormProvider, SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -183,7 +183,7 @@ export function ManifestForm({
       toast.error('Error creating manifest');
       setShowSpinner(false);
     }
-  }, [saveManifestResult, saveManifestIsLoading, saveManifestError]);
+  }, [saveManifestResult, saveManifestIsLoading, saveManifestError, navigate, manifestingSiteID]);
 
   useEffect(() => {
     if (saveEmanifestTaskId) {

@@ -1,6 +1,6 @@
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { ButtonProps } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ManifestContext } from '~/components/Manifest/ManifestForm';
@@ -9,7 +9,7 @@ import { useReadOnly } from '~/hooks/manifest';
 
 interface ManifestEditBtnProps extends ButtonProps {}
 
-export function ManifestEditBtn({ children, ...props }: ManifestEditBtnProps) {
+export function ManifestEditBtn({ ...props }: ManifestEditBtnProps) {
   const navigate = useNavigate();
   const { trackingNumber, viewingAsSiteId } = useContext(ManifestContext);
   const [readOnly, setReadOnly] = useReadOnly();

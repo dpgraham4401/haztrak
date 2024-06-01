@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { describe, expect, test } from 'vitest';
 import { RcraSiteType } from '~/components/Manifest/manifestSchema';
@@ -10,7 +10,6 @@ function TestComponent({ siteType }: { siteType?: RcraSiteType }) {
   const [mockSiteType, setMockSiteType] = useState();
   const handleChange = (siteType: any) => setMockSiteType(siteType);
   const { control } = useForm();
-  // @ts-ignore
   return (
     <SiteTypeSelect
       siteType={siteType}

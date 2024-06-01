@@ -1,10 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { FloatingLabel, Form } from 'react-bootstrap';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HaztrakSite } from '~/components/HaztrakSite/haztrakSiteSchema';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { FloatingLabel, Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
+import { z } from 'zod';
+import { HaztrakSite } from '~/components/HaztrakSite/haztrakSiteSchema';
 
 interface SiteFilterFormProps {
   sites: Array<HaztrakSite>;
@@ -31,6 +31,14 @@ export function SiteFilterForm({ sites, setFilteredSites, onClear }: SiteFilterF
   });
 
   useEffect(() => {
+    const clearFilter = () => {
+      if (onClear) {
+        onClear();
+      }
+      setFilteredSites(sites);
+      searchParams.delete('q');
+      setSearchParams(searchParams);
+    };
     if (siteFilter) {
       const filtered = sites.filter((site) => {
         return (
@@ -42,16 +50,7 @@ export function SiteFilterForm({ sites, setFilteredSites, onClear }: SiteFilterF
     } else {
       clearFilter();
     }
-  }, [siteFilter]);
-
-  const clearFilter = () => {
-    if (onClear) {
-      onClear();
-    }
-    setFilteredSites(sites);
-    searchParams.delete('q');
-    setSearchParams(searchParams);
-  };
+  }, [onClear, searchParams, setFilteredSites, setSearchParams, siteFilter, sites]);
 
   const onSubmit = (data: SiteFilterForm) => {
     setSiteFilter(data.query);

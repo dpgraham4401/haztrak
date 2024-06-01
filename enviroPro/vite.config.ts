@@ -9,7 +9,18 @@ export default defineConfig({
     host: true,
     port: 3000,
   },
-  plugins: [!process.env.VITEST && remix({ ssr: false }), tsconfigPaths()],
+  plugins: [
+    !process.env.VITEST &&
+      remix({
+        ssr: false,
+        future: {
+          v3_fetcherPersist: true,
+          v3_relativeSplatPath: true,
+          v3_throwAbortReason: true,
+        },
+      }),
+    tsconfigPaths(),
+  ],
   test: {
     environment: 'jsdom',
     coverage: {

@@ -11,7 +11,7 @@ const generateRandomMTN = (): string => {
 
 export const mockManifestEndpoints = [
   /** mock GET Manifest*/
-  http.get(`${API_BASE_URL}/api/rcra/manifest/${mockMTN}`, (info) => {
+  http.get(`${API_BASE_URL}/api/rcra/manifest/${mockMTN}`, () => {
     return HttpResponse.json(createMockManifest(), { status: 200 });
   }),
   /** Mock create local Manifests*/
@@ -30,7 +30,7 @@ export const mockManifestEndpoints = [
     return HttpResponse.json(bodyManifest, { status: 200 });
   }),
   /** list of manifests ('My Manifests' feature and a site's manifests)*/
-  http.get(`${API_BASE_URL}/api/rcra/mtn*`, (info) => {
+  http.get(`${API_BASE_URL}/api/rcra/mtn*`, () => {
     const mockManifestArray = [
       createMockManifest(),
       createMockManifest({ manifestTrackingNumber: '987654321ELC', status: 'Pending' }),

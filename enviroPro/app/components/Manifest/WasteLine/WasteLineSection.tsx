@@ -27,12 +27,9 @@ export function WasteLineSection({ toggleWlFormShow }: WasteLineSectionProps) {
       {readOnly ? (
         <></>
       ) : (
-        <HtButton
-          onClick={toggleWlFormShow}
-          children={'Add Waste'}
-          variant="outline-primary"
-          horizontalAlign
-        />
+        <HtButton onClick={toggleWlFormShow} variant="outline-primary" horizontalAlign>
+          Add Waste
+        </HtButton>
       )}
       <ErrorMessage
         errors={errors}

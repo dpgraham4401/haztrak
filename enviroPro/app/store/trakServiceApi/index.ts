@@ -28,7 +28,10 @@ export const {
   useGetProfileQuery,
   useGetRcrainfoProfileQuery,
   useUpdateUserMutation,
+  useUpdateRcrainfoProfileMutation,
+  useSyncRcrainfoProfileMutation,
 } = userApi;
+export { userApi };
 export type {
   ProfileSlice,
   LoginRequest,

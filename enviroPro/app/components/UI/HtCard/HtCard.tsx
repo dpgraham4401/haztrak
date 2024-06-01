@@ -1,6 +1,6 @@
-import { ErrorBoundary } from '~/components/Error';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Card, CardHeaderProps, CardProps, Container } from 'react-bootstrap';
+import { ErrorBoundary } from '~/components/Error';
 
 interface HeaderProps extends CardHeaderProps {
   title?: string;
@@ -43,6 +43,7 @@ export function HtCard({ className, title, children, ...props }: CardProps): Rea
  *   <HtCard.Header title="Card Title!">{top right dropdown button}<HtCard.Header>
  * </HtCard>
  */
+// eslint-disable-next-line react/display-name
 HtCard.Header = function ({ children, className, title }: HeaderProps): ReactElement {
   // If the title prop is passed, we use a consistent styling. else,
   // the children/content, and it will be distributed evenly in the header.
@@ -70,6 +71,7 @@ HtCard.Header = function ({ children, className, title }: HeaderProps): ReactEle
  *   <HtCard.Footer>Put button here!<HtCard.Footer>
  * </HtCard>
  */
+// eslint-disable-next-line react/display-name
 HtCard.Footer = function (props: CardProps): ReactElement {
   return (
     <Card.Footer className={`p-2 bg-light ${props.className}`}>
@@ -85,6 +87,7 @@ HtCard.Footer = function (props: CardProps): ReactElement {
  *   <HtCard.Body>Hello World!<HtCard.Body>
  * </HtCard>
  */
+// eslint-disable-next-line react/display-name
 HtCard.Body = function ({ className, children, ...props }: CardProps): ReactElement {
   return (
     <Card.Body className={className ? `${className}` : ''} {...props}>

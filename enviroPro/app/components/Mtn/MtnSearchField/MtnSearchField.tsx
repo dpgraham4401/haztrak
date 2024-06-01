@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useEffect } from 'react';
+import { ChangeEventHandler } from 'react';
 import { Form } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 

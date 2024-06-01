@@ -5,7 +5,7 @@ import { mockDotIdNumbers, mockFederalWasteCodes } from '~/test-utils/fixtures/m
 const API_BASE_URL = import.meta.env.VITE_HT_API_URL;
 export const mockWasteEndpoints = [
   /** GET User */
-  http.get(`${API_BASE_URL}/api/rcra/waste/code/federal`, (info) => {
+  http.get(`${API_BASE_URL}/api/rcra/waste/code/federal`, () => {
     return HttpResponse.json(mockFederalWasteCodes, { status: 200 });
   }),
   http.get(`${API_BASE_URL}/api/rcra/waste/dot/id`, (info) => {

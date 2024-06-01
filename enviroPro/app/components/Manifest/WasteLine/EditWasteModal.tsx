@@ -1,10 +1,10 @@
+import { useContext } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { UseFieldArrayReturn } from 'react-hook-form';
 import { ManifestContext, ManifestContextType } from '~/components/Manifest/ManifestForm';
 import { Manifest } from '~/components/Manifest/manifestSchema';
 import { WasteLine } from '~/components/Manifest/WasteLine/wasteLineSchema';
 import { HtModal } from '~/components/UI';
-import React, { useContext } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { UseFieldArrayReturn } from 'react-hook-form';
 import { WasteLineForm } from './WasteLineForm';
 
 interface Props {

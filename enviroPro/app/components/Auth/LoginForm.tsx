@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HtForm, HtSpinner } from '~/components/UI';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FloatingLabel, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+import { HtForm, HtSpinner } from '~/components/UI';
 import {
   selectAuthenticated,
   setCredentials,
@@ -11,7 +12,6 @@ import {
   useAppSelector,
   useLoginMutation,
 } from '~/store';
-import { z } from 'zod';
 
 const loginSchema = z.object({
   username: z.string().min(1, 'Username Required').min(8),
@@ -36,7 +36,7 @@ export function LoginForm() {
     if (isAuthenticated) {
       navigation('/');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigation]);
 
   async function onSubmit({ username, password }: LoginSchema) {
     try {

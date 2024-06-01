@@ -17,7 +17,7 @@ export function useHandlerSearchConfig() {
 
   useEffect(() => {
     dispatch(setHandlerSearchConfigs(configs));
-  }, [configs]);
+  }, [configs, dispatch]);
 
   useEffect(() => {
     setConfigs(reduxConfigs);

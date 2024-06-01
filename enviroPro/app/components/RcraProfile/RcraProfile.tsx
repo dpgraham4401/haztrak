@@ -31,7 +31,7 @@ export function RcraProfile({ profile }: ProfileViewProps) {
   const [profileLoading, setProfileLoading] = useState(false);
   const [taskId, setTaskId] = useState<undefined | string>();
   const [updateRcrainfoProfile] = useUpdateRcrainfoProfileMutation();
-  const { rcraSites, isLoading, ...formValues } = profile;
+  const { ...formValues } = profile;
   const { inProgress } = useProgressTracker({
     taskId: taskId,
   });
@@ -39,7 +39,7 @@ export function RcraProfile({ profile }: ProfileViewProps) {
   useEffect(() => {
     // ToDo: invalidating tags should be done in the slice
     dispatch(userApi.util?.invalidateTags(['rcrainfoProfile']));
-  }, [inProgress]);
+  }, [inProgress, dispatch]);
 
   const {
     register,

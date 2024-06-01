@@ -49,6 +49,10 @@ export type {
   HaztrakProfileOrg,
 } from './trakServiceApi';
 export {
+  userApi,
+  trakServiceApi,
+  useSyncRcrainfoProfileMutation,
+  useUpdateRcrainfoProfileMutation,
   useGetProfileQuery,
   useGetRcrainfoProfileQuery,
   useUpdateUserMutation,

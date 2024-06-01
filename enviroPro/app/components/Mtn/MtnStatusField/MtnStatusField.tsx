@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Select from 'react-select';
 
@@ -48,6 +48,7 @@ export function MtnStatusField({ onChange }: MtnStatusFieldProps) {
       searchParams.delete('status');
     }
     setSearchParams(searchParams);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue]);
 
   return (

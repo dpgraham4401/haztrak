@@ -1,5 +1,5 @@
+import { useEffect } from 'react';
 import { RcraApiUserBtn } from '~/components/Rcrainfo';
-import React, { useEffect } from 'react';
 import { addTask, updateTask, useAppDispatch, useSyncRcrainfoProfileMutation } from '~/store';
 
 interface SyncRcrainfoProfileBtnProps {
@@ -25,7 +25,7 @@ export function SyncRcrainfoProfileBtn({ taskId, setTaskId }: SyncRcrainfoProfil
     if (error) {
       dispatch(updateTask({ taskId: taskId, status: 'FAILURE', complete: true }));
     }
-  }, [data, error, isLoading]);
+  }, [data, dispatch, error, isLoading, setTaskId, taskId]);
 
   return (
     <RcraApiUserBtn

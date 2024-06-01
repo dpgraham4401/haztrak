@@ -11,14 +11,14 @@ interface HtToolTipProps extends TooltipProps {
 }
 
 export function HtTooltip(props: HtToolTipProps): ReactElement {
-  const overlayProps = (({ text, children, ...props }: HtToolTipProps) => props)(props);
+  const { text, children, ...overlayProps } = props;
   return (
     <OverlayTrigger
       {...overlayProps}
       delay={{ show: 250, hide: 400 }}
-      overlay={<Tooltip>{props.text}</Tooltip>}
+      overlay={<Tooltip>{text}</Tooltip>}
     >
-      {props.children}
+      {children}
     </OverlayTrigger>
   );
 }

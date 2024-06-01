@@ -15,7 +15,7 @@ export function useManifestStatus(propStatus?: ManifestStatus) {
 
   useEffect(() => {
     dispatch(setManifestStatus(status));
-  }, [status]);
+  }, [dispatch, status]);
 
   useEffect(() => {
     setStatus(reduxStatus);

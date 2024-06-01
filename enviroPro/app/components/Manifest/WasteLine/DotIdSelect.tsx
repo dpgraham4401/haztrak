@@ -1,8 +1,8 @@
-import { WasteLine } from '~/components/Manifest/WasteLine/wasteLineSchema';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { useLazyGetDotIdNumbersQuery } from '~/store';
 import Select from 'react-select';
+import { WasteLine } from '~/components/Manifest/WasteLine/wasteLineSchema';
+import { useLazyGetDotIdNumbersQuery } from '~/store';
 
 interface DotIdOption {
   label: string;
@@ -26,7 +26,7 @@ export function DotIdSelect() {
   useEffect(() => {
     // On mount, fetch and pre-populate DOT ID numbers with some initial options
     getDotIds('');
-  }, []);
+  }, [getDotIds]);
 
   useEffect(() => {
     if (data) {

@@ -28,12 +28,19 @@ export function GeneratorForm(): ReactElement {
     if (!mailCheck) {
       setValue(`generator.mailingAddress`, siteAddress);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    // ToDo - probably a better way to keep this hook in sync
     mailCheck,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     watch(`generator.siteAddress.streetNumber`),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     watch(`generator.siteAddress.address1`),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     watch(`generator.siteAddress.country`),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     watch(`generator.siteAddress.city`),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     watch(`generator.siteAddress.state`),
   ]);
 

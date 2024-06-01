@@ -1,4 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext, useState } from 'react';
+import { Button, Col, Container, Form, Row, Stack } from 'react-bootstrap';
+import { Controller, FormProvider, UseFieldArrayReturn, useForm } from 'react-hook-form';
 import { AdditionalInfoForm } from '~/components/Manifest/AdditionalInfo';
 import { ManifestContext, ManifestContextType } from '~/components/Manifest/ManifestForm';
 import { Manifest } from '~/components/Manifest/manifestSchema';
@@ -6,9 +9,6 @@ import { DotIdSelect } from '~/components/Manifest/WasteLine/DotIdSelect';
 import { HazardousWasteForm } from '~/components/Manifest/WasteLine/HazardousWasteForm';
 import { WasteLine, wasteLineSchema } from '~/components/Manifest/WasteLine/wasteLineSchema';
 import { HtCard, HtForm } from '~/components/UI';
-import React, { useContext, useState } from 'react';
-import { Button, Col, Container, Form, Row, Stack } from 'react-bootstrap';
-import { Controller, FormProvider, UseFieldArrayReturn, useForm } from 'react-hook-form';
 import { QuantityForm } from './QuantityForm';
 
 interface WasteLineFormProps {
@@ -32,7 +32,7 @@ export function WasteLineForm({ handleClose, wasteForm, waste, lineNumber }: Was
     waste?.epaWaste === undefined ? true : waste.epaWaste
   );
 
-  // @ts-ignore - we do not want a default container type or unit of measure
+  // @ts-expect-error - we do not want a default container type or unit of measure
   const wasteLineDefaultValues: Partial<WasteLine> = waste
     ? waste
     : {

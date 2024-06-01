@@ -34,7 +34,7 @@ export function TsdfSection({ signAble, setupSign }: TsdfSectionProps) {
     if (data) {
       manifestForm.setValue('designatedFacility', data);
     }
-  }, [data]);
+  }, [data, manifestForm]);
 
   if (isLoading) {
     return <HtSpinner size="xl" center className="m-5" />;
@@ -51,10 +51,11 @@ export function TsdfSection({ signAble, setupSign }: TsdfSectionProps) {
             searchParams.delete('tsdf');
             setSearchParams(searchParams);
           }}
-          children={'Clear TSDF'}
           variant="outline-danger"
           horizontalAlign
-        ></HtButton>
+        >
+          Clear TSDF
+        </HtButton>
       </>
     );
   }
@@ -90,20 +91,22 @@ export function TsdfSection({ signAble, setupSign }: TsdfSectionProps) {
               setSearchParams(searchParams);
             }
           }}
-          children={'Remove TSDF'}
           variant="outline-danger"
           horizontalAlign
-        />
+        >
+          Remove TSDF
+        </HtButton>
       )}
       {!tsdf && (
         <HtButton
           onClick={() => {
             setSearchConfigs({ siteType: 'designatedFacility', open: true });
           }}
-          children={'Add TSDF'}
           variant="outline-primary"
           horizontalAlign
-        />
+        >
+          Add TSDF
+        </HtButton>
       )}
       <ErrorMessage
         errors={errors}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import Select, { SingleValue } from 'react-select';
 import { Manifest, ManifestStatus, SubmissionType } from '~/components/Manifest/manifestSchema';

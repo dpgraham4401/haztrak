@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { setupServer } from 'msw/node';
 
 import { afterAll, afterEach, beforeAll, describe, expect, test } from 'vitest';

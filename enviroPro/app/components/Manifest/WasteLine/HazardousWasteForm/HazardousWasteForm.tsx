@@ -2,7 +2,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useContext } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Controller, useFormContext } from 'react-hook-form';
-import Select, { components, GroupBase, MultiValueProps, StylesConfig } from 'react-select';
+import Select, { components, StylesConfig } from 'react-select';
 import { ManifestContext, ManifestContextType } from '~/components/Manifest/ManifestForm';
 import { StateWasteCodeSelect } from '~/components/Manifest/WasteLine/HazardousWasteForm/StateWasteCodeSelect';
 import { Code, WasteLine } from '~/components/Manifest/WasteLine/wasteLineSchema';
@@ -39,14 +39,6 @@ export function HazardousWasteForm({ epaWaste }: HazardousWasteFormProps) {
       ...baseStyle,
       borderRadius: '5px',
     }),
-    // leaving this here as documentation
-    multiValueRemove: (baseStyle, state: MultiValueProps<Code, true, GroupBase<Code>>) => ({
-      ...baseStyle,
-      borderRadius: '5px',
-      ':hover': {
-        backgroundColor: '#e6151580',
-      },
-    }),
   };
 
   /**
@@ -82,8 +74,9 @@ export function HazardousWasteForm({ epaWaste }: HazardousWasteFormProps) {
                     options={federalWasteCodes}
                     isLoading={federalLoading}
                     getOptionLabel={(option) =>
-                      // @ts-ignore
-                      `${option.code}: ${option.description.toLowerCase()}`
+                      `${option.code}: ${
+                        option.description?.toLowerCase() && 'no description available'
+                      }`
                     }
                     getOptionValue={(option) => option.code}
                     styles={wasteCodeStyles}

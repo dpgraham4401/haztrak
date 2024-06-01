@@ -1,4 +1,4 @@
-import robotRedX from '/assets/img/robot/robot-bad-sign.jpg';
+import robotRedX from 'public/assets/img/robot/robot-bad-sign.jpg';
 
 export function Error404() {
   return (

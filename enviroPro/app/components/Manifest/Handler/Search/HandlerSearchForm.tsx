@@ -1,9 +1,4 @@
-import { RcrainfoSiteSearchBadge } from '~/components/Manifest/Handler/Search/RcrainfoSiteSearchBadge';
-import { ManifestContext, ManifestContextType } from '~/components/Manifest/ManifestForm';
-import { Manifest, SiteType, Transporter } from '~/components/Manifest/manifestSchema';
-import { RcraSite } from '~/components/RcraSite';
-import { HtForm } from '~/components/UI';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import {
   Controller,
@@ -14,6 +9,11 @@ import {
 } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import Select from 'react-select';
+import { RcrainfoSiteSearchBadge } from '~/components/Manifest/Handler/Search/RcrainfoSiteSearchBadge';
+import { ManifestContext, ManifestContextType } from '~/components/Manifest/ManifestForm';
+import { Manifest, SiteType, Transporter } from '~/components/Manifest/manifestSchema';
+import { RcraSite } from '~/components/RcraSite';
+import { HtForm } from '~/components/UI';
 import { useGetProfileQuery, useSearchRcrainfoSitesQuery, useSearchRcraSitesQuery } from '~/store';
 
 interface Props {
@@ -67,7 +67,7 @@ export function HandlerSearchForm({
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [options, setOptions] = useState<RcraSite[]>([]);
-  const [rcrainfoSitesLoading, setRcrainfoSitesLoading] = useState<boolean>(false);
+  const [rcrainfoSitesLoading] = useState<boolean>(false);
 
   const onSubmit: SubmitHandler<searchHandlerForm> = () => {
     if (selectedHandler !== null) {
