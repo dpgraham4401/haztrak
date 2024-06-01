@@ -38,13 +38,13 @@ export default function About() {
       <p>
         Haztrak It was developed by the United State Environmental Protection Agency (US EPA) under
         the MIT license, a permissive license that lets you modify, redistribute, and use
-        commercially as you see fit. If you're thinking about using/forking/etc. Haztrak encourage
-        you to read the license, don't worry, it's short:
+        commercially as you see fit. If you&apos;re thinking about using/forking/etc. Haztrak
+        encourage you to read the license, don&apos;t worry, it&apos;s short:
       </p>
       <HaztrakLicense />
       <p className="pt-4">
-        We welcome contribution to the source code, which you can find, along with the contributor's
-        guidelines in our git repository on{' '}
+        We welcome contribution to the source code, which you can find, along with the
+        contributor&apos;s guidelines in our git repository on{' '}
         <a href={`${import.meta.env.VITE_GITHUB_URL}`}>GitHub</a>
       </p>
       <p />

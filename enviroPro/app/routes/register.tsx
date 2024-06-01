@@ -10,7 +10,7 @@ export default function RegisterHero() {
       <h2 className="display-6 fw-semibold pt-0">Let us Handle the paperwork</h2>
       <Col lg={6} className="mx-auto">
         <p className="lead my-2">
-          The Resource Conservation and Recovery Act (RCRA) is complicated enough; don`&apos;`t make
+          The Resource Conservation and Recovery Act (RCRA) is complicated enough; don&apos;t make
           it more complicated with outdated hazardous waste management practices. Start
           electronically manifesting your waste shipments and take control of your data.
         </p>
@@ -39,7 +39,7 @@ export default function RegisterHero() {
           <FeatureDescription title="e-Sign" icon={faPen}>
             <p>
               Sign your electronic manifests to signify custody exchange without ever logging into
-              EPA`&apos;`s e-Manifest system.
+              EPA&apos;s e-Manifest system.
             </p>
           </FeatureDescription>
         </Col>
