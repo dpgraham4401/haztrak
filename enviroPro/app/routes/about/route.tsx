@@ -7,7 +7,7 @@ import { useTitle } from '~/hooks';
  * @constructor
  * @example "<About/>"
  */
-export default function About() {
+export default function Route() {
   useTitle('About');
   return (
     <Container fluid className="p-5">
