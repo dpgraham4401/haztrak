@@ -5,7 +5,7 @@ from django.utils.html import format_html, urlencode
 
 from apps.profile.models import Profile, RcrainfoProfile, RcrainfoSiteAccess
 
-from .models import TrakUser
+from .models import Authority, Role, TrakUser, UserRole
 
 
 class HiddenListView(admin.ModelAdmin):
@@ -72,4 +72,7 @@ except ImportError:
     from rest_framework.authtoken.models import Token as DRFToken
 
 admin.site.register(Profile)
+admin.site.register(UserRole)
+admin.site.register(Role)
+admin.site.register(Authority)
 admin.site.unregister(DRFToken)

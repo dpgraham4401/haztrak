@@ -37,11 +37,11 @@ class SiteDetailsView(RetrieveAPIView):
     queryset = Site.objects.all()
 
     def get_object(self):
-        site = get_user_site(username=self.request.user.username, epa_id=self.kwargs["epa_id"])
-        return site
+        return get_user_site(username=self.request.user.username, epa_id=self.kwargs["epa_id"])
 
-    @method_decorator(cache_page(60 * 15))
+    # @method_decorator(cache_page(60 * 15))
     def retrieve(self, request, *args, **kwargs):
+        print("retrieve site")
         try:
             site = self.get_object()
             data = self.serializer_class(site).data

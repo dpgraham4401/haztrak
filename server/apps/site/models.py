@@ -81,6 +81,10 @@ class Site(models.Model):
     )
 
     @property
+    def epa_id(self):
+        return self.rcra_site.epa_id
+
+    @property
     def admin_has_rcrainfo_api_credentials(self) -> bool:
         """Returns True if the admin user has RcraInfo API credentials"""
         return self.org.is_rcrainfo_integrated
