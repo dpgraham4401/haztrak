@@ -31,7 +31,7 @@ class SiteManager(QuerySet):
 
     def filter_by_epa_id(self: models.Manager, epa_id: str) -> QuerySet:
         """filter a sites by EPA ID number"""
-        return self.filter(rcra_site__epa_id=epa_id)
+        return self.filter(rcra_site__epa_id__iexact=epa_id)
 
     def filter_by_epa_ids(self: models.Manager, epa_ids: [str]) -> QuerySet:
         """filter a sites by EPA ID number"""

@@ -26,13 +26,22 @@ class TrakUser(AbstractUser):
 class Authority(models.Model):
     name = models.CharField(blank=False, max_length=50)
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Role(models.Model):
     name = models.CharField(blank=False, max_length=50)
     authority = models.ManyToManyField(Authority)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class UserRole(models.Model):
     user = models.OneToOneField(TrakUser, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user}: {self.site}"
