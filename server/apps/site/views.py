@@ -4,9 +4,11 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.core.permissions import SiteAccessPOC
 from apps.site.models import Site
 from apps.site.serializers import SiteSerializer
 from apps.site.services import filter_sites_by_org, filter_sites_by_username, get_user_site
@@ -29,14 +31,19 @@ class SiteListView(ListAPIView):
 class SiteDetailsView(RetrieveAPIView):
     """View details of a Haztrak Site."""
 
+    permission_classes = [IsAuthenticated & SiteAccessPOC]
     serializer_class = SiteSerializer
     lookup_url_kwarg = "epa_id"
     queryset = Site.objects.all()
 
+    def get_object(self):
+        site = get_user_site(username=self.request.user.username, epa_id=self.kwargs["epa_id"])
+        return site
+
     @method_decorator(cache_page(60 * 15))
-    def get(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         try:
-            site = get_user_site(username=request.user.username, epa_id=self.kwargs["epa_id"])
+            site = self.get_object()
             data = self.serializer_class(site).data
             return Response(data, status=status.HTTP_200_OK)
         except Site.DoesNotExist as e:
