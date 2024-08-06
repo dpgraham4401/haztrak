@@ -1,5 +1,4 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import { HaztrakLicense, SectionTitle } from '~/components/Help';
 import { useTitle } from '~/hooks';
 
@@ -11,30 +10,23 @@ import { useTitle } from '~/hooks';
 export function About() {
   useTitle('About');
   return (
-    <Container fluid className="p-5">
+    <div className="tw-container tw-px-11 tw-w-full lg:tw-w-3/4 xl:tw-w-2/3">
       <SectionTitle title="About" variant="h1" />
-      <Row className="content">
-        <Col xs={12} md={5} lg={6}>
-          <p>
-            Haztrak is an an open-source example of how hazardous handlers can interface their waste
-            management software with <a href="https://rcrainfo.epa.gov">RCRAInfo</a> to use
-            e-Manifest. It illustrates how many of the common task necessary to execute a fully
-            electronic manifest can be completed without ever having to login to RCRAInfo via the
-            web browser.
-          </p>
-        </Col>
-        <Col xs={12} md={7} lg={6}>
-          <p>
-            Integration with RCRAInfo and e-Manifest directly benefits the end user and the
-            organization.
-          </p>
-          <ul>
-            <li>Up-to-date site information</li>
-            <li>Seamless electronic manifest and e-signatures</li>
-            <li>Waste stream data analysis for compliance</li>
-          </ul>
-        </Col>
-      </Row>
+      <p className="tw-justify-self-start ">
+        Haztrak is an an open-source example of how hazardous handlers can interface their waste
+        management software with <a href="https://rcrainfo.epa.gov">RCRAInfo</a> to use e-Manifest.
+        It illustrates how many of the common task necessary to execute a fully electronic manifest
+        can be completed without ever having to login to RCRAInfo via the web browser.
+      </p>
+      <p>
+        Integration with RCRAInfo and e-Manifest directly benefits the end user and the
+        organization.
+      </p>
+      <ul className="tw-list-disc tw-list-inside">
+        <li>Up-to-date site information</li>
+        <li>Seamless electronic manifest and e-signatures</li>
+        <li>Waste stream data analysis for compliance</li>
+      </ul>
       <SectionTitle title="Licensing" />
       <p>
         Haztrak It was developed by the United State Environmental Protection Agency (US EPA) under
@@ -43,12 +35,12 @@ export function About() {
         you to read the license, don't worry, it's short:
       </p>
       <HaztrakLicense />
-      <p className="pt-4">
+      <p className="tw-pt-4">
         We welcome contribution to the source code, which you can find, along with the contributor's
         guidelines in our git repository on{' '}
         <a href={`${import.meta.env.VITE_GITHUB_URL}`}>GitHub</a>
       </p>
       <p />
-    </Container>
+    </div>
   );
 }
