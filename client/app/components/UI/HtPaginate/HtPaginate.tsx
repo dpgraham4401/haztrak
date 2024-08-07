@@ -15,7 +15,6 @@ interface usePaginationProps {
 }
 
 interface HtPaginateProps extends usePaginationProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onPageChange: any;
 }
 

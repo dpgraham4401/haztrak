@@ -10,7 +10,10 @@
   "trailingComma": "es5",
   "overrides": [
     {
-      "files": ["*.yaml", "*.yml"],
+      "files": [
+        "*.yaml",
+        "*.yml"
+      ],
       "options": {
         "singleQuote": true
       }

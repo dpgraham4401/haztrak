@@ -112,7 +112,7 @@ export function AdditionalInfoForm() {
           })}
         </Row>
       </Col>
-      <div className="d-flex justify-content-end ">
+      <div className="d-flex justify-content-end">
         {readOnly ? (
           <></>
         ) : (

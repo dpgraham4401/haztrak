@@ -9,7 +9,7 @@ export function SectionTitle({
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }) {
   return (
-    <div className="section-title text-center pb-3 ">
+    <div className="section-title text-center pb-3">
       <h2 className={`${variant ?? 'h2'} text-primary fw-bold text-uppercase position-relative`}>
         <div
           className="bg-secondary-subtle"

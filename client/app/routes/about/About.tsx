@@ -10,9 +10,9 @@ import { useTitle } from '~/hooks';
 export function About() {
   useTitle('About');
   return (
-    <div className="tw-container tw-px-11 tw-w-full lg:tw-w-3/4 xl:tw-w-2/3">
+    <div className="tw-container tw-w-full tw-px-11 lg:tw-w-3/4 xl:tw-w-2/3">
       <SectionTitle title="About" variant="h1" />
-      <p className="tw-justify-self-start ">
+      <p className="tw-justify-self-start">
         Haztrak is an an open-source example of how hazardous handlers can interface their waste
         management software with <a href="https://rcrainfo.epa.gov">RCRAInfo</a> to use e-Manifest.
         It illustrates how many of the common task necessary to execute a fully electronic manifest
@@ -22,7 +22,7 @@ export function About() {
         Integration with RCRAInfo and e-Manifest directly benefits the end user and the
         organization.
       </p>
-      <ul className="tw-list-disc tw-list-inside">
+      <ul className="tw-list-inside tw-list-disc">
         <li>Up-to-date site information</li>
         <li>Seamless electronic manifest and e-signatures</li>
         <li>Waste stream data analysis for compliance</li>

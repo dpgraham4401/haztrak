@@ -20,14 +20,14 @@ export function NavItem({ route, targetBlank }: NavItemProps) {
 
   return (
     <NavLink
-      className="text-decoration-none text-dark py-2 d-flex align-items-center "
+      className="text-decoration-none text-dark py-2 d-flex align-items-center"
       as={Link}
       to={route.url}
       target={targetBlank ? '_blank' : undefined}
       onClick={toggleSidebar}
     >
       <FontAwesomeIcon icon={route.icon} className="me-2 text-primary ms-2" size="lg" />
-      <span className=" mb-0">{route.text}</span>
+      <span className="mb-0">{route.text}</span>
       {route.external && (
         <FontAwesomeIcon
           icon={faArrowUpRightFromSquare}

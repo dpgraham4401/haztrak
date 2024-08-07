@@ -44,7 +44,7 @@ export function TopNav() {
             >
               <FontAwesomeIcon icon={faBars} />
             </Button>
-            <Link to="/" className="p-3 ">
+            <Link to="/" className="p-3">
               <img
                 src={logo}
                 alt="haztrak logo, hazardous waste tracking made easy."
