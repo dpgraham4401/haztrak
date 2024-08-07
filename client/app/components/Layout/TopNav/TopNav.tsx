@@ -31,7 +31,7 @@ export function TopNav() {
   // noinspection JSValidateTypes
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex">
-      <div className="flex-grow-1">
+      <div className="grow-1">
         <Row className="align-items-center">
           <Col xs={12} md={5}>
             <Button

@@ -16,6 +16,13 @@ export default [
   eslintPluginPrettierRecommended,
   ...tailwind.configs['flat/recommended'],
   {
+    name: 'tailwind-migration',
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    rules: {
+      'tailwindcss/no-custom-classname': 0,
+    },
+  },
+  {
     name: 'ignore-outputs',
     ignores: ['**/build/', '**/dist/', '**/node_modules/', '**/.next/'],
   },
