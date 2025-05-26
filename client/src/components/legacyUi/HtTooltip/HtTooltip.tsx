@@ -12,6 +12,7 @@ interface HtToolTipProps extends TooltipProps {
 export const HtTooltip = forwardRef<Ref<any>, HtToolTipProps>((props, _ref) => {
   const { children, text, ...rest } = props;
   return (
+    // @ts-ignore
     <OverlayTrigger {...rest} delay={{ show: 250, hide: 400 }} overlay={<Tooltip>{text}</Tooltip>}>
       {children}
     </OverlayTrigger>

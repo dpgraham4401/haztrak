@@ -127,7 +127,7 @@ services:
       target: dev
     volumes:
       - ./client/public:/app/public
-      - ./client/app:/app/app
+      - ./client/src:/app/src
       - ./client/postcss.config.js:/app/postcss.config.js
       - ./client/vite.config.ts:/app/vite.config.ts
       - ./client/nginx.conf:/app/nginx.conf
