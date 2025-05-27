@@ -44,7 +44,7 @@ export function About() {
       <p className="tw:pt-4">
         We welcome contribution to the source code, which you can find, along with the contributor's
         guidelines in our git repository on{' '}
-        <a href={`${import.meta.env.VITE_GITHUB_URL}`}>GitHub</a>
+        <a href={`${process.env.NEXT_PUBLIC_GITHUB_URL}`}>GitHub</a>
       </p>
       <p />
     </div>

@@ -1,10 +1,10 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import winkingRobot from 'public/assets/img/robot/robot-wink.jpg';
 import React, { useState } from 'react';
 import { Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { SiteFilterForm } from '~/components/Site/SiteFilter/SiteFilterForm';
 import { SiteListItem } from '~/components/Site/SiteListItem/SiteListItem';
 import { HaztrakSite } from '~/components/Site/siteSchema';
-import winkingRobot from '/assets/img/robot/robot-wink.jpg';
 
 interface SiteListGroupProps {
   sites: HaztrakSite[];
@@ -25,7 +25,7 @@ export function SiteListGroup({ sites }: SiteListGroupProps) {
         <Container fluid>
           <Col className="d-flex justify-content-center">
             <img
-              src={winkingRobot}
+              src={winkingRobot.src}
               alt="winking robot"
               width={200}
               height={'auto'}

@@ -133,9 +133,9 @@ services:
       - ./client/nginx.conf:/app/nginx.conf
       - ./client/index.html:/app/index.html
     environment:
-      VITE_HT_API_URL: ${VITE_HT_API_URL}
-      VITE_HT_ENV: ${VITE_HT_ENV}
-      VITE_GITHUB_URL: ${VITE_GITHUB_URL}
+      NEXT_PUBLIC_HT_API_URL: ${NEXT_PUBLIC_HT_API_URL}
+      NEXT_PUBLIC_HT_ENV: ${NEXT_PUBLIC_HT_ENV}
+      NEXT_PUBLIC_GITHUB_URL: ${NEXT_PUBLIC_GITHUB_URL}
     command: sh -c "cd /app; npm install; npm start"
 
   nginx:

@@ -141,10 +141,10 @@ https://docs.python.org/3/library/logging.html#logging-levels
 
 ### Required (client)
 
-- `VITE_HT_API_URL`
+- `NEXT_PUBLIC_HT_API_URL`
   - Value: host/domain name of the haztrak back end
   - Default: `http://localhost`
-- `VITE_HT_ENV`
+- `NEXT_PUBLIC_HT_ENV`
   - Default: `PROD`
   - Options: `PROD`, `DEV`, `TEST`
   - Description: The deployment environments, `TEST` mock service worker that

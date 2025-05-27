@@ -1,9 +1,9 @@
+import logo from 'public/assets/img/haztrak-logos/haztrak-logo-zip-file/png/logo-black-crop.png';
 import React, { ReactElement, useContext } from 'react';
 import { Link } from 'react-router';
 import { OrgSelect } from '~/components/Org/OrgSelect';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '~/components/ui';
 import { NavContext, NavContextProps } from '~/features/layout/Root';
-import logo from '/assets/img/haztrak-logos/haztrak-logo-zip-file/png/logo-black-crop.png';
 import { NavItem } from './Nav/NavItem';
 import { NavSection } from './Nav/NavSection';
 import { routes } from './SidebarRoutes';
@@ -19,7 +19,7 @@ export function Sidebar(): ReactElement | null {
           <SheetTitle asChild>
             <Link to="/" className="tw:flex tw:justify-center">
               <img
-                src={logo}
+                src={logo.src}
                 alt="haztrak logo, hazardous waste tracking made easy."
                 width={200}
                 height={'auto'}

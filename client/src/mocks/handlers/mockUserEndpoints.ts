@@ -8,7 +8,7 @@ import {
 import { AuthSuccessResponse, HaztrakUser } from '~/store/userApi/userApi';
 
 /** mock Rest API*/
-const API_BASE_URL = import.meta.env.VITE_HT_API_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_HT_API_URL;
 export const mockUserEndpoints = [
   /** GET User */
   http.get(`${API_BASE_URL}/api/user/current-user`, () => {

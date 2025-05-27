@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 
 import { FaUser } from 'react-icons/fa';
 import { Avatar, AvatarFallback, AvatarImage, Input } from '~/components/ui';
-import { useAuth } from '~/hooks';
 import { useUpdateAvatarMutation } from '~/store';
 
 interface AvatarFormProps {

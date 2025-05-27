@@ -1,4 +1,4 @@
-import logo from '/assets/img/haztrak-logos/high-resolution/png/haztrak-high-resolution-logo-black-on-transparent-background.png';
+import logo from 'public/assets/img/haztrak-logos/high-resolution/png/haztrak-high-resolution-logo-black-on-transparent-background.png';
 
 import { Button, Col, Container, Row, Stack } from 'react-bootstrap';
 import { FaPen, FaSitemap } from 'react-icons/fa';
@@ -10,7 +10,7 @@ export function RegisterHero() {
   return (
     <Container fluid className="text-center px-4 py-5 bg-light tw:h-full">
       <img
-        src={logo}
+        src={logo.src}
         alt="haztrak logo, hazardous waste tracking made easy."
         width="auto"
         height={100}

@@ -1,4 +1,4 @@
-@import url('~bootstrap/dist/css/bootstrap.min.css') layer(base);
+@import url('bootstrap/dist/css/bootstrap.min.css') layer(base);
 
 @import 'tailwindcss' prefix(tw);
 

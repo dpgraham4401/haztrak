@@ -1,6 +1,9 @@
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import { LogOut } from 'lucide-react';
+import logo from 'public/assets/img/haztrak-logos/haztrak-logo-zip-file/svg/logo-no-background.svg';
 import React, { useContext } from 'react';
+
+import { FaUser } from 'react-icons/fa';
 import { LuMenu, LuUser } from 'react-icons/lu';
 import { TbBinaryTree } from 'react-icons/tb';
 import { Link } from 'react-router';
@@ -13,9 +16,6 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/DropDown/dropdown-menu';
 import { NavContext, NavContextProps } from '~/features/layout/Root';
-import logo from '/assets/img/haztrak-logos/haztrak-logo-zip-file/svg/logo-no-background.svg';
-
-import { FaUser } from 'react-icons/fa';
 import { useGetProfileQuery, useLogoutMutation } from '~/store';
 
 export function TopNav() {
@@ -49,7 +49,7 @@ export function TopNav() {
           </Button>
           <Link to="/" className="tw:hidden tw:px-3 tw:sm:block">
             <img
-              src={logo}
+              src={logo.src}
               alt="haztrak logo, hazardous waste tracking made easy."
               width={125}
               height={'auto'}

@@ -1,9 +1,9 @@
-import robotRedX from '/assets/img/robot/robot-bad-sign.jpg';
+import robotRedX from 'public/assets/img/robot/robot-bad-sign.jpg';
 
 export function Error404() {
   return (
     <>
-      <img src={robotRedX} alt="happy robot" width={200} height={'auto'} />
+      <img src={robotRedX.src} alt="happy robot" width={200} height={'auto'} />
       <h1 className="display-1 d-flex justify-content-center">404</h1>
       <h4>Resource not found</h4>
     </>

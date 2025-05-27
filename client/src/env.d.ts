@@ -4,8 +4,8 @@
 // https://vitejs.dev/guide/env-and-mode.html#intellisense-for-typescript
 
 interface ImportMetaEnv {
-  readonly VITE_HT_API_URL: string;
-  readonly VITE_GITHUB_URL: string;
+  readonly NEXT_PUBLIC_HT_API_URL: string;
+  readonly NEXT_PUBLIC_GITHUB_URL: string;
 }
 
 interface ImportMeta {

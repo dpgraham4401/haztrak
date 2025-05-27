@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "vite",
-    "build": "tsc && vite build",
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "npx serve@latest ./build",
     "serve": "serve dist",
     "test": "vitest --run",
     "test:watch": "vitest",
