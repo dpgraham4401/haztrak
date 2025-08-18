@@ -43,6 +43,7 @@ repos:
     rev: v0.6.1
     hooks:
       - id: biome-check
+        entry: npx biome check --write --files-ignore-unknown=true --no-errors-on-unmatched
   # PyUpgrade
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.15.0

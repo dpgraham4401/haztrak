@@ -142,10 +142,10 @@ services:
     container_name: ezywaste
     build:
       context: ./ezywaste
+      target: dev
     volumes:
       - ./ezywaste/public:/app/public
-      - ./ezywaste/app:/app/app
-      - ./ezywaste/postcss.config.js:/app/postcss.config.js
+      - ./ezywaste/src:/app/src
       - ./ezywaste/vite.config.ts:/app/vite.config.ts
       - ./ezywaste/nginx.conf:/app/nginx.conf
       - ./ezywaste/index.html:/app/index.html
@@ -161,6 +161,7 @@ services:
     depends_on:
       - trak
       - client
+      - ezywaste
 
   mail:
     container_name: mail
