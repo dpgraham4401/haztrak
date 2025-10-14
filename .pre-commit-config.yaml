@@ -23,7 +23,7 @@ repos:
         exclude: (?x)^(\.idea\/.*|\.vscode\/.*)$
   # Ruff
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.11.2
+    rev: v0.14.1
     hooks:
       - id: ruff
         args: [ --fix, --config, ./server/pyproject.toml ]
@@ -39,15 +39,6 @@ repos:
         types:
           - python
         pass_filenames: false
-  - repo: https://github.com/biomejs/pre-commit
-    rev: v0.6.1
-    hooks:
-      - id: biome-check
-  # PyUpgrade
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
-    hooks:
-      - id: pyupgrade
   - repo: https://github.com/biomejs/pre-commit
     rev: v0.6.1
     hooks:
