@@ -1,9 +1,16 @@
 # Builder
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
-LABEL maintainer="graham.david@epa.gov"
-ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+FROM python:3.13-slim AS builder
+LABEL authors="dpgraham4401@gmail.com"
+
+COPY --from=ghcr.io/astral-sh/uv:0.8.22 /uv /uvx /bin/
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING=UTF-8 \
+    PYTHONFAULTHANDLER=1 \
+    PIP_NO_CACHE_DIR=off \
+    UV_PYTHON_DOWNLOADS=0 \
+    UV_SYSTEM_PYTHON=1 \
+    UV_COMPILE_BYTECODE=1
 
 #RUN apt install libffi-dev gcc libc-dev curl
 RUN apt-get update && \
@@ -12,18 +19,15 @@ RUN apt-get update && \
 
 WORKDIR /app
 
+COPY . /app
+
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-project --no-dev
-
-ADD . /app
-
-RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 
 # App
-FROM python:3.12-slim-bookworm
+FROM python:3.13-slim-bookworm
 
 COPY --from=builder --chown=app:app /app /app
 
