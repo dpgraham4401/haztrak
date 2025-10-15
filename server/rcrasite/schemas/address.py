@@ -5,7 +5,7 @@ from pydantic.alias_generators import to_camel
 from rcrasite.models import RcraCountries, RcraStates
 
 
-class LocalitySchema(BaseModel):
+class RcraLocalitySchema(BaseModel):
     """Represents a RCRAInfo locality (state or country).
 
     Examples:
@@ -21,15 +21,15 @@ class LocalitySchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class AddressSchema(BaseModel):
+class RcraAddressSchema(BaseModel):
     """Address model schema for JSON representation."""
 
     street_number: str | None = Field(None, alias="streetNumber")
     address1: str
     address2: str | None = None
     city: str | None = None
-    state: LocalitySchema | None = None
-    country: LocalitySchema | None = None
+    state: RcraLocalitySchema | None = None
+    country: RcraLocalitySchema | None = None
     zip: str | None = None
 
     model_config = ConfigDict(
@@ -40,10 +40,10 @@ class AddressSchema(BaseModel):
 
     @field_validator("state", mode="before")
     @classmethod
-    def serialize_state(cls, state: str) -> LocalitySchema:
-        return LocalitySchema(code=state, name=RcraStates.from_code(state))
+    def serialize_state(cls, state: str) -> RcraLocalitySchema:
+        return RcraLocalitySchema(code=state, name=RcraStates.from_code(state))
 
     @field_validator("country", mode="before")
     @classmethod
-    def serialize_country(cls, country: str) -> LocalitySchema:
-        return LocalitySchema(code=country, name=RcraCountries.from_code(country))
+    def serialize_country(cls, country: str) -> RcraLocalitySchema:
+        return RcraLocalitySchema(code=country, name=RcraCountries.from_code(country))
