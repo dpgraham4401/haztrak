@@ -1,3 +1,3 @@
-from .address import AddressSchema
+from .address import RcraAddressSchema
 
-__all__ = ["AddressSchema"]
+__all__ = ["RcraAddressSchema"]
