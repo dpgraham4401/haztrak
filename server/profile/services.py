@@ -1,13 +1,14 @@
 """business logic related to a user's Haztrak profile (note: not their RcrainfoProfile)."""
 
-from profile.models import Profile, RcrainfoProfile, RcrainfoSiteAccess
-from profile.serializers import RcrainfoSitePermissionsSerializer
 from typing import TYPE_CHECKING
+
+from django.db import transaction
 
 from core.models import TrakUser
 from core.services import RcraClient, get_rcra_client
-from django.db import transaction
 from org.services import SiteServiceError
+from profile.models import Profile, RcrainfoProfile, RcrainfoSiteAccess
+from profile.serializers import RcrainfoSitePermissionsSerializer
 from rcrasite.models import RcraSite
 from rcrasite.services import RcraSiteService
 
@@ -61,7 +62,7 @@ class RcraProfileService:
 
     def __init__(self, *, username: str, rcrainfo: RcraClient | None = None):
         self.username = username
-        profile, created = get_or_create_rcra_profile(username=username)
+        profile, _created = get_or_create_rcra_profile(username=username)
         self.profile: RcrainfoProfile = profile
         self.rcrainfo = rcrainfo or get_rcra_client(username=username)
 
@@ -122,7 +123,7 @@ class RcraProfileService:
     ) -> RcrainfoSiteAccess:
         permission_serializer = RcrainfoSitePermissionsSerializer(data=epa_permission)
         if permission_serializer.is_valid():
-            obj, created = RcrainfoSiteAccess.objects.update_or_create(
+            obj, _created = RcrainfoSiteAccess.objects.update_or_create(
                 **permission_serializer.validated_data,
                 site=site,
                 profile=self.profile,

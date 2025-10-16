@@ -1,5 +1,6 @@
 import pytest
 from django.db.models import QuerySet
+
 from org.models import Org, Site
 
 

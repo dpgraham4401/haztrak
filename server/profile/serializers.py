@@ -1,11 +1,11 @@
 """Profile serializer."""
 
-from profile.models import Profile, RcrainfoProfile, RcrainfoSiteAccess
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from core.serializers import TrakUserSerializer
 from manifest.serializers.mixins import RemoveEmptyFieldsMixin
-from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
+from profile.models import Profile, RcrainfoProfile, RcrainfoSiteAccess
 
 
 class RcraSitePermissionSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):

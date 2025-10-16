@@ -4,6 +4,7 @@ import logging
 
 from celery import shared_task, states
 from celery.exceptions import Ignore
+
 from rcrasite.services import RcraSiteService
 
 logger = logging.getLogger(__name__)

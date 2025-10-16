@@ -14,6 +14,7 @@ from rest_framework import serializers
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from wasteline.models import DotLookup, WasteCode
 from wasteline.serializers import WasteCodeSerializer
 from wasteline.services import (

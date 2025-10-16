@@ -2,8 +2,6 @@
 
 from http import HTTPStatus
 
-from core.serializers import TrakUserSerializer
-from core.services import get_task_status
 from django_celery_results.models import TaskResult
 from rest_framework import permissions
 from rest_framework.exceptions import ValidationError
@@ -11,6 +9,9 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from core.serializers import TrakUserSerializer
+from core.services import get_task_status
 
 
 class TaskStatusView(APIView):

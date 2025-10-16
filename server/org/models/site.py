@@ -2,15 +2,17 @@
 
 from typing import TYPE_CHECKING
 
-from core.models import TrakUser
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models import QuerySet
 from guardian.models import GroupObjectPermissionBase, UserObjectPermissionBase
 from guardian.shortcuts import get_objects_for_user
 
+from core.models import TrakUser
+
 if TYPE_CHECKING:
     from django.contrib.auth.models import User
+
     from org.models import Org
 
 

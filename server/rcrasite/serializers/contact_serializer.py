@@ -1,7 +1,8 @@
 """Serializers for the Contact model."""
 
-from rcrasite.models import Contact
 from rest_framework import serializers
+
+from rcrasite.models import Contact
 
 from .base_serializer import SitesBaseSerializer
 

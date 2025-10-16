@@ -2,10 +2,11 @@ from http import HTTPStatus
 from unittest.mock import patch
 
 import pytest
-from org.models import Org
-from org.views import OrgDetailsView, OrgListView, SiteDetailsView
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
+
+from org.models import Org
+from org.views import OrgDetailsView, OrgListView, SiteDetailsView
 
 
 class TestOrgDetailsView:
@@ -80,7 +81,7 @@ class TestSiteDetailsApi:
 
     def test_returns_site_by_id(self, setup_user_site_perm):
         # Arrange
-        user, site, request = setup_user_site_perm
+        _user, site, request = setup_user_site_perm
         # Act
         response = SiteDetailsView.as_view()(request, epa_id=site.rcra_site.epa_id)
         # Assert
@@ -89,7 +90,7 @@ class TestSiteDetailsApi:
 
     def test_non_user_sites_not_returned(self, site_factory, org_factory, setup_user_site_perm):
         # Arrange
-        user, site, request = setup_user_site_perm
+        _user, _site, request = setup_user_site_perm
         other_site = site_factory()
         # Act
         response = SiteDetailsView.as_view()(request, epa_id=other_site.rcra_site.epa_id)
@@ -110,7 +111,7 @@ class TestOrgListView:
 
     def test_returns_user_orgs(self, setup_user_org_perm):
         # Arrange
-        user, org, request = setup_user_org_perm
+        _user, org, request = setup_user_org_perm
         # Act
         response = OrgListView.as_view()(request)
         # Assert
@@ -119,7 +120,7 @@ class TestOrgListView:
 
     def test_filters_orgs(self, setup_user_org_perm, org_factory):
         # Arrange
-        user, org, request = setup_user_org_perm
+        _user, org, request = setup_user_org_perm
         other_org = org_factory()
         # Act
         response = OrgListView.as_view()(request)

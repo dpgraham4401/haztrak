@@ -1,13 +1,9 @@
 """Views for the profile app."""
 
 from http import HTTPStatus
-from profile.models import Profile, RcrainfoProfile
-from profile.serializers import ProfileSerializer, RcrainfoProfileSerializer
-from profile.services import get_user_profile
 from typing import TYPE_CHECKING
 
 from celery.exceptions import CeleryError
-from rcrasite.tasks import sync_user_rcrainfo_sites_task
 from rest_framework.generics import (
     RetrieveAPIView,
     RetrieveUpdateAPIView,
@@ -18,6 +14,11 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
+
+from profile.models import Profile, RcrainfoProfile
+from profile.serializers import ProfileSerializer, RcrainfoProfileSerializer
+from profile.services import get_user_profile
+from rcrasite.tasks import sync_user_rcrainfo_sites_task
 
 if TYPE_CHECKING:
     from celery.result import AsyncResult as CeleryTask

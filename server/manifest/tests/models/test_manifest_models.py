@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from django.core.exceptions import ValidationError
+
 from manifest.models import Manifest, draft_mtn, manifest_factory, validate_mtn
 from manifest.serializers import HandlerSerializer
 from rcrasite.models import RcraSiteType

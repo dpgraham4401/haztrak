@@ -9,13 +9,13 @@ from .schemas.handler import RcraHandlerSchema
 router = Router(tags=["Handler"], by_alias=True)
 
 
-@router.get("/address", response=list[RcraAddressSchema])
+@router.get("handlers/addresses", response=list[RcraAddressSchema])
 def list_addresses(request):
     """Get a list of Address (temporary)."""
     return Address.objects.all()
 
 
-@router.get("", response=list[RcraHandlerSchema])
+@router.get("handlers", response=list[RcraHandlerSchema])
 def list_handlers(request):
     """Get a list of Handler (temporary)."""
     return RcraSite.objects.all()

@@ -1,7 +1,8 @@
 from http import HTTPStatus
 
-from core.utils import exception_handler
 from django.http import Http404
+
+from core.utils import exception_handler
 
 
 class TestTrakExceptionHandler:

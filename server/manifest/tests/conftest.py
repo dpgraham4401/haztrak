@@ -6,6 +6,7 @@ import pytest
 from django.db import IntegrityError
 from faker import Faker
 from faker.providers import BaseProvider
+
 from manifest.models import (
     ESignature,
     Handler,

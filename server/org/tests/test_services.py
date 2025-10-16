@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 import pytest
 from django.core.exceptions import ObjectDoesNotExist
+
 from org.models import Site
 from org.services import (
     filter_sites_by_org,

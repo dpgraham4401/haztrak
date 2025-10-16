@@ -4,13 +4,14 @@ import logging
 from datetime import datetime
 from typing import TYPE_CHECKING, Literal, NotRequired, TypedDict
 
-from core.services import RcraClient, get_rcra_client
 from django.db import transaction
+from requests import RequestException
+
+from core.services import RcraClient, get_rcra_client
 from manifest.models import Manifest, QuickerSign
 from manifest.serializers import ManifestSerializer, QuickerSignSerializer
 from manifest.services.emanifest_search import EmanifestSearch
 from manifest.tasks import pull_manifest_by_mtn_task, sign_manifest_task
-from requests import RequestException
 
 if TYPE_CHECKING:
     from django.db.models import QuerySet
