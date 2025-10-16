@@ -5,7 +5,7 @@ from ninja import Router
 from profile.models import Profile
 from profile.schemas.profile import ProfileSchema
 
-router = Router(tags=["Profile"], by_alias=True)
+router = Router(tags=["Profile"], by_alias=True, exclude_none=True)
 
 
 @router.get("/profile", response=list[ProfileSchema])

@@ -8,7 +8,7 @@ from rcrasite.schemas import RcraAddressSchema
 from rcrasite.schemas.contact import RcraContactSchema, RcraPhoneSchema
 
 
-class RcraHandlerSchema(Schema):
+class RcraSiteSchema(Schema):
     """Schema for serializing and deserializing handler information."""
 
     epa_id: str = Field(..., alias="epaSiteId")

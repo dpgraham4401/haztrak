@@ -4,18 +4,18 @@ from ninja import Router
 
 from .models import Address, RcraSite
 from .schemas import RcraAddressSchema
-from .schemas.handler import RcraHandlerSchema
+from .schemas.rcrasite import RcraSiteSchema
 
-router = Router(tags=["Handler"], by_alias=True)
+router = Router(tags=["Rcra Sites"], by_alias=True, exclude_none=True)
 
 
-@router.get("handlers/addresses", response=list[RcraAddressSchema])
+@router.get("rcrasite/addresses", response=list[RcraAddressSchema])
 def list_addresses(request):
     """Get a list of Address (temporary)."""
     return Address.objects.all()
 
 
-@router.get("handlers", response=list[RcraHandlerSchema])
+@router.get("rcrasite", response=list[RcraSiteSchema])
 def list_handlers(request):
     """Get a list of Handler (temporary)."""
     return RcraSite.objects.all()
