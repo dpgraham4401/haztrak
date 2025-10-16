@@ -1,6 +1,8 @@
 """URLs for the manifest app."""
 
 from django.urls import include, path
+from rest_framework.routers import SimpleRouter
+
 from manifest.views import (
     ElectronicManifestSaveView,
     ElectronicManifestSignView,
@@ -8,7 +10,6 @@ from manifest.views import (
     MtnListView,
     SiteManifestSyncView,
 )
-from rest_framework.routers import SimpleRouter
 
 manifest_router = SimpleRouter(trailing_slash=False)
 manifest_router.register("manifest", ManifestViewSet)

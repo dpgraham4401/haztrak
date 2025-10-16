@@ -1,8 +1,9 @@
 """Serializers for the RcraSite model."""
 
+from rest_framework import serializers
+
 from rcrasite.models import RcraSite, RcraSiteType
 from rcrasite.serializers import AddressSerializer, ContactSerializer, RcraPhoneSerializer
-from rest_framework import serializers
 
 from .base_serializer import SitesBaseSerializer
 

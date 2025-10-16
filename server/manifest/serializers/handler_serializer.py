@@ -1,8 +1,9 @@
 """Serializers for Handler and Transporter models."""
 
+from rest_framework import serializers
+
 from manifest.models import Handler, ManifestPhone, Transporter
 from rcrasite.serializers import RcraSiteSerializer
-from rest_framework import serializers
 
 from .signatures import ESignatureSerializer, PaperSignatureSerializer
 

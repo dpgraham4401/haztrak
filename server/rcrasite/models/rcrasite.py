@@ -6,6 +6,7 @@ from typing import Optional
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from rcrasite.models import Address, Contact, RcraPhone
 
 logger = logging.getLogger(__name__)
@@ -31,7 +32,7 @@ class RcraSiteManager(models.Manager):
         """Return an RcraSite object by its epa_id."""
         return self.get(epa_id__iexact=epa_id)
 
-    def save(self, instance: Optional["RcraSite"], **handler_data) -> "RcraSite":
+    def save(self, instance: Optional["RcraSite"], **handler_data) -> "RcraSite | None":
         """Create an RcraSite and its related fields."""
         try:
             epa_id = handler_data.get("epa_id")
@@ -42,7 +43,7 @@ class RcraSiteManager(models.Manager):
             emergency_phone = self.get_emergency_phone()
             site_address = self.get_address("site_address")
             mail_address = self.get_address("mail_address")
-            rcra_site, created = self.model.objects.update_or_create(
+            rcra_site, _created = self.model.objects.update_or_create(
                 epa_id=self.handler_data.pop("epa_id"),
                 site_address=site_address,
                 mail_address=mail_address,

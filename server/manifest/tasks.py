@@ -4,6 +4,7 @@ import logging
 
 from celery import Task, shared_task, states
 from celery.exceptions import Ignore, Reject
+
 from core.services import get_rcra_client
 
 logger = logging.getLogger(__name__)

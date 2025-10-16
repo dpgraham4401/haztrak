@@ -5,6 +5,7 @@ from typing import Literal
 
 from django.db import transaction
 from django.db.models import Q, QuerySet
+
 from manifest.models import Manifest
 from manifest.services import EManifest, EManifestError, TaskResponse
 from manifest.tasks import save_to_emanifest_task as save_to_emanifest_task

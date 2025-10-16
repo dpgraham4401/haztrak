@@ -1,6 +1,7 @@
 """Tests for waste line serializer."""
 
 import pytest
+
 from wasteline.serializers import WasteLineSerializer
 
 

@@ -1,10 +1,11 @@
 """Manifest admin."""
 
-from core.admin import HiddenListView
 from django.contrib import admin
 from django.db.models import Q, QuerySet
 from django.urls import reverse
 from django.utils.html import format_html, urlencode
+
+from core.admin import HiddenListView
 from manifest.models import Manifest
 from wasteline.admin import WasteLineInline
 

@@ -2,10 +2,11 @@ from http import HTTPStatus
 from unittest import mock
 
 import pytest
-from core.views import TaskStatusView
 from django.test.client import Client
 from rest_framework.reverse import reverse
 from rest_framework.test import APIRequestFactory, force_authenticate
+
+from core.views import TaskStatusView
 
 
 class TestUserViews:

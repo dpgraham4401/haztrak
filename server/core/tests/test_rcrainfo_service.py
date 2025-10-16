@@ -2,10 +2,11 @@ from datetime import UTC, datetime
 from http import HTTPStatus
 
 import emanifest
+from responses import matchers
+
 from core.services import RcraClient, get_rcra_client
 from manifest.models import QuickerSign
 from manifest.serializers import QuickerSignSerializer
-from responses import matchers
 
 
 class TestRcrainfoService:

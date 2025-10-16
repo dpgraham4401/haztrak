@@ -5,6 +5,7 @@ from typing import Optional
 
 from django.core.exceptions import ValidationError
 from django.db import models
+
 from rcrasite.models import RcraSite
 
 from .contact import ManifestPhone
@@ -116,7 +117,7 @@ class TransporterManager(HandlerManager):
                 data.pop("rcra_site")
             else:
                 rcra_site = RcraSite.objects.save(None, **data.pop("rcra_site"))
-            transporter, created = self.model.objects.update_or_create(
+            transporter, _created = self.model.objects.update_or_create(
                 manifest=data.pop("manifest"),
                 order=data.pop("order"),
                 rcra_site__epa_id=rcra_site.epa_id,

@@ -1,16 +1,17 @@
 """Organization and Site models."""
 
 import uuid
-from profile.models import RcrainfoProfile
 from typing import TYPE_CHECKING
 
-from core.models import TrakUser
 from django.conf import settings
 from django.db import models
 from django.db.models import QuerySet
 from django_extensions.db.fields import AutoSlugField
 from guardian.models import GroupObjectPermissionBase, UserObjectPermissionBase
 from guardian.shortcuts import get_objects_for_user
+
+from core.models import TrakUser
+from profile.models import RcrainfoProfile
 
 if TYPE_CHECKING:
     from django.contrib.auth.models import User

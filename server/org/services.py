@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from django.db import transaction
 from django.db.models import QuerySet
+
 from manifest.services import TaskResponse
 from manifest.tasks import sync_site_manifests_task
 from org.models import Org, Site

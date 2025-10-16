@@ -1,11 +1,13 @@
 """Address model schema for Django Ninja."""
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from ninja import Schema
+from pydantic import ConfigDict, Field, field_validator
 from pydantic.alias_generators import to_camel
+
 from rcrasite.models import RcraCountries, RcraStates
 
 
-class RcraLocalitySchema(BaseModel):
+class RcraLocalitySchema(Schema):
     """Represents a RCRAInfo locality (state or country).
 
     Examples:
@@ -21,7 +23,7 @@ class RcraLocalitySchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class RcraAddressSchema(BaseModel):
+class RcraAddressSchema(Schema):
     """Address model schema for JSON representation."""
 
     street_number: str | None = Field(None, alias="streetNumber")

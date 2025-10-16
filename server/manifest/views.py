@@ -4,6 +4,12 @@ import logging
 from http import HTTPStatus
 
 from drf_spectacular.utils import OpenApiResponse, extend_schema, inline_serializer
+from rest_framework import mixins, serializers, viewsets
+from rest_framework.generics import GenericAPIView, ListAPIView
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from manifest.models import Manifest
 from manifest.serializers import ManifestSerializer, MtnSerializer, QuickerSignSerializer
 from manifest.services import (
@@ -15,11 +21,6 @@ from manifest.services import (
     update_manifest,
 )
 from org.services import sync_site_manifest_with_rcrainfo
-from rest_framework import mixins, serializers, viewsets
-from rest_framework.generics import GenericAPIView, ListAPIView
-from rest_framework.request import Request
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 logger = logging.getLogger(__name__)
 

@@ -1,10 +1,10 @@
 """Signals for the core app."""
 
-from profile.models import RcrainfoProfile
-
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from profile.models import RcrainfoProfile
 
 
 @receiver(post_save, sender=User)

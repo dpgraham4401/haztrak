@@ -1,10 +1,11 @@
 """RCRAInfo Contact Schema."""
 
-from pydantic import BaseModel, ConfigDict
+from ninja import Schema
+from pydantic import ConfigDict
 from pydantic.alias_generators import to_camel
 
 
-class RcraPhoneSchema(BaseModel):
+class RcraPhoneSchema(Schema):
     """Schema for RCRAInfo phone information."""
 
     number: str
@@ -17,7 +18,7 @@ class RcraPhoneSchema(BaseModel):
     )
 
 
-class RcraContactSchema(BaseModel):
+class RcraContactSchema(Schema):
     """Schema for RCRAInfo contact information."""
 
     first_name: str | None

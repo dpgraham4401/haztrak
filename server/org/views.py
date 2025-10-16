@@ -1,5 +1,8 @@
 """Views for the org app."""
 
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
+
 from org.filters import ObjectPermissionsFilter
 from org.models import Org, Site
 from org.permissions import OrgObjectPermissions, SiteObjectPermissions
@@ -10,8 +13,6 @@ from org.services import (
     get_org_by_slug,
     get_site_by_epa_id,
 )
-from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework.permissions import IsAuthenticated
 
 
 class OrgDetailsView(RetrieveAPIView):

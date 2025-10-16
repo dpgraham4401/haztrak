@@ -2,6 +2,8 @@
 
 import logging
 
+from rest_framework import serializers
+
 from manifest.models import (
     AdditionalInfo,
     Manifest,
@@ -13,7 +15,6 @@ from manifest.serializers import (
     TransporterSerializer,
 )
 from rcrasite.models import RcraStates
-from rest_framework import serializers
 from wasteline.serializers import (
     WasteLineSerializer,
 )

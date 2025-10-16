@@ -1,6 +1,7 @@
 """Tests for the ManifestSerializer class."""
 
 import pytest
+
 from manifest.models import AdditionalInfo, Manifest
 from manifest.serializers import ManifestSerializer
 from wasteline.models import WasteLine

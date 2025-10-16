@@ -1,13 +1,14 @@
 """RCRAInfo Service Module."""
 
 import logging
-from profile.models import RcrainfoProfile
 from typing import Literal
 
 import emanifest
 from django.db import IntegrityError
 from emanifest import RcrainfoClient, RcrainfoResponse
+
 from org.models import Org
+from profile.models import RcrainfoProfile
 from wasteline.models import WasteCode
 
 logger = logging.getLogger(__name__)

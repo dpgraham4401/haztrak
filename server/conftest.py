@@ -6,26 +6,27 @@ import os
 import random
 import string
 from enum import Enum
-from profile.models import Profile, RcrainfoProfile
 from typing import Any, Literal, Required, TypedDict
 
 import pytest
 import pytest_mock
 import responses
-from core.models import TrakUser
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from faker import Faker
 from faker.providers import BaseProvider
 from guardian.shortcuts import assign_perm
+from rest_framework.test import APIClient
+
+from core.models import TrakUser
 from org.models import Org, Site
+from profile.models import Profile, RcrainfoProfile
 from rcrasite.models import (
     Address,
     Contact,
     RcraPhone,
     RcraSite,
 )
-from rest_framework.test import APIClient
 
 
 class SiteIDProvider(BaseProvider):
