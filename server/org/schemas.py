@@ -6,7 +6,7 @@ from ninja import Schema
 from pydantic import ConfigDict, Field
 from pydantic.alias_generators import to_camel
 
-from rcrasite.schemas.handler import RcraHandlerSchema
+from rcrasite.schemas.rcrasite import RcraSiteSchema
 
 
 class OrgSchema(Schema):
@@ -28,7 +28,7 @@ class SiteSchema(Schema):
     """Haztrak Site schema."""
 
     name: str
-    rcra_site: RcraHandlerSchema = Field(alias="handler")
+    rcra_site: RcraSiteSchema = Field(alias="rcraSite")
 
     model_config = ConfigDict(
         from_attributes=True,

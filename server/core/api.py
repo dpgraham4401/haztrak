@@ -5,7 +5,7 @@ from ninja import Router
 from core.models import TrakUser
 from core.schemas import TrakUserSchema
 
-router = Router(tags=["Core"], by_alias=True)
+router = Router(tags=["Core"], by_alias=True, exclude_none=True)
 
 
 @router.get("/users", response=list[TrakUserSchema])

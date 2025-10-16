@@ -7,7 +7,7 @@ from org.schemas import OrgSchema, SiteSchema
 
 from .models import Org, Site
 
-router = Router(tags=["Organizations"], by_alias=True)
+router = Router(tags=["Organizations"], by_alias=True, exclude_none=True)
 
 
 @router.get("organizations", response=list[OrgSchema])
