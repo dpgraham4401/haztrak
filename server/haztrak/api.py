@@ -15,4 +15,4 @@ api = NinjaAPI(
     urls_namespace="api",
 )
 
-api.add_router("/org/", org_router)
+api.add_router("/organizations", org_router)
