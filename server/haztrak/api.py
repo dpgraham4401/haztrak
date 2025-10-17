@@ -2,6 +2,7 @@
 
 from ninja import NinjaAPI
 from ninja.security import django_auth
+from org.api import router as org_router
 
 api_auth = [django_auth]
 
@@ -13,3 +14,5 @@ api = NinjaAPI(
     servers=[],
     urls_namespace="api",
 )
+
+api.add_router("/org/", org_router)
