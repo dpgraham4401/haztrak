@@ -5,7 +5,7 @@ from org.schemas import OrgSchema
 
 from .models import Org
 
-router = Router(tags=["Organizations"])
+router = Router(tags=["Organizations"], by_alias=True)
 
 
 @router.get("", response=list[OrgSchema])
