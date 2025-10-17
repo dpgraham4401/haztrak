@@ -37,6 +37,8 @@ dependencies = [
     "uvicorn[standard]>=0.37.0",
     "pillow==12.0.0",
     "uvicorn-worker>=0.4.0",
+    "django-ninja>=1.4.3",
+    "pydantic>=2.12.2",
 ]
 
 [dependency-groups]
