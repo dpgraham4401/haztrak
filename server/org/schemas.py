@@ -20,3 +20,6 @@ class OrgSchema(Schema):
         populate_by_name=True,
         alias_generator=to_camel,
     )
+
+
+# ToDo(David): Add the SiteSchema after we complete the rcrasite app migration to ninja/pydantic.
