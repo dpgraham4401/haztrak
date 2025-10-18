@@ -27,13 +27,13 @@ class LocalitySchema(BaseModel):
         if isinstance(value, cls):
             return value
         if isinstance(value, str):
-            name = str(dict(RcraStates.choices).get(value))
+            name = RcraStates.from_state_code(value)
             if not name:
                 raise ValueError(f"Invalid state code: {value}")
             return {"code": value, "name": name}
         if isinstance(value, dict):
             code = value.get("code")
-            name = value.get("name") or str(dict(RcraStates.choices).get(code))
+            name = value.get("name") or RcraStates.from_state_code(code)
             return {"code": code, "name": name}
         if value is None:
             return value

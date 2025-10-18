@@ -87,6 +87,16 @@ class RcraStates(models.TextChoices):
     XI = "XI", _("REGION 09 PURVIEW")
     XJ = "XJ", _("REGION 10 PURVIEW")
 
+    @classmethod
+    def from_state_code(cls, code: str) -> str:
+        """Return the full state name for a given state code, or None if not found."""
+        state_name = str(dict(cls.choices).get(code))
+        if not state_name:
+            msg = f"Invalid RCRA state code: {code}"
+            logger.error(msg)
+            raise ValueError(msg)
+        return state_name
+
 
 class RcraPhoneNumber(models.CharField):
     """RcraPhoneNumber encapsulates RCRAInfo's representation of a phone."""
