@@ -1,8 +1,8 @@
 """Address model schema for Django Ninja."""
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from pydantic.alias_generators import to_camel
-from rcrasite.models import RcraStates
+from rcrasite.models import RcraCountries, RcraStates
 
 
 class LocalitySchema(BaseModel):
@@ -20,25 +20,6 @@ class LocalitySchema(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-    @model_validator(mode="before")
-    @classmethod
-    def coerce_locality(cls, value):
-        """Allow 'TX', {'code': 'TX'}, or {'code': 'TX', 'name': 'Texas'}."""
-        if isinstance(value, cls):
-            return value
-        if isinstance(value, str):
-            name = RcraStates.from_state_code(value)
-            if not name:
-                raise ValueError(f"Invalid state code: {value}")
-            return {"code": value, "name": name}
-        if isinstance(value, dict):
-            code = value.get("code")
-            name = value.get("name") or RcraStates.from_state_code(code)
-            return {"code": code, "name": name}
-        if value is None:
-            return value
-        raise TypeError(f"Cannot coerce {value!r} into LocalitySchema")
-
 
 class AddressSchema(BaseModel):
     """Address model schema for JSON representation."""
@@ -48,7 +29,7 @@ class AddressSchema(BaseModel):
     address2: str | None = None
     city: str | None = None
     state: LocalitySchema | None = None
-    # country: Locality | None = None
+    country: LocalitySchema | None = None
     zip: str | None = None
 
     model_config = ConfigDict(
@@ -56,3 +37,13 @@ class AddressSchema(BaseModel):
         populate_by_name=True,
         alias_generator=to_camel,
     )
+
+    @field_validator("state", mode="before")
+    @classmethod
+    def serialize_state(cls, state: str) -> LocalitySchema:
+        return LocalitySchema(code=state, name=RcraStates.from_code(state))
+
+    @field_validator("country", mode="before")
+    @classmethod
+    def serialize_country(cls, country: str) -> LocalitySchema:
+        return LocalitySchema(code=country, name=RcraCountries.from_code(country))

@@ -17,6 +17,16 @@ class RcraCountries(models.TextChoices):
     MX = "MX", _("Mexico")
     CA = "CA", _("Canada")
 
+    @classmethod
+    def from_code(cls, code: str) -> str:
+        """Return the full state name for a given state code, or None if not found."""
+        state_name = str(dict(cls.choices).get(code))
+        if not state_name:
+            msg = f"Invalid RCRA Country code: {code}"
+            logger.error(msg)
+            raise ValueError(msg)
+        return state_name
+
 
 class RcraStates(models.TextChoices):
     """RCRAInfo state abbreviations."""
@@ -88,7 +98,7 @@ class RcraStates(models.TextChoices):
     XJ = "XJ", _("REGION 10 PURVIEW")
 
     @classmethod
-    def from_state_code(cls, code: str) -> str:
+    def from_code(cls, code: str) -> str:
         """Return the full state name for a given state code, or None if not found."""
         state_name = str(dict(cls.choices).get(code))
         if not state_name:
