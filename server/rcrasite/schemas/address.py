@@ -1,10 +1,11 @@
 """Address model schema for Django Ninja."""
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 from pydantic.alias_generators import to_camel
+from rcrasite.models import RcraStates
 
 
-class Locality(BaseModel):
+class LocalitySchema(BaseModel):
     """Represents a RCRAInfo locality (state or country).
 
     Examples:
@@ -17,6 +18,27 @@ class Locality(BaseModel):
     code: str = Field(..., description="The locality code, e.g. 'TX'")
     name: str | None = Field(None, description="The full locality name, e.g. 'Texas'")
 
+    model_config = ConfigDict(from_attributes=True)
+
+    @model_validator(mode="before")
+    @classmethod
+    def coerce_locality(cls, value):
+        """Allow 'TX', {'code': 'TX'}, or {'code': 'TX', 'name': 'Texas'}."""
+        if isinstance(value, cls):
+            return value
+        if isinstance(value, str):
+            name = str(dict(RcraStates.choices).get(value))
+            if not name:
+                raise ValueError(f"Invalid state code: {value}")
+            return {"code": value, "name": name}
+        if isinstance(value, dict):
+            code = value.get("code")
+            name = value.get("name") or str(dict(RcraStates.choices).get(code))
+            return {"code": code, "name": name}
+        if value is None:
+            return value
+        raise TypeError(f"Cannot coerce {value!r} into LocalitySchema")
+
 
 class AddressSchema(BaseModel):
     """Address model schema for JSON representation."""
@@ -25,7 +47,7 @@ class AddressSchema(BaseModel):
     address1: str
     address2: str | None = None
     city: str | None = None
-    # state: Locality | None = None
+    state: LocalitySchema | None = None
     # country: Locality | None = None
     zip: str | None = None
 
