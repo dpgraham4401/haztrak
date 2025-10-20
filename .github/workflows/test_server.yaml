@@ -1,4 +1,6 @@
 name: "Trak Service Tests"
+permissions:
+  contents: read
 # This workflow is responsible for running the Haztrak server tests.
 # It spins up a postgres container and runs the tests against it.
 
