@@ -11,6 +11,9 @@ jobs:
   check_terraform_fmt:
     name: "Terraform Format"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     defaults:
       run:
         working-directory: ./infra/gcp/dev
