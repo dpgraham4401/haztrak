@@ -16,6 +16,9 @@ on:
 jobs:
   build_image:
     name: "Build Docker Image"
+    permissions:
+      contents: read
+      packages: write
     runs-on: ubuntu-latest
     defaults:
       run:
