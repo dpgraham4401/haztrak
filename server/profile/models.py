@@ -18,6 +18,14 @@ class ProfileManager(models.QuerySet):
         """Get a user Haztrak Profile by the user."""
         return self.get(user=user)
 
+    def get_profile_by_user_id(self, user_id: str) -> "Profile":
+        """Get a user Haztrak Profile by the user ID.
+
+        Raises:
+            Profile.DoesNotExist: If no profile exists for the given user ID.
+        """
+        return self.get(user__id=user_id)
+
 
 class Profile(models.Model):
     """User information outside the scope of the User model.

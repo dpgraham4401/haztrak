@@ -12,3 +12,9 @@ router = Router(tags=["Profile"], by_alias=True, exclude_none=True)
 def list_profiles(request):
     """List all profiles."""
     return Profile.objects.all()
+
+
+@router.get("/profile/{user_id}", response=ProfileSchema)
+def get_profile(request, user_id: str):
+    """Get a profile by user UUID."""
+    return Profile.objects.get_profile_by_user_id(user_id)

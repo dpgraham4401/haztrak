@@ -53,3 +53,14 @@ class TestProfileModel:
         saved_profile = profile_factory(user=user)
         profile = Profile.objects.get_profile_by_user(user)
         assert profile == saved_profile
+
+    def test_get_profile_by_user_id(self, profile_factory, user_factory):
+        user = user_factory()
+        saved_profile = profile_factory(user=user)
+        profile = Profile.objects.get_profile_by_user_id(user.id)
+        assert profile == saved_profile
+
+    def test_by_user_id_raises_error_if_not_found(self, profile_factory, user_factory):
+        """Get profile by user ID raises Profile.DoesNotExist if not found."""
+        with pytest.raises(Profile.DoesNotExist):
+            Profile.objects.get_profile_by_user_id(9999)
