@@ -1,6 +1,8 @@
 """API endpoints for the Profile app."""
 
+from django.http import HttpRequest
 from ninja import Router
+from ninja.errors import AuthenticationError
 
 from profile.models import Profile
 from profile.schemas.profile import ProfileSchema
@@ -12,6 +14,15 @@ router = Router(tags=["Profile"], by_alias=True, exclude_none=True)
 def list_profiles(request):
     """List all profiles."""
     return Profile.objects.all()
+
+
+@router.get("/profile/me", response=ProfileSchema)
+def get_my_profile(request: HttpRequest):
+    """Get the profile of the currently authenticated user."""
+    user = request.user
+    if user.is_anonymous:
+        raise AuthenticationError(message="Authentication required to access this endpoint.")
+    return Profile.objects.get_profile_by_user(user)
 
 
 @router.get("/profile/{user_id}", response=ProfileSchema)
