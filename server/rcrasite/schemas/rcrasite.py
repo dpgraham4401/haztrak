@@ -1,5 +1,7 @@
 """Handler Schema serializer."""
 
+from typing import Annotated
+
 from ninja import Schema
 from pydantic import ConfigDict, Field
 from pydantic.alias_generators import to_camel
@@ -11,10 +13,10 @@ from rcrasite.schemas.contact import RcraContactSchema, RcraPhoneSchema
 class RcraSiteSchema(Schema):
     """Schema for serializing and deserializing handler information."""
 
-    epa_id: str = Field(..., alias="epaSiteId")
+    epa_id: Annotated[str, Field(..., alias="epaSiteId")]
     site_type: str | None = None
     modified: bool = False
-    name: str = Field(..., description="The name of the handler.")
+    name: str
     site_address: RcraAddressSchema
     mail_address: RcraAddressSchema
     contact: RcraContactSchema
