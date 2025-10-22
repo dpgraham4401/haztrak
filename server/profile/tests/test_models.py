@@ -42,6 +42,18 @@ class TestRcrainfoProfileModel:
         returned_profile = RcrainfoProfile.objects.get_by_trak_username(username)
         assert isinstance(returned_profile, RcrainfoProfile)
 
+    def test_get_rcrainfo_profile_by_trak_user_id(
+        self,
+        rcrainfo_profile_factory,
+        profile_factory,
+    ):
+        """We can retrieve a RcrainfoProfile by the related Trak user ID."""
+        rcrainfo_profile = rcrainfo_profile_factory()
+        trak_profile = profile_factory(rcrainfo_profile=rcrainfo_profile)
+        user_id = trak_profile.user.id
+        returned_profile = RcrainfoProfile.objects.get_by_trak_user_id(user_id)
+        assert isinstance(returned_profile, RcrainfoProfile)
+
 
 class TestProfileModel:
     def test_haztrak_profile_factory(self, profile_factory):
