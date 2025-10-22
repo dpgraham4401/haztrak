@@ -24,7 +24,7 @@ class ProfileManager(models.QuerySet):
         Raises:
             Profile.DoesNotExist: If no profile exists for the given user ID.
         """
-        return self.get(user__id=user_id)
+        return self.select_related("user").get(user__id=user_id)
 
 
 class Profile(models.Model):

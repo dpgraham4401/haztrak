@@ -92,3 +92,13 @@ class TestProfileModel:
         """Get profile by user ID raises Profile.DoesNotExist if not found."""
         with pytest.raises(Profile.DoesNotExist):
             Profile.objects.get_profile_by_user_id(9999)
+
+    def test_retrieves_profile_and_user_in_single_query(
+        self, profile_factory, user_factory, django_assert_num_queries
+    ):
+        """We want to avoid the N+! problem of getting a profile, then the user."""
+        user = user_factory()
+        profile_factory(user=user)
+        with django_assert_num_queries(1):
+            returned_profile = Profile.objects.get_profile_by_user_id(user.id)
+            _ = returned_profile.user.id
