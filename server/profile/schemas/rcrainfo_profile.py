@@ -2,11 +2,11 @@
 
 from typing import Annotated
 
-from ninja import ModelSchema
+from ninja import ModelSchema, Schema
 from pydantic import ConfigDict, Field
 from pydantic.alias_generators import to_camel
 
-from profile.models import RcrainfoProfile, RcrainfoSiteAccess
+from profile.models import RcrainfoSiteAccess
 
 
 class RcrainfoSitePermissionsInternalSchema(ModelSchema):
@@ -39,22 +39,19 @@ class RcrainfoSitePermissionsInternalSchema(ModelSchema):
         ]
 
 
-class RcrainfoProfileSchema(ModelSchema):
+class RcrainfoProfileSchema(Schema):
     """A user's profile retrieved from RCRAInfo."""
+
+    has_rcrainfo_api_id_key: Annotated[bool, Field(..., alias="apiUser")]
+    permissions: Annotated[
+        list[RcrainfoSitePermissionsInternalSchema],
+        Field(..., alias="rcraSites"),
+    ]
+    rcra_username: str | None
+    phone_number: str | None
 
     model_config = ConfigDict(
         from_attributes=True,
         populate_by_name=True,
         alias_generator=to_camel,
     )
-
-    class Meta:
-        """Metaclass."""
-
-        model = RcrainfoProfile
-        fields = [
-            "id",
-            "rcra_username",
-            "phone_number",
-            "email",
-        ]
