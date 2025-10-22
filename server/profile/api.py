@@ -4,8 +4,9 @@ from django.http import HttpRequest
 from ninja import Router
 from ninja.errors import AuthenticationError
 
-from profile.models import Profile
+from profile.models import Profile, RcrainfoProfile
 from profile.schemas.profile import ProfileSchema
+from profile.schemas.rcrainfo_profile import RcrainfoProfileSchema
 
 router = Router(tags=["Profile"], by_alias=True, exclude_none=True)
 
@@ -29,3 +30,9 @@ def get_my_profile(request: HttpRequest):
 def get_profile(request, user_id: str):
     """Get a profile by user UUID."""
     return Profile.objects.get_profile_by_user_id(user_id)
+
+
+@router.get("/profile/rcrainfo/{user_id}", response=RcrainfoProfileSchema)
+def get_rcrainfo_profile(request, user_id: str):
+    """Get a RCRAInfo profile by user UUID."""
+    return RcrainfoProfile.objects.get_by_trak_user_id(user_id)
