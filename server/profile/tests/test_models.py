@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.auth.models import AbstractUser
 
 from profile.models import Profile, RcrainfoProfile
 
@@ -6,6 +7,17 @@ from profile.models import Profile, RcrainfoProfile
 @pytest.mark.django_db
 class TestRcrainfoProfileModel:
     """Test related to the RcrainfoProfile model and its API."""
+
+    @pytest.fixture
+    def user_profile_rcra_profile_factory(self, rcrainfo_profile_factory, profile_factory):
+        """Helper to create a user, profile, and rcrainfo profile together."""
+
+        def _factory(**kwargs) -> tuple[AbstractUser, Profile, RcrainfoProfile]:
+            rcrainfo_profile = rcrainfo_profile_factory(**kwargs)
+            profile = profile_factory(rcrainfo_profile=rcrainfo_profile)
+            return profile.user, profile, rcrainfo_profile
+
+        return _factory
 
     def test_rcra_profile_factory(self, rcrainfo_profile_factory):
         """Simply check the model saves given our factory's defaults."""
@@ -32,27 +44,25 @@ class TestRcrainfoProfileModel:
         assert api_user is expected
 
     def test_get_by_trak_username_returns_a_rcrainfo_profile(
-        self,
-        rcrainfo_profile_factory,
-        profile_factory,
+        self, user_profile_rcra_profile_factory
     ):
-        rcrainfo_profile = rcrainfo_profile_factory()
-        trak_profile = profile_factory(rcrainfo_profile=rcrainfo_profile)
-        username = trak_profile.user.username
-        returned_profile = RcrainfoProfile.objects.get_by_trak_username(username)
+        user, _, _ = user_profile_rcra_profile_factory()
+        returned_profile = RcrainfoProfile.objects.get_by_trak_username(user.username)
         assert isinstance(returned_profile, RcrainfoProfile)
 
-    def test_get_rcrainfo_profile_by_trak_user_id(
-        self,
-        rcrainfo_profile_factory,
-        profile_factory,
+    def test_get_rcrainfo_profile_by_trak_user_id(self, user_profile_rcra_profile_factory):
+        """We can retrieve a RcrainfoProfile by the related Trak user ID."""
+        user, _, _ = user_profile_rcra_profile_factory()
+        returned_profile = RcrainfoProfile.objects.get_by_trak_user_id(user.id)
+        assert isinstance(returned_profile, RcrainfoProfile)
+
+    def test_only_executes_one_query(
+        self, user_profile_rcra_profile_factory, django_assert_num_queries
     ):
         """We can retrieve a RcrainfoProfile by the related Trak user ID."""
-        rcrainfo_profile = rcrainfo_profile_factory()
-        trak_profile = profile_factory(rcrainfo_profile=rcrainfo_profile)
-        user_id = trak_profile.user.id
-        returned_profile = RcrainfoProfile.objects.get_by_trak_user_id(user_id)
-        assert isinstance(returned_profile, RcrainfoProfile)
+        user, _, _ = user_profile_rcra_profile_factory()
+        with django_assert_num_queries(1):
+            _ = RcrainfoProfile.objects.get_by_trak_user_id(user.id)
 
 
 class TestProfileModel:

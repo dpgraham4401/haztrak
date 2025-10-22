@@ -79,9 +79,7 @@ class RcrainfoProfileManager(models.Manager):
 
     def get_by_trak_user_id(self, user_id: str) -> "RcrainfoProfile":
         """Get a RcrainfoProfile by the user's Haztrak user ID."""
-        return self.prefetch_related("haztrak_profile__user").get(
-            haztrak_profile__user__id=user_id
-        )
+        return self.select_related("haztrak_profile__user").get(haztrak_profile__user__id=user_id)
 
 
 class RcrainfoProfile(models.Model):
