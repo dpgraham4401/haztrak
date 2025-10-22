@@ -64,6 +64,12 @@ class TestRcrainfoProfileModel:
         with django_assert_num_queries(1):
             _ = RcrainfoProfile.objects.get_by_trak_user_id(user.id)
 
+    def test_raises_does_not_exists_if_user_exists_but_not_profile(self, user_factory):
+        """We can retrieve a RcrainfoProfile by the related Trak user ID."""
+        user = user_factory()
+        with pytest.raises(RcrainfoProfile.DoesNotExist):
+            RcrainfoProfile.objects.get_by_trak_user_id(user.id)
+
 
 class TestProfileModel:
     def test_haztrak_profile_factory(self, profile_factory):

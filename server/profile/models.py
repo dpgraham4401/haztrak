@@ -78,7 +78,13 @@ class RcrainfoProfileManager(models.Manager):
         return self.get(haztrak_profile__user__username=username)
 
     def get_by_trak_user_id(self, user_id: str) -> "RcrainfoProfile":
-        """Get a RcrainfoProfile by the user's Haztrak user ID."""
+        """Get a RcrainfoProfile by the user's Haztrak user ID.
+
+        automatically joins the user's trak profile and user models to avoid N+1 queries.
+
+        Raises:
+            RcrainfoProfile.DoesNotExist: If no RcrainfoProfile exists for the given user ID.
+        """
         return self.select_related("haztrak_profile__user").get(haztrak_profile__user__id=user_id)
 
 
