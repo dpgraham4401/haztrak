@@ -1,5 +1,6 @@
 """REST API for the organization module."""
 
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from guardian.shortcuts import get_objects_for_user
 from ninja import Router
@@ -12,7 +13,7 @@ router = Router(tags=["Organizations"], by_alias=True, exclude_none=True)
 
 
 @router.get("organizations", response=list[OrgSchema])
-def list_orgs(request):
+def list_orgs(request: HttpRequest):
     """Get a list of organizations."""
     queryset = Org.objects.all()
     user = request.user
@@ -20,12 +21,13 @@ def list_orgs(request):
 
 
 @router.get("organizations/{org_slug}", response=OrgSchema)
-def get_org(request, org_slug: str):
+def get_org(request: HttpRequest, org_slug: str):
     """Get an organization by slug."""
-    return get_object_or_404(Org.objects.all(), slug=org_slug)
+    qs = get_objects_for_user(request.user, [], Org.objects.filter_by_slug(org_slug))
+    return get_object_or_404(qs)
 
 
 @router.get("/sites", response=list[SiteSchema])
-def list_sites(request):
+def list_sites(request: HttpRequest):
     """Get a list of all sites (temporary)."""
     return Site.objects.all()
