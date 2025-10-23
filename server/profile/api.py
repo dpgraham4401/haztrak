@@ -32,6 +32,15 @@ def get_profile(request, user_id: str):
     return Profile.objects.get_profile_by_user_id(user_id)
 
 
+@router.get("/profile/rcrainfo/me", response=RcrainfoProfileSchema)
+def get_my_rcrainfo_profile(request):
+    """Get a RCRAInfo profile of the currently authenticated user."""
+    user = request.user
+    if user.is_anonymous:
+        raise AuthenticationError(message="Authentication required to access this endpoint.")
+    return RcrainfoProfile.objects.get_by_trak_user_id(user.id)
+
+
 @router.get("/profile/rcrainfo/{user_id}", response=RcrainfoProfileSchema)
 def get_rcrainfo_profile(request, user_id: str):
     """Get a RCRAInfo profile by user UUID."""

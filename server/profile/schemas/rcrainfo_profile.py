@@ -40,7 +40,11 @@ class RcrainfoSitePermissionsInternalSchema(ModelSchema):
 
 
 class RcrainfoProfileSchema(Schema):
-    """A user's profile retrieved from RCRAInfo."""
+    """A user's profile retrieved from RCRAInfo.
+
+    We use this internally because it's easier to handle,
+    Using consistent naming,Haztrak has a separate serializer for user permissions from RCRAInfo.
+    """
 
     has_rcrainfo_api_id_key: Annotated[bool, Field(..., alias="apiUser")]
     permissions: Annotated[
