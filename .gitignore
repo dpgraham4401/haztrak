@@ -3,6 +3,7 @@
 **/.secrets
 .coverage
 **/*.sqlite3
+test_db
 **/*.rdb
 **/.pytest_cache/
 *.DS_Store
