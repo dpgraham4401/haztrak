@@ -1,6 +1,7 @@
 """REST API for the organization module."""
 
 from django.shortcuts import get_object_or_404
+from guardian.shortcuts import get_objects_for_user
 from ninja import Router
 
 from org.schemas import OrgSchema, SiteSchema
@@ -13,7 +14,9 @@ router = Router(tags=["Organizations"], by_alias=True, exclude_none=True)
 @router.get("organizations", response=list[OrgSchema])
 def list_orgs(request):
     """Get a list of organizations."""
-    return Org.objects.all()
+    queryset = Org.objects.all()
+    user = request.user
+    return get_objects_for_user(user, [], queryset, accept_global_perms=False)
 
 
 @router.get("organizations/{org_slug}", response=OrgSchema)
