@@ -2,7 +2,7 @@ import pytest
 from conftest import SiteIDProvider
 from faker import Faker
 
-from profile.models import RcrainfoProfile, RcrainfoSiteAccess
+from trak.apps.profile.models import RcrainfoProfile, RcrainfoSiteAccess
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 import pytest
 
-from org.models import Org, Site
-from rcrasite.models import RcraSite
+from trak.apps.org.models import Org, Site
+from trak.apps.rcrasite.models import RcraSite
 
 
 @pytest.fixture

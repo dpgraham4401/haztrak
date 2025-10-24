@@ -2,7 +2,7 @@
 
 import pytest
 
-from wasteline.serializers import WasteLineSerializer
+from trak.apps.wasteline.serializers import WasteLineSerializer
 
 
 @pytest.fixture

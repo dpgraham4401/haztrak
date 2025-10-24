@@ -1,6 +1,6 @@
 import pytest
 
-from rcrasite.serializers import (
+from trak.apps.rcrasite.serializers import (
     ContactSerializer,
     RcraSiteSerializer,
 )

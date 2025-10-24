@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 from django.http import Http404
 
-from core.utils import exception_handler
+from trak.apps.core.utils import exception_handler
 
 
 class TestTrakExceptionHandler:

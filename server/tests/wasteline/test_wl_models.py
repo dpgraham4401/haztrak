@@ -5,7 +5,7 @@ from typing import ClassVar
 import pytest
 from django.db import IntegrityError
 
-from wasteline.models import DotLookup, DotLookupType, WasteCode
+from trak.apps.wasteline.models import DotLookup, DotLookupType, WasteCode
 
 
 @pytest.mark.django_db

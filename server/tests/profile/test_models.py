@@ -1,7 +1,7 @@
 import pytest
 from django.contrib.auth.models import AbstractUser
 
-from profile.models import Profile, RcrainfoProfile
+from trak.apps.profile.models import Profile, RcrainfoProfile
 
 
 @pytest.mark.django_db

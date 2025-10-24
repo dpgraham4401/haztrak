@@ -1,5 +1,5 @@
-from profile.models import Profile, RcrainfoProfile
-from profile.services import (
+from trak.apps.profile.models import Profile, RcrainfoProfile
+from trak.apps.profile.services import (
     get_or_create_rcra_profile,
     get_user_profile,
     get_user_rcrainfo_profile,

@@ -7,8 +7,8 @@ from PIL import Image
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 
-from profile.serializers import ProfileSerializer
-from profile.views import ProfileDetailsView, RcrainfoProfileRetrieveUpdateView
+from trak.apps.profile.serializers import ProfileSerializer
+from trak.apps.profile.views import ProfileDetailsView, RcrainfoProfileRetrieveUpdateView
 
 
 class TestProfileViewSet:

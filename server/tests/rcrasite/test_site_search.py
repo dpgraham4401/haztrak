@@ -2,8 +2,8 @@ import json
 
 import pytest
 
-from core.services import RcraClient
-from rcrasite.services import RcraSiteSearch
+from trak.apps.core.services import RcraClient
+from trak.apps.rcrasite.services import RcraSiteSearch
 
 
 class TestRcraSiteSearchClass:

@@ -6,7 +6,7 @@ from django.test.client import Client
 from rest_framework.reverse import reverse
 from rest_framework.test import APIRequestFactory, force_authenticate
 
-from core.views import TaskStatusView
+from trak.apps.core.views import TaskStatusView
 
 
 class TestUserViews:

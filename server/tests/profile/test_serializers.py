@@ -1,8 +1,8 @@
 import pytest
 
-from profile.models import RcrainfoSiteAccess
-from profile.schemas.rcrainfo_profile import RcrainfoSiteAccessSchema
-from profile.serializers import (
+from trak.apps.profile.models import RcrainfoSiteAccess
+from trak.apps.profile.schemas.rcrainfo_profile import RcrainfoSiteAccessSchema
+from trak.apps.profile.serializers import (
     ProfileSerializer,
     RcrainfoSitePermissionsSerializer,
     RcraSitePermissionSerializer,

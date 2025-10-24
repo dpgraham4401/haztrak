@@ -19,10 +19,10 @@ from faker.providers import BaseProvider
 from guardian.shortcuts import assign_perm
 from rest_framework.test import APIClient
 
-from core.models import TrakUser
-from org.models import Org, Site
-from profile.models import Profile, RcrainfoProfile
-from rcrasite.models import (
+from trak.apps.core.models import TrakUser
+from trak.apps.org.models import Org, Site
+from trak.apps.profile.models import Profile, RcrainfoProfile
+from trak.apps.rcrasite.models import (
     Address,
     Contact,
     RcraPhone,

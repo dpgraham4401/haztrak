@@ -5,8 +5,8 @@ from unittest.mock import patch
 import pytest
 from django.core.exceptions import ObjectDoesNotExist
 
-from org.models import Site
-from org.services import (
+from trak.apps.org.models import Site
+from trak.apps.org.services import (
     filter_sites_by_org,
     get_org_by_id,
     get_org_rcrainfo_api_credentials,

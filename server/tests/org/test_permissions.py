@@ -1,8 +1,8 @@
 from guardian.shortcuts import assign_perm
 from rest_framework.test import APIRequestFactory
 
-from org.permissions import SiteObjectPermissions
-from org.views import SiteDetailsView
+from trak.apps.org.permissions import SiteObjectPermissions
+from trak.apps.org.views import SiteDetailsView
 
 
 class TestSiteObjectPermissions:

@@ -126,7 +126,7 @@ extend-ignore = [
 "**/models.py" = ["COM819"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["haztrak", "profile", "wasteline", "rcrasite", "org", "manifest", "core"]
+known-first-party = ["trak"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"

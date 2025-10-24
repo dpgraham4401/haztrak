@@ -1,4 +1,4 @@
-from org.serializers import OrgSerializer
+from trak.apps.org.serializers import OrgSerializer
 
 
 class TestOrgSerializer:

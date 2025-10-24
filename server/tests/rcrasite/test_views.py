@@ -6,8 +6,8 @@ import pytest
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 
-from rcrasite.models import RcraSiteType
-from rcrasite.views import HandlerSearchView, RcraSiteSearchView
+from trak.apps.rcrasite.models import RcraSiteType
+from trak.apps.rcrasite.views import HandlerSearchView, RcraSiteSearchView
 
 if TYPE_CHECKING:
     from rest_framework.response import Response

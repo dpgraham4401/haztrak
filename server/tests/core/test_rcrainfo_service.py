@@ -4,9 +4,9 @@ from http import HTTPStatus
 import emanifest
 from responses import matchers
 
-from core.services import RcraClient, get_rcra_client
-from manifest.models import QuickerSign
-from manifest.serializers import QuickerSignSerializer
+from trak.apps.core.services import RcraClient, get_rcra_client
+from trak.apps.manifest.models import QuickerSign
+from trak.apps.manifest.serializers import QuickerSignSerializer
 
 
 class TestRcrainfoService:

@@ -1,7 +1,7 @@
 import pytest
 from django.db.models import QuerySet
 
-from org.models import Org, Site
+from trak.apps.org.models import Org, Site
 
 
 class TestOrgModel:

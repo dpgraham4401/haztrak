@@ -1,8 +1,8 @@
 import pytest
 from faker import Faker
 
-from manifest.models import Manifest
-from wasteline.models import DotLookup, DotLookupType, WasteCode, WasteLine
+from trak.apps.manifest.models import Manifest
+from trak.apps.wasteline.models import DotLookup, DotLookupType, WasteCode, WasteLine
 
 
 @pytest.fixture

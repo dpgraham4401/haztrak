@@ -5,8 +5,8 @@ import pytest
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 
-from org.models import Org
-from org.views import OrgDetailsView, OrgListView, SiteDetailsView
+from trak.apps.org.models import Org
+from trak.apps.org.views import OrgDetailsView, OrgListView, SiteDetailsView
 
 
 class TestOrgDetailsView:
