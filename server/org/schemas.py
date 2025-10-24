@@ -29,6 +29,7 @@ class SiteSchema(ModelSchema):
     """Haztrak Site schema."""
 
     name: str
+    # Django Ninja will serialize ForeignKey if we use the '_id' suffix
     rcra_site_id: Annotated[int, Field(..., alias="rcraSite")]
     org_id: Annotated[UUID, Field(..., alias="organization")]
 
