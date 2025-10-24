@@ -20,17 +20,17 @@ def list_orgs(request: HttpRequest):
     return get_objects_for_user(user, [], queryset, accept_global_perms=False)
 
 
-@router.get("organizations/{org_slug}", response=OrgSchema)
-def get_org(request: HttpRequest, org_slug: str):
+@router.get("organizations/{org_id}", response=OrgSchema)
+def get_org(request: HttpRequest, org_id: str):
     """Get an organization by slug."""
-    qs = get_objects_for_user(request.user, [], Org.objects.filter_by_slug(org_slug))
+    qs = get_objects_for_user(request.user, [], Org.objects.filter_by_id(org_id))
     return get_object_or_404(qs)
 
 
-@router.get("organizations/{org_slug}/sites", response=list[SiteSchema])
-def get_org_sites(request: HttpRequest, org_slug: str):
+@router.get("organizations/{org_id}/sites", response=list[SiteSchema])
+def get_org_sites(request: HttpRequest, org_id: str):
     """Get an organization's sites."""
-    org_query = get_objects_for_user(request.user, [], Org.objects.filter_by_slug(org_slug))
+    org_query = get_objects_for_user(request.user, [], Org.objects.filter_by_id(org_id))
     org_instance = get_object_or_404(org_query)
     return Site.objects.filter_by_org(org_instance)
 
