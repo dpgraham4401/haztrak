@@ -5,7 +5,7 @@
     admin: 8062d496-15f1-485d-961c-a8e5fa118dde
     slug: generators-org-llc
 - model: org.site
-  pk: 1
+  pk: 2b7770a9-0a41-4a95-be37-1aa82abc0ce5
   fields:
     name: VA TEST GEN 2021
     rcra_site: 1
@@ -20,7 +20,7 @@
       - site
     user:
       - testuser1
-    content_object: 1
+    content_object: 2b7770a9-0a41-4a95-be37-1aa82abc0ce5
 - model: auth.group
   fields:
     name: Org admin

@@ -1,6 +1,7 @@
 """Organization and Site models."""
 
 from typing import TYPE_CHECKING
+from uuid import uuid4
 
 from django.core.validators import MinLengthValidator
 from django.db import models
@@ -68,6 +69,12 @@ class SiteManager(QuerySet):
 class Site(models.Model):
     """The site entity represents a physical location that is a part of an organization."""
 
+    id = models.UUIDField(
+        unique=True,
+        editable=False,
+        primary_key=True,
+        default=uuid4,
+    )
     name = models.CharField(
         verbose_name="site alias",
         max_length=200,
