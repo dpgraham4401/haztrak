@@ -27,6 +27,14 @@ def get_org(request: HttpRequest, org_slug: str):
     return get_object_or_404(qs)
 
 
+@router.get("organizations/{org_slug}/sites", response=list[SiteSchema])
+def get_org_sites(request: HttpRequest, org_slug: str):
+    """Get an organization's sites."""
+    org_query = get_objects_for_user(request.user, [], Org.objects.filter_by_slug(org_slug))
+    org_instance = get_object_or_404(org_query)
+    return Site.objects.filter_by_org(org_instance)
+
+
 @router.get("/sites", response=list[SiteSchema])
 def list_sites(request: HttpRequest):
     """Get a list of all sites (temporary)."""
