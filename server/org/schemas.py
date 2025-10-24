@@ -1,18 +1,19 @@
 """schemas for Org and Site."""
 
-import uuid
+from typing import Annotated
+from uuid import UUID
 
-from ninja import Schema
+from ninja import ModelSchema, Schema
 from pydantic import ConfigDict, Field
 from pydantic.alias_generators import to_camel
 
-from rcrasite.schemas.rcrasite import RcraSiteSchema
+from org.models import Site
 
 
 class OrgSchema(Schema):
     """Haztrak Organization schema."""
 
-    id: uuid.UUID
+    id: UUID
     name: str
     slug: str
     is_rcrainfo_integrated: bool = Field(alias="rcrainfoIntegrated")
@@ -24,14 +25,25 @@ class OrgSchema(Schema):
     )
 
 
-class SiteSchema(Schema):
+class SiteSchema(ModelSchema):
     """Haztrak Site schema."""
 
     name: str
-    rcra_site: RcraSiteSchema = Field(alias="rcraSite")
+    # Django Ninja will serialize ForeignKey if we use the '_id' suffix
+    rcra_site_id: Annotated[int, Field(..., alias="rcraSite")]
+    org_id: Annotated[UUID, Field(..., alias="organization")]
 
     model_config = ConfigDict(
         from_attributes=True,
         populate_by_name=True,
         alias_generator=to_camel,
     )
+
+    class Meta:
+        """Metaclass"""
+
+        model = Site
+        exclude = [
+            "rcra_site",
+            "org",
+        ]
