@@ -60,6 +60,10 @@ class SiteManager(QuerySet):
         """Get a list of sites by organization."""
         return self.filter(org=org)
 
+    def filter_by_id(self, idx: int) -> QuerySet:
+        """Get a list of sites by organization."""
+        return self.filter(id=idx)
+
 
 class Site(models.Model):
     """The site entity represents a physical location that is a part of an organization."""

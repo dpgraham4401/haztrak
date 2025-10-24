@@ -45,5 +45,4 @@ class SiteSchema(ModelSchema):
         exclude = [
             "rcra_site",
             "org",
-            "id",
         ]

@@ -41,3 +41,12 @@ def list_sites(request: HttpRequest):
     queryset = Site.objects.all()
     user = request.user
     return get_objects_for_user(user, [], queryset, accept_global_perms=False)
+
+
+@router.get("/sites/{site_id}", response=SiteSchema)
+def get_site(request: HttpRequest, site_id: int):
+    """Get details of a Trak sites by ID."""
+    queryset = Site.objects.filter_by_id(site_id)
+    user = request.user
+    site_query = get_objects_for_user(user, [], queryset, accept_global_perms=False)
+    return get_object_or_404(site_query)
