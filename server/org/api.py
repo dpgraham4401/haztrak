@@ -30,4 +30,6 @@ def get_org(request: HttpRequest, org_slug: str):
 @router.get("/sites", response=list[SiteSchema])
 def list_sites(request: HttpRequest):
     """Get a list of all sites (temporary)."""
-    return Site.objects.all()
+    queryset = Site.objects.all()
+    user = request.user
+    return get_objects_for_user(user, [], queryset, accept_global_perms=False)
