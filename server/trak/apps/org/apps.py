@@ -7,4 +7,4 @@ class OrgConfig(AppConfig):
     """Config for the org app."""
 
     default_auto_field = "django.db.models.BigAutoField"
-    name = "org"
+    name = "trak.apps.org"

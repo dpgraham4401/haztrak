@@ -7,4 +7,4 @@ class ManifestConfig(AppConfig):
     """Manifest app configuration."""
 
     default_auto_field = "django.db.models.BigAutoField"
-    name = "manifest"
+    name = "trak.apps.manifest"

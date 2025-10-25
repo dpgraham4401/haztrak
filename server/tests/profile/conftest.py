@@ -1,6 +1,6 @@
 import pytest
-from conftest import SiteIDProvider
 from faker import Faker
+from tests.conftest import SiteIDProvider
 
 from trak.apps.profile.models import RcrainfoProfile, RcrainfoSiteAccess
 

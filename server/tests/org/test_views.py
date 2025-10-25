@@ -31,7 +31,7 @@ class TestOrgDetailsView:
     def test_404_when_org_id_not_defined(self, org, user):
         request = self.factory.get(reverse("org:details", args=["foo"]))
         force_authenticate(request, user)
-        with patch("org.views.get_org_by_slug") as mock_org:
+        with patch("trak.apps.org.views.get_org_by_slug") as mock_org:
             mock_org.side_effect = Org.DoesNotExist
             response = OrgDetailsView.as_view()(request, org_slug="foo")
             assert response.status_code == HTTPStatus.NOT_FOUND

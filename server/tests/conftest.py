@@ -2,7 +2,6 @@
 
 import datetime
 import json
-import os
 import random
 import string
 from enum import Enum
@@ -44,7 +43,7 @@ class SiteIDProvider(BaseProvider):
 @pytest.fixture
 def haztrak_json():
     """Fixture with JSON data."""
-    json_dir = os.path.dirname(os.path.abspath(__file__)) + "/fixtures/json"  # noqa: PTH120, PTH100
+    json_dir = Path.cwd() / "fixtures" / "json"
 
     def read_file(path: str) -> str:
         file = Path(path)

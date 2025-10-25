@@ -37,12 +37,12 @@ urlpatterns = [
             [
                 # path("auth/registration/", include("dj_rest_auth.registration.urls")),
                 # path("auth/", include("dj_rest_auth.urls")),
-                path("", include("manifest.urls", namespace="manifest")),
-                path("", include("wasteline.urls", namespace="wasteline")),
-                path("", include("rcrasite.urls", namespace="rcrasite")),
-                path("", include("core.urls", namespace="core")),
-                path("", include("org.urls", namespace="org")),
-                path("", include("profile.urls", namespace="profile")),
+                path("", include("trak.apps.manifest.urls", namespace="manifest")),
+                path("", include("trak.apps.wasteline.urls", namespace="wasteline")),
+                path("", include("trak.apps.rcrasite.urls", namespace="rcrasite")),
+                path("", include("trak.apps.core.urls", namespace="core")),
+                path("", include("trak.apps.org.urls", namespace="org")),
+                path("", include("trak.apps.profile.urls", namespace="profile")),
                 path("schema/", SpectacularAPIView.as_view(), name="schema"),
                 path(
                     "schema/swagger-ui",

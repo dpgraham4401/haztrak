@@ -38,7 +38,7 @@ class TestTaskStatusView:
         task_id = "123"
         request = factory.get(reverse("core:task:status", args=[task_id]))
         force_authenticate(request, user)
-        with mock.patch("core.views.get_task_status") as mock_task:
+        with mock.patch("trak.apps.core.views.get_task_status") as mock_task:
             mock_task.return_value = {
                 "status": "PENDING",
                 "name": "task_name",

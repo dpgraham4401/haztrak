@@ -138,7 +138,7 @@ extend-immutable-calls = ["ninja.Query", "ninja.Depends", "ninja.File"]
 classmethod-decorators = ["pydantic.validator", "pydantic.root_validator"]
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "haztrak.settings.test"
+DJANGO_SETTINGS_MODULE = "trak.main.settings.test"
 addopts = [
     "--strict-config",
     "--strict-markers",
@@ -187,5 +187,5 @@ warn_unreachable = true
 warn_no_return = true
 
 [tool.django-stubs]
-django_settings_module = ".haztrak.settings.test"
+django_settings_module = ".trak.main.settings.test"
 strict_settings = false

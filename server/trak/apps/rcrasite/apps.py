@@ -7,4 +7,4 @@ class SitesConfig(AppConfig):
     """App configuration for the rcrasite app."""
 
     default_auto_field = "django.db.models.BigAutoField"
-    name = "rcrasite"
+    name = "trak.apps.rcrasite"

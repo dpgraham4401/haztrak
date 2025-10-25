@@ -117,7 +117,7 @@ class TestHandlerSearchView:
 
     def test_valid_search_returns_200(self, user_factory):
         """Test."""
-        with patch("rcrasite.views.RcraSiteService") as mock_rcra_site_service:
+        with patch("trak.apps.rcrasite.views.RcraSiteService") as mock_rcra_site_service:
             mock_service = mock_rcra_site_service.return_value
             mock_service.search_rcrainfo_handlers.return_value = {"sites": []}
             user = user_factory()

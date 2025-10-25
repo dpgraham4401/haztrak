@@ -51,7 +51,7 @@ class TestSignManifestVIew:
 
     @pytest.fixture(autouse=True)
     def _patch_task(self, mocker):
-        mock_task = mocker.patch("manifest.tasks.sign_manifest_task.delay")
+        mock_task = mocker.patch("trak.apps.manifest.tasks.sign_manifest_task.delay")
         self.mock_task_id = "mock_task_id"
         mock_task.return_value = AsyncResult(self.mock_task_id)
 
@@ -91,7 +91,7 @@ class TestMtnListView:
         return user_factory()
 
     def test_returns_empty_list_if_no_manifests(self, factory, user):
-        with patch("manifest.views.get_manifests") as mock_get_manifests:
+        with patch("trak.apps.manifest.views.get_manifests") as mock_get_manifests:
             mock_get_manifests.return_value = []
             request = factory.get(reverse("manifest:mtn:list"))
             force_authenticate(request, user)
@@ -99,7 +99,7 @@ class TestMtnListView:
             assert isinstance(response.data, list)
 
     def test_403_if_not_authorized(self, factory, user):
-        with patch("manifest.views.get_manifests") as mock_get_manifests:
+        with patch("trak.apps.manifest.views.get_manifests") as mock_get_manifests:
             mock_get_manifests.return_value = []
             request = factory.get(reverse("manifest:mtn:list"))
             response = MtnListView.as_view()(request)

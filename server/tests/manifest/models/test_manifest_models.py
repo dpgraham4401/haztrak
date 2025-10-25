@@ -14,7 +14,7 @@ class TestManifestModel:
     def test_draft_mtn_follow_rcrainfo_pattern_with_dft_suffix(self, mocker):
         mock = MagicMock()
         mock.count.return_value = 5
-        with patch("manifest.models.Manifest.objects.all", return_value=mock):
+        with patch("trak.apps.manifest.models.Manifest.objects.all", return_value=mock):
             result = draft_mtn()
             assert isinstance(result, str)
             assert re.match(r"\d{9}DFT", result)

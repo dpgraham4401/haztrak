@@ -22,8 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 AUTH_USER_MODEL = "core.TrakUser"
 
-WSGI_APPLICATION = "haztrak.wsgi.app"
-ASGI_APPLICATION = "haztrak.asgi.app"
+WSGI_APPLICATION = "trak.main.wsgi.app"
+ASGI_APPLICATION = "trak.main.asgi.app"
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -51,12 +51,12 @@ INSTALLED_APPS = [
     "django_celery_results",
     "django_celery_beat",
     "drf_spectacular",
-    "rcrasite",
-    "core",
-    "manifest",
-    "wasteline",
-    "org",
-    "profile",
+    "trak.apps.rcrasite",
+    "trak.apps.core",
+    "trak.apps.manifest",
+    "trak.apps.wasteline",
+    "trak.apps.org",
+    "trak.apps.profile",
 ]
 
 MIDDLEWARE = [
@@ -79,7 +79,7 @@ SESSION_COOKIE_AGE = 60 * 30  # 30 minutes
 CORS_ALLOW_CREDENTIALS = True
 
 # URLs
-ROOT_URLCONF = "haztrak.urls"
+ROOT_URLCONF = "trak.main.urls"
 APPEND_SLASH = True
 
 TEMPLATES = [
@@ -146,7 +146,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
     ],
-    "EXCEPTION_HANDLER": "core.utils.exception_handler",
+    "EXCEPTION_HANDLER": "trak.apps.core.utils.exception_handler",
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
