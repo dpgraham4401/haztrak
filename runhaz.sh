@@ -82,7 +82,7 @@ load_django_fixtures() {
 
 generate_api_schema() {
     print_style "Generating Open API schema...\n" "success";
-    exec_cmd="$base_py_cmd spectacular --settings trak.main.settings --file $base_dir/docs/api/postman/schemas/openapi-schema.yaml"
+    exec_cmd="$base_py_cmd spectacular --settings haztrak.settings --file $base_dir/docs/api/postman/schemas/openapi-schema.yaml"
     eval "$exec_cmd"
     exit
 }
@@ -92,7 +92,7 @@ graph_models() {
     print_style "Generating Entity Relationship Diagram...\n" "success";
     exec_cmd="$base_py_cmd graph_models rcrasite handler core org wasteline manifest site profile\
     -g \
-    --settings trak.main.settings \
+    --settings haztrak.settings \
     --rankdir=RL \
     --arrow-shape=normal \
     --exclude-models=*BaseModel \

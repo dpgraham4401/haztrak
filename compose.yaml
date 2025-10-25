@@ -6,9 +6,15 @@ services:
     build:
       context: ./server
     volumes:
-      - ./server/trak:/app/trak
+      - ./server/core:/app/core
+      - ./server/haztrak:/app/haztrak
+      - ./server/manifest:/app/manifest
+      - ./server/org:/app/org
+      - ./server/profile:/app/profile
+      - ./server/rcrasite:/app/rcrasite
+      - ./server/wasteline:/app/wasteline
     environment:
-      DJANGO_SETTINGS_MODULE: "trak.main.settings.dev"
+      DJANGO_SETTINGS_MODULE: "haztrak.settings.dev"
       CELERY_BROKER_URL: "redis://redis:6379"
       HT_HOST: "http://localhost"
       HT_SECRET_KEY: ${HT_SECRET_KEY}
@@ -49,9 +55,15 @@ services:
     build:
       context: ./server
     volumes:
-      - ./server/trak:/app/trak
+      - ./server/core:/app/core
+      - ./server/haztrak:/app/haztrak
+      - ./server/manifest:/app/manifest
+      - ./server/org:/app/org
+      - ./server/profile:/app/profile
+      - ./server/rcrasite:/app/rcrasite
+      - ./server/wasteline:/app/wasteline
     environment:
-      DJANGO_SETTINGS_MODULE: "trak.main.settings.dev"
+      DJANGO_SETTINGS_MODULE: "haztrak.settings.dev"
       CELERY_BROKER_URL: "redis://redis:6379"
       CELERY_LOG_LEVEL: ${CELERY_LOG_LEVEL}
       HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}
@@ -70,9 +82,15 @@ services:
     build:
       context: ./server
     volumes:
-      - ./server/trak:/app/trak
+      - ./server/core:/app/core
+      - ./server/haztrak:/app/haztrak
+      - ./server/manifest:/app/manifest
+      - ./server/org:/app/org
+      - ./server/profile:/app/profile
+      - ./server/rcrasite:/app/rcrasite
+      - ./server/wasteline:/app/wasteline
     environment:
-      DJANGO_SETTINGS_MODULE: "trak.main.settings.dev"
+      DJANGO_SETTINGS_MODULE: "haztrak.settings.dev"
       CELERY_BROKER_URL: "redis://redis:6379"
       CELERY_LOG_LEVEL: ${CELERY_LOG_LEVEL}
       HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}

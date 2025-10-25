@@ -34,7 +34,7 @@ repos:
   #    hooks:
   #       - id: pre-commit-django-migrations
   #         name: Check django migrations
-  #         entry: env DJANGO_SETTINGS_MODULE=trak.main.settings.dev python server/manage.py makemigrations --check
+  #         entry: env DJANGO_SETTINGS_MODULE=haztrak.settings.dev python server/manage.py makemigrations --check
   #         language: system
   #         types:
   #           - python
