@@ -6,6 +6,7 @@ import os
 import random
 import string
 from enum import Enum
+from pathlib import Path
 from typing import Any, Literal, Required, TypedDict
 
 import pytest
@@ -45,9 +46,9 @@ def haztrak_json():
     """Fixture with JSON data."""
     json_dir = os.path.dirname(os.path.abspath(__file__)) + "/fixtures/json"  # noqa: PTH120, PTH100
 
-    def read_file(path: str) -> dict:
-        with open(path) as f:  # noqa: PTH123
-            return json.load(f)
+    def read_file(path: str) -> str:
+        file = Path(path)
+        return json.loads(file.read_bytes())
 
     class Json(Enum):
         CONTACT = read_file(f"{json_dir}/contact/good_contact.json")

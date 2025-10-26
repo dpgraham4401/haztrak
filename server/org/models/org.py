@@ -36,6 +36,26 @@ class OrgManager(models.Manager):
         """Get an organization by slug."""
         return self.model.objects.get(slug=slug)
 
+    def filter_by_slug(self, slug: str) -> QuerySet["Org"]:
+        """Return a queryset filtering organization by slug.
+
+        Useful for cases where a queryset object is needed instead of an instance.
+
+        See Also:
+            get_by_slug - which returns a single org or raises DoesNotExist
+        """
+        return self.model.objects.filter(slug=slug)
+
+    def filter_by_id(self, id: str) -> QuerySet["Org"]:
+        """Return a queryset filtering organization by id.
+
+        Useful for cases where a queryset object is needed instead of an instance.
+
+        See Also:
+            filter_by_slug - which returns a single org or raises DoesNotExist
+        """
+        return self.model.objects.filter(id=id)
+
 
 class Org(models.Model):
     """Haztrak Organization."""

@@ -1,6 +1,7 @@
 import pytest
 
 from profile.models import RcrainfoSiteAccess
+from profile.schemas.rcrainfo_profile import RcrainfoSiteAccessSchema
 from profile.serializers import (
     ProfileSerializer,
     RcrainfoSitePermissionsSerializer,
@@ -66,3 +67,16 @@ class TestRcrainfoSitePermissionSerializer:
             profile=rcrainfo_profile_factory(),
         )
         assert isinstance(rcrainfo_site_access, RcrainfoSiteAccess)
+
+
+class TestDeserializeRcrainfoSiteAccess:
+    """Test suite for deserializing RCRAInfo site access data."""
+
+    @pytest.fixture
+    def epa_perm_data(self, haztrak_json) -> dict:
+        return haztrak_json.EPA_PERMISSION.value
+
+    def test_deserializes_epa_permissions(self, epa_perm_data):
+        """Test deserializing RCRAInfo site access JSON data."""
+        data = RcrainfoSiteAccessSchema.model_validate(epa_perm_data)
+        assert isinstance(data, RcrainfoSiteAccessSchema)

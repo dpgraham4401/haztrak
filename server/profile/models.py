@@ -18,6 +18,14 @@ class ProfileManager(models.QuerySet):
         """Get a user Haztrak Profile by the user."""
         return self.get(user=user)
 
+    def get_profile_by_user_id(self, user_id: str) -> "Profile":
+        """Get a user Haztrak Profile by the user ID.
+
+        Raises:
+            Profile.DoesNotExist: If no profile exists for the given user ID.
+        """
+        return self.select_related("user").get(user__id=user_id)
+
 
 class Profile(models.Model):
     """User information outside the scope of the User model.
@@ -68,6 +76,16 @@ class RcrainfoProfileManager(models.Manager):
     def get_by_trak_username(self, username: str) -> "RcrainfoProfile":
         """Get a RcrainfoProfile by the user's Haztrak username."""
         return self.get(haztrak_profile__user__username=username)
+
+    def get_by_trak_user_id(self, user_id: str) -> "RcrainfoProfile":
+        """Get a RcrainfoProfile by the user's Haztrak user ID.
+
+        automatically joins the user's trak profile and user models to avoid N+1 queries.
+
+        Raises:
+            RcrainfoProfile.DoesNotExist: If no RcrainfoProfile exists for the given user ID.
+        """
+        return self.select_related("haztrak_profile__user").get(haztrak_profile__user__id=user_id)
 
 
 class RcrainfoProfile(models.Model):

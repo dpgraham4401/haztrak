@@ -13,7 +13,7 @@ from rcrasite.models import RcraSite
 from rcrasite.services import RcraSiteService
 
 if TYPE_CHECKING:
-    from django.contrib.auth.models import User
+    from django.contrib.auth.models import AbstractBaseUser, User
 
 
 @transaction.atomic
@@ -27,7 +27,7 @@ def get_or_create_profile(*, username: str) -> tuple[Profile, bool]:
     return profile, created
 
 
-def get_user_profile(*, user: "User") -> Profile:
+def get_user_profile(*, user: "AbstractBaseUser") -> Profile:
     """Retrieve a user's Profile."""
     return Profile.objects.get_profile_by_user(user=user)
 
