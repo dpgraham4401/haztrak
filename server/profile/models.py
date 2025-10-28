@@ -1,20 +1,17 @@
 """Profile models for the Haztrak application."""
 
 import uuid
-from typing import TYPE_CHECKING
 
 from django.conf import settings
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.exceptions import ValidationError
 from django.db import models
-
-if TYPE_CHECKING:
-    from django.contrib.auth.models import User
 
 
 class ProfileManager(models.QuerySet):
     """Query manager for the TrakProfile model."""
 
-    def get_profile_by_user(self, user: "User") -> "Profile":
+    def get_profile_by_user(self, user: "AbstractBaseUser") -> "Profile":
         """Get a user Haztrak Profile by the user."""
         return self.get(user=user)
 
@@ -38,7 +35,7 @@ class Profile(models.Model):
         editable=False,
         default=uuid.uuid4,
     )
-    user: "User" = models.OneToOneField(
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="haztrak_profile",
@@ -67,7 +64,7 @@ class Profile(models.Model):
 
     def __str__(self):
         """Human-readable representation."""
-        return f"{self.user.username}"
+        return f"{self.user.get_username()}"
 
 
 class RcrainfoProfileManager(models.Manager):
@@ -131,7 +128,7 @@ class RcrainfoProfile(models.Model):
 
     def __str__(self):
         """Human-readable representation."""
-        return f"{self.haztrak_profile.user.username}"
+        return f"{self.haztrak_profile.user.get_username()}"
 
     @property
     def has_rcrainfo_api_id_key(self) -> bool:

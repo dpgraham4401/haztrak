@@ -24,7 +24,7 @@ if TYPE_CHECKING:
     from celery.result import AsyncResult as CeleryTask
 
 
-class ProfileViewSet(GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+class ProfileViewSet(GenericViewSet[Profile], RetrieveModelMixin, UpdateModelMixin):
     """ViewSet for the Profile model."""
 
     lookup_field = "user__id"
@@ -34,7 +34,7 @@ class ProfileViewSet(GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
     serializer_class = ProfileSerializer
 
 
-class ProfileDetailsView(RetrieveAPIView):
+class ProfileDetailsView(RetrieveAPIView[RcrainfoProfile]):
     """Displays a user's HaztrakProfile."""
 
     queryset = Profile.objects.all()
@@ -48,7 +48,7 @@ class ProfileDetailsView(RetrieveAPIView):
         return get_user_profile(user=self.request.user)
 
 
-class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView):
+class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView[RcrainfoProfile]):
     """
     Responsible for Create/Update operations related to the user RcrainfoProfile.
 

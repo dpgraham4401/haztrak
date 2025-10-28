@@ -18,7 +18,7 @@ class WasteLineManager(models.Manager):
         try:
             line_number = waste_data.pop("line_number", None)
             manifest = waste_data.pop("manifest", None)
-            wl, created = WasteLine.objects.update_or_create(
+            wl, _created = WasteLine.objects.update_or_create(
                 manifest=manifest,
                 line_number=line_number,
                 defaults=waste_data,
@@ -292,7 +292,7 @@ class DotLookupType(models.TextChoices):
 class DotLookupBaseManager(models.Manager):
     """Base Model manager for DOT lookup options."""
 
-    def filter_by_value(self, value: str) -> models.QuerySet:
+    def filter_by_value(self, value: str | None) -> models.QuerySet:
         """Filter by DOT Lookup Value."""
         return self.filter(value__icontains=value)
 
@@ -316,7 +316,7 @@ class PackingGroups(DotLookupBaseManager):
 class ShippingNames(DotLookupBaseManager):
     """DOT Option model manager for dealing with DOT ID numbers."""
 
-    def filter_by_value(self, value: str) -> models.QuerySet:
+    def filter_by_value(self, value: str | None) -> models.QuerySet:
         """Filter by value."""
         return self.filter(value__icontains=value)
 

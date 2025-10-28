@@ -25,7 +25,7 @@ class RcraSiteManager(models.Manager):
     """RcraSite Model database querying interface."""
 
     def __init__(self):
-        self.handler_data = None
+        self.handler_data: dict | None = None
         super().__init__()
 
     def get_by_epa_id(self, epa_id: str) -> "RcraSite":

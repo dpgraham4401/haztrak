@@ -205,7 +205,7 @@ class Address(models.Model):
 class ContactManager(models.Manager):
     """Contact Model database querying interface."""
 
-    def save(self, **contact_data) -> models.QuerySet:
+    def save(self, **contact_data) -> "Contact":
         """
         Create Contact instance.
 
@@ -218,7 +218,8 @@ class ContactManager(models.Manager):
             else:
                 phone = RcraPhone.objects.create(**phone_data)
             return self.create(**contact_data, phone=phone)
-        return super().save(**contact_data)
+        # ToDo(David): save is a django instance method, not queryset. I believe these needs fixing
+        return super().save(**contact_data)  # type: ignore
 
 
 class Contact(models.Model):

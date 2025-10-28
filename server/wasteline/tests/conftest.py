@@ -54,7 +54,7 @@ def waste_line_factory(db):
     """Abstract factory for Haztrak DotLookup model."""
 
     def create_waste_line(
-        manifest: Manifest = None,
+        manifest: Manifest | None = None,
         dot_hazardous: bool | None = True,
         quantity: dict | None = None,
         line_number: int | None = 1,

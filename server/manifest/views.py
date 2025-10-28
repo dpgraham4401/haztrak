@@ -4,11 +4,13 @@ import logging
 from http import HTTPStatus
 
 from drf_spectacular.utils import OpenApiResponse, extend_schema, inline_serializer
-from rest_framework import mixins, serializers, viewsets
+from rest_framework import serializers
 from rest_framework.generics import GenericAPIView, ListAPIView
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 
 from manifest.models import Manifest
 from manifest.serializers import ManifestSerializer, MtnSerializer, QuickerSignSerializer
@@ -25,7 +27,7 @@ from org.services import sync_site_manifest_with_rcrainfo
 logger = logging.getLogger(__name__)
 
 
-class ManifestViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.CreateModelMixin):
+class ManifestViewSet(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
     """Local CRUD operations for HazTrak manifests."""
 
     lookup_field = "mtn"
@@ -72,7 +74,7 @@ class ManifestViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins
 
 
 @extend_schema(request=ManifestSerializer)
-class ElectronicManifestSaveView(GenericAPIView):
+class ElectronicManifestSaveView(GenericAPIView[Manifest]):
     """Save a manifest to RCRAInfo."""
 
     queryset = None
