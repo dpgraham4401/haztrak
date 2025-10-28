@@ -72,10 +72,10 @@ dev = [
 ]
 
 [project.urls]
-issues = "https://github.com/USEPA/haztrak/issues"
-documentation = "https://usepa.github.io/haztrak/"
-homepage = "https://github.com/USEPA/haztrak"
-repository = "https://github.com/USEPA/haztrak"
+issues = "https://github.com/dpgraham4401/haztrak/issues"
+documentation = "https://dpgraham4401.github.io/haztrak/"
+homepage = "https://github.com/dpgraham4401/haztrak"
+repository = "https://github.com/dpgraham4401/haztrak"
 
 [tool.ruff]
 line-length = 99
