@@ -1,11 +1,12 @@
 """Profile models for the Haztrak application."""
 
-import uuid
+from uuid import UUID, uuid4
 
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Manager
 
 
 class ProfileManager(models.QuerySet):
@@ -33,7 +34,7 @@ class Profile(models.Model):
     id = models.UUIDField(
         primary_key=True,
         editable=False,
-        default=uuid.uuid4,
+        default=uuid4,
     )
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -67,14 +68,14 @@ class Profile(models.Model):
         return f"{self.user.get_username()}"
 
 
-class RcrainfoProfileManager(models.Manager):
+class RcrainfoProfileManager(Manager["RcrainfoProfile"]):
     """Query manager for the RcrainfoProfile model."""
 
     def get_by_trak_username(self, username: str) -> "RcrainfoProfile":
         """Get a RcrainfoProfile by the user's Haztrak username."""
         return self.get(haztrak_profile__user__username=username)
 
-    def get_by_trak_user_id(self, user_id: str) -> "RcrainfoProfile":
+    def get_by_trak_user_id(self, user_id: str | UUID) -> "RcrainfoProfile":
         """Get a RcrainfoProfile by the user's Haztrak user ID.
 
         automatically joins the user's trak profile and user models to avoid N+1 queries.
@@ -95,7 +96,7 @@ class RcrainfoProfile(models.Model):
     id = models.UUIDField(
         primary_key=True,
         editable=False,
-        default=uuid.uuid4,
+        default=uuid4,
     )
     rcra_api_key = models.CharField(
         max_length=128,

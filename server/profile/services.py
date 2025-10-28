@@ -29,7 +29,7 @@ def get_or_create_profile(*, username: str) -> tuple[Profile, bool]:
 
 def get_user_profile(*, user: "AbstractBaseUser") -> Profile:
     """Retrieve a user's Profile."""
-    return Profile.objects.get_profile_by_user(user=user)
+    return Profile.objects.get_profile_by_user(user=user)  # type: ignore[attr-defined]
 
 
 def get_user_rcrainfo_profile(*, user: "User") -> RcrainfoProfile:
@@ -84,7 +84,8 @@ class RcraProfileService:
             permissions = self._parse_rcra_response(rcra_response=profile_response.json())
             self._save_rcrainfo_profile_permissions(permissions)
         except (RcrainfoProfile.DoesNotExist, RcraSite.DoesNotExist) as exc:
-            raise RcraProfileServiceError(exc) from exc
+            msg = "RcraProfile or RcraSite does not exist."
+            raise RcraProfileServiceError(msg) from exc
 
     def _save_rcrainfo_profile_permissions(self, permissions: list[dict]) -> None:
         try:

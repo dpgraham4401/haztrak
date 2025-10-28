@@ -42,7 +42,7 @@ class ManifestViewSet(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
         manifest_serializer = self.serializer_class(data=request.data)
         manifest_serializer.is_valid(raise_exception=True)
         manifest = create_manifest(
-            username=request.user.username,
+            username=request.user.get_username(),
             data=manifest_serializer.validated_data,
         )
         data = ManifestSerializer(manifest).data
@@ -85,7 +85,7 @@ class ElectronicManifestSaveView(GenericAPIView[Manifest]):
         """Electronic Manifest Save View."""
         manifest_serializer = self.serializer_class(data=request.data)
         manifest_serializer.is_valid(raise_exception=True)
-        data = save_emanifest(username=request.user.username, data=manifest_serializer.data)
+        data = save_emanifest(username=request.user.get_username(), data=manifest_serializer.data)
         return Response(data=data, status=HTTPStatus.CREATED)
 
 
@@ -119,7 +119,7 @@ class ElectronicManifestSignView(GenericAPIView):
         quicker_serializer = self.serializer_class(data=request.data)
         quicker_serializer.is_valid(raise_exception=True)
         signature = quicker_serializer.save()
-        emanifest = EManifest(username=request.user.username)
+        emanifest = EManifest(username=request.user.get_username())
         data: TaskResponse = emanifest.sign(signature=signature)
         return Response(data=data, status=HTTPStatus.OK)
 
@@ -152,7 +152,7 @@ class SiteManifestSyncView(APIView):
         serializer = self.SyncSiteManifestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = sync_site_manifest_with_rcrainfo(
-            username=request.user.username,
+            username=request.user.get_username(),
             **serializer.validated_data,
         )
         return Response(data=data, status=HTTPStatus.OK)

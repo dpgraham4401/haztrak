@@ -58,7 +58,6 @@ class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView[RcrainfoProfile]):
 
     queryset = RcrainfoProfile.objects.all()
     serializer_class = RcrainfoProfileSerializer
-    response = Response
     lookup_url_kwarg = "username"
 
     def get_object(self):
@@ -69,16 +68,13 @@ class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView[RcrainfoProfile]):
 class RcrainfoProfileSyncView(APIView):
     """Launches a task to sync the logged-in user's RCRAInfo profile."""
 
-    queryset = None
-    response = Response
-
     def post(self, request: Request, **kwargs) -> Response:
         """Create a job to sync the user's RCRAInfo profile."""
         try:
             task: CeleryTask = sync_user_rcrainfo_sites_task.delay(str(self.request.user))
-            return self.response({"taskId": task.id})
+            return Response({"taskId": task.id})
         except CeleryError as exc:
-            return self.response(
+            return Response(
                 data={"error": str(exc)},
                 status=HTTPStatus.INTERNAL_SERVER_ERROR,
             )

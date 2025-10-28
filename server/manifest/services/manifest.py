@@ -32,7 +32,7 @@ def get_manifests(
     site_type: Literal["Generator", "Tsdf", "Transporter"] | None = None,
 ) -> QuerySet[Manifest]:
     """Get a list of manifest tracking numbers and select details for a users site."""
-    sites: QuerySet[Site] = Site.objects.filter_by_username(username).values("rcra_site__epa_id")
+    sites = Site.objects.filter_by_username(username).values("rcra_site__epa_id")
     if epa_id:
         sites = sites.filter(rcra_site__epa_id__iexact=epa_id)
     if site_type:

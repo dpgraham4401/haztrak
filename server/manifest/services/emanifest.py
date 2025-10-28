@@ -1,6 +1,7 @@
 """Service module for interacting with the e-Manifest system."""
 
 import logging
+from collections.abc import Mapping
 from datetime import datetime
 from typing import TYPE_CHECKING, Literal, NotRequired, TypedDict
 
@@ -12,6 +13,7 @@ from manifest.models import Manifest, QuickerSign
 from manifest.serializers import ManifestSerializer, QuickerSignSerializer
 from manifest.services.emanifest_search import EmanifestSearch
 from manifest.tasks import pull_manifest_by_mtn_task, sign_manifest_task
+from rcrasite.models import RcraSiteType
 
 if TYPE_CHECKING:
     from django.db.models import QuerySet
@@ -57,17 +59,10 @@ class EManifestError(Exception):
         super().__init__(*args)
 
 
-class PullManifestsResult(TypedDict):
-    """Type definition for the results returned from pulling manifests from RCRAInfo."""
-
-    success: list[str]
-    error: list[str]
-
-
 class EManifest:
     """IO interface with the e-Manifest system."""
 
-    def __init__(self, *, username: str | None, rcrainfo: RcraClient | None = None):
+    def __init__(self, *, username: str | None = None, rcrainfo: RcraClient | None = None):
         self.username = username
         self.rcrainfo = rcrainfo or get_rcra_client(username=username)
 
@@ -76,9 +71,9 @@ class EManifest:
         """Check if e-Manifest is available."""
         return self.rcrainfo.has_rcrainfo_credentials
 
-    def pull(self, tracking_numbers: list[str]) -> PullManifestsResult:
+    def pull(self, tracking_numbers: list[str]) -> dict[str, list]:
         """Retrieve manifests from e-Manifest and save to database."""
-        results: PullManifestsResult = {"success": [], "error": []}
+        results: dict[str, list] = {"success": [], "error": []}
         logger.info(f"pulling manifests {tracking_numbers}")
         for mtn in tracking_numbers:
             try:
@@ -102,9 +97,9 @@ class EManifest:
         task = sign_manifest_task.delay(username=self.username, **signature_serializer.data)
         return {"taskId": task.id}
 
-    def submit_quick_signature(self, signature: dict) -> PullManifestsResult:
+    def submit_quick_signature(self, signature: Mapping) -> dict[str, list]:
         """Submit a quicker signature to RCRAInfo."""
-        results: PullManifestsResult = {"success": [], "error": []}
+        results: dict[str, list] = {"success": [], "error": []}
         response = self.rcrainfo.sign_manifest(**signature)
         if response.ok:
             for manifest in response.json()["manifestReports"]:
@@ -141,7 +136,7 @@ class EManifest:
         *,
         mtn: list[str],
         site_id: str,
-        site_type: Literal["Generator", "Tsdf", "Transporter"],
+        site_type: RcraSiteType | Literal["all"],
     ) -> list[str]:
         handler_filter = Manifest.objects.filter_by_epa_id_and_site_type([site_id], site_type)
         existing_mtn = Manifest.objects.filter_existing_mtn(mtn=mtn)
@@ -176,7 +171,7 @@ class EManifest:
         return manifest
 
 
-def get_updated_mtn(site_id: str, last_sync_date: datetime, rcra_client) -> list[str]:
+def get_updated_mtn(site_id: str, last_sync_date: datetime | None, rcra_client) -> list[str]:
     """Use the last sync date for a site to get a list of updated MTNs from RCRAInfo."""
     logger.info(f"retrieving updated MTN for site {site_id}")
     response = (
@@ -196,9 +191,9 @@ def get_updated_mtn(site_id: str, last_sync_date: datetime, rcra_client) -> list
 def sync_manifests(
     *,
     site_id: str,
-    last_sync_date: datetime,
+    last_sync_date: datetime | None,
     rcra_client: RcraClient,
-) -> PullManifestsResult:
+) -> dict:
     """Pull manifests and update the last sync date for a site."""
     updated_mtn = get_updated_mtn(
         site_id=site_id,
@@ -207,5 +202,5 @@ def sync_manifests(
     )
     updated_mtn = updated_mtn[:15]  # temporary limit to 15
     emanifest = EManifest(rcrainfo=rcra_client)
-    results: PullManifestsResult = emanifest.pull(tracking_numbers=updated_mtn)
+    results = emanifest.pull(tracking_numbers=updated_mtn)
     return results

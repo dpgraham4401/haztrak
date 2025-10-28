@@ -5,6 +5,7 @@ from typing import Optional
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
 
 from rcrasite.models import Address, Contact, RcraPhone
@@ -21,10 +22,10 @@ class RcraSiteType(models.TextChoices):
     BROKER = "Broker"
 
 
-class RcraSiteManager(models.Manager):
+class RcraSiteManager(Manager["RcraSite"]):
     """RcraSite Model database querying interface."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.handler_data: dict | None = None
         super().__init__()
 
@@ -53,7 +54,7 @@ class RcraSiteManager(models.Manager):
             )
         except KeyError as exc:
             msg = f"Missing required data for {self.model.__class__.__name__}: {exc}"
-            logger.warning(msg)
+            logger.exception(msg, exc_info=exc)
         else:
             return rcra_site
 

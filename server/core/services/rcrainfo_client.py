@@ -56,13 +56,13 @@ class RcraClient(RcrainfoClient):
     def retrieve_id(self, api_id=None) -> str:
         """Override RcrainfoClient method to retrieve API ID for authentication."""
         if self.has_rcrainfo_credentials:
-            return super().retrieve_id(self.api_id or self.profile.rcra_api_id)
+            return super().retrieve_id(self.api_id or self.profile.rcra_api_id)  # type: ignore[union-attr]
         return super().retrieve_key()
 
     def retrieve_key(self, api_key=None) -> str:
         """Override RcrainfoClient method to retrieve API key to authentication."""
         if self.has_rcrainfo_credentials:
-            return super().retrieve_key(self.api_key or self.profile.rcra_api_key)
+            return super().retrieve_key(self.api_key or self.profile.rcra_api_key)  # type: ignore[union-attr]
         return super().retrieve_key()
 
     def get_user_rcrainfo_profile(
@@ -118,26 +118,32 @@ def get_rcra_client(
     **kwargs,
 ) -> RcraClient:
     """RcraClient Constructor for interacting with RCRAInfo web services."""
-    if api_id is not None and api_key is not None:
+    if not username and not (api_id and api_key):
+        raise ValueError(
+            "You must provide either a username or "
+            "both api_id and api_key to instantiate RcraClient"
+        )
+    if api_id and api_key:
         return RcraClient(
             api_id=api_id,
             api_key=api_key,
             rcrainfo_env=rcrainfo_env,
             **kwargs,
         )
-    try:
-        org: Org = Org.objects.get_by_username(username)
-        if org.is_rcrainfo_integrated:
-            api_id, api_key = org.rcrainfo_api_id_key
-        return RcraClient(
-            api_id=api_id,
-            api_key=api_key,
-            rcrainfo_env=rcrainfo_env,
-            **kwargs,
-        )
-    except Org.DoesNotExist as exc:
-        msg = (
-            "If not using an organization with RCRAInfo credentials, "
-            "you must provide api_id and api_key"
-        )
-        raise ValueError(msg) from exc
+    elif username:
+        try:
+            org: Org = Org.objects.get_by_username(username)
+            if org.is_rcrainfo_integrated:
+                api_id, api_key = org.rcrainfo_api_id_key  # type: ignore[misc]
+            return RcraClient(
+                api_id=api_id,
+                api_key=api_key,
+                rcrainfo_env=rcrainfo_env,
+                **kwargs,
+            )
+        except Org.DoesNotExist as exc:
+            msg = (
+                "If not using an organization with RCRAInfo credentials, "
+                "you must provide api_id and api_key"
+            )
+            raise ValueError(msg) from exc

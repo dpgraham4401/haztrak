@@ -159,6 +159,7 @@ exclude = [
     '.*\/tests\/.*\.py',
     '.*\/admin\.py',
     'conftest\.py',
+    '.*/\tests\/.*\.py',
     '.*\/serializers\/.*\.py',
 ]
 enable_error_code = [

@@ -7,7 +7,7 @@ from typing import Literal, Optional
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Q, QuerySet
+from django.db.models import Manager, Model, Q, QuerySet
 from django.utils.translation import gettext_lazy as _
 
 from rcrasite.models import RcraSiteType, RcraStates
@@ -95,7 +95,7 @@ class HandlerFilterFactory:
         raise ValueError(msg)
 
 
-class ManifestManager(models.Manager):
+class ManifestManager(Manager["Manifest"]):
     """Manifest repository manager."""
 
     def filter_existing_mtn(self, mtn: list[str]) -> QuerySet:
@@ -104,7 +104,7 @@ class ManifestManager(models.Manager):
 
     def filter_by_epa_id_and_site_type(
         self,
-        epa_ids: [str],
+        epa_ids: list[str],
         site_type: RcraSiteType | Literal["all"] = "all",
     ) -> QuerySet:
         """Filter manifests by site_id and site_type."""
@@ -114,8 +114,8 @@ class ManifestManager(models.Manager):
     @classmethod
     def save(cls, instance: Optional["Manifest"], **manifest_data: dict) -> "Manifest":
         """Update or Create a manifest with its related models instances."""
-        waste_data = manifest_data.pop("wastes", [])
-        transporter_data = manifest_data.pop("transporters", [])
+        waste_data: list[dict] = manifest_data.pop("wastes", [])
+        transporter_data: list[dict] = manifest_data.pop("transporters", [])
         if instance:
             manifest = cls.update_manifest(instance, **manifest_data)
         else:
@@ -166,7 +166,7 @@ def manifest_factory(mtn=None, generator=None, tsdf=None, **kwargs):
     return Manifest(mtn=mtn, generator=generator, tsdf=tsdf, **kwargs)
 
 
-class Manifest(models.Model):
+class Manifest(Model):
     """Model definition the RCRA Uniform Hazardous Waste Manifest."""
 
     class LockReason(models.TextChoices):
@@ -382,10 +382,10 @@ class Manifest(models.Model):
     @property
     def is_draft(self) -> bool:
         """Check if the manifest is a draft."""
-        return bool(self.mtn is None or self.mtn.endswith("DFT"))
+        return bool(self.mtn.endswith("DFT"))
 
 
-class AdditionalInfo(models.Model):
+class AdditionalInfo(Model):
     """Entity containing Additional Information.
 
     Relevant to Both Manifest and individual WastesLines.
@@ -440,7 +440,7 @@ class AdditionalInfo(models.Model):
         return f"{self.original_mtn or 'Unknown'}"
 
 
-class PortOfEntry(models.Model):
+class PortOfEntry(Model):
     """location of where hazardous waste is imported or exported."""
 
     state = models.CharField(

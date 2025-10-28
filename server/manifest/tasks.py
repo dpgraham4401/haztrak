@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task(name="pull manifest", bind=True, acks_late=True)
-def pull_manifest_by_mtn_task(self: Task, *, mtn: list[str], username: str) -> dict:
+def pull_manifest_by_mtn_task(self: Task, *, mtn: list[str], username: str | None) -> dict:
     """This task initiates a call to the EManifest to pull a manifest by MTN."""
     from core.services import TaskService
     from manifest.services import EManifest
@@ -35,7 +35,7 @@ def pull_manifest_by_mtn_task(self: Task, *, mtn: list[str], username: str) -> d
 
 
 @shared_task(name="sign manifests", bind=True, acks_late=True)
-def sign_manifest_task(self: Task, *, username: str, **signature_data: dict) -> dict:
+def sign_manifest_task(self: Task, *, username: str | None, **signature_data: dict) -> dict:
     """A task to Quicker Sign manifest, by MTN, in RCRAInfo."""
     from manifest.services import EManifest
 
