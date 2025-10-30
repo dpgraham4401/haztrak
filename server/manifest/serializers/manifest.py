@@ -138,7 +138,7 @@ class ManifestSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
     residueNewManifestTrackingNumbers = serializers.JSONField(
         source="residue_new_mtn",
         required=False,
-        default=[],
+        default={},
     )
     # import, see .to_representation() and .to_internal_value() methods
     importInfo = serializers.JSONField(

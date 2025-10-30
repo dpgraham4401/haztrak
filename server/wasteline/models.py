@@ -293,8 +293,10 @@ class DotLookupType(TextChoices):
 class DotLookupBaseManager(Manager["DotLookup"]):
     """Base Model manager for DOT lookup options."""
 
-    def filter_by_value(self, value: str | None) -> models.QuerySet:
+    def filter_by_value(self, value: str | None) -> QuerySet:
         """Filter by DOT Lookup Value."""
+        if value is None:
+            return self.filter()
         return self.filter(value__icontains=value)
 
 

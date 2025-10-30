@@ -220,7 +220,7 @@ class ContactManager(Manager["Contact"]):
                 phone = RcraPhone.objects.create(**phone_data)
             return self.create(**contact_data, phone=phone)
         # ToDo(David): save is a django instance method, not queryset. I believe these needs fixing
-        return super().save(**contact_data)  # type: ignore
+        return super().save(**contact_data)  # type: ignore[misc]
 
 
 class Contact(models.Model):

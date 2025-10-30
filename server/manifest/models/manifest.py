@@ -18,7 +18,7 @@ from .handler import Handler, Transporter
 logger = logging.getLogger(__name__)
 
 
-def draft_mtn():
+def draft_mtn() -> str:
     """Returns a timestamped draft MTN in lieu of an official MTN from e-Manifest."""
     mtn_count: int = Manifest.objects.all().count()
     return f"{str(mtn_count).zfill(9)}DFT"

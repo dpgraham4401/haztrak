@@ -51,7 +51,7 @@ class QuickerSignSerializer(serializers.Serializer):
         elif isinstance(instance, QuickerSign):
             data["printedSignatureDate"] = instance.printed_date.isoformat(timespec="milliseconds")
         else:
-            data["printedSignatureDate"] = datetime.datetime.now(datetime.UTC).isoformat(
+            data["printedSignatureDate"] = datetime.datetime.now(datetime.UTC).isoformat(  # type: ignore[unreachable]
                 timespec="milliseconds",
             )
         return data

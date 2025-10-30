@@ -34,7 +34,7 @@ class HandlerManager[T: Model](Manager[T]):
                 handler_data.pop("rcra_site")
             else:
                 rcra_site = RcraSite.objects.save(None, **handler_data.pop("rcra_site"))  # type: ignore[assignment]
-            manifest_handler = self.model.objects.create(
+            manifest_handler = self.model.objects.create(  # type: ignore[attr-defined]
                 rcra_site=rcra_site,
                 paper_signature=paper_signature,
                 **handler_data,
@@ -149,7 +149,7 @@ class Transporter(Handler):
     )
     order = models.PositiveIntegerField()
 
-    objects = TransporterManager()
+    objects = TransporterManager()  # type: ignore[misc]
 
     class Meta:
         """Metaclass."""

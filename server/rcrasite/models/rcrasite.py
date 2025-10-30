@@ -79,7 +79,8 @@ class RcraSiteManager(Manager["RcraSite"]):
             return Address.objects.create(**address)
         except KeyError as exc:
             logger.warning(exc)
-            raise ValidationError(exc) from exc
+            msg = "missing required key while creating RcraSite address"
+            raise ValidationError(msg) from exc
 
 
 class RcraSite(models.Model):
