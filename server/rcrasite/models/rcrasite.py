@@ -62,7 +62,7 @@ class RcraSiteManager(Manager["RcraSite"]):
     def get_emergency_phone(self) -> RcraPhone | None:
         """Check if emergency phone is present and create an RcraPhone row."""
         try:
-            emergency_phone_data = self.handler_data.pop("emergency_phone")
+            emergency_phone_data = self.handler_data.pop("emergency_phone")  # type: ignore[union-attr]
             if emergency_phone_data is not None:
                 return RcraPhone.objects.create(**emergency_phone_data)
             return None
@@ -73,7 +73,7 @@ class RcraSiteManager(Manager["RcraSite"]):
     def get_address(self, key) -> Address:
         """Remove Address data and create if necessary."""
         try:
-            address = self.handler_data.pop(key)
+            address = self.handler_data.pop(key)  # type: ignore[union-attr]
             if isinstance(address, Address):
                 return address
             return Address.objects.create(**address)

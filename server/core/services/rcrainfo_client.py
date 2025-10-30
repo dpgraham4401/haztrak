@@ -45,7 +45,7 @@ class RcraClient(RcrainfoClient):
     def has_rcrainfo_credentials(self) -> bool:
         """Returns boolean if the assigned API user has credentials."""
         try:
-            return self.profile.has_rcrainfo_api_id_key
+            return self.profile.has_rcrainfo_api_id_key  # type: ignore[union-attr]
         except AttributeError:
             return self.api_id is not None and self.api_key is not None
 

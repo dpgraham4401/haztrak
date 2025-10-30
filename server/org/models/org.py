@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 class OrgManager(Manager["Org"]):
     """Organization Repository manager."""
 
-    def get_by_username(self, username: str) -> "Org":
+    def get_by_username(self, username: str) -> "Org | None":
         """Get the organization for a user."""
         user = TrakUser.objects.get(username=username)
         # TODO(David): Currently we are assuming the use only has one org
@@ -99,12 +99,12 @@ class Org(Model):
         return f"{self.name}"
 
     @property
-    def rcrainfo_api_id_key(self) -> tuple[str, str] | None:
+    def rcrainfo_api_id_key(self) -> tuple[str | None, str | None]:
         """Returns the RcraInfo API credentials for the admin user."""
         try:
             rcrainfo_profile = RcrainfoProfile.objects.get(haztrak_profile__user=self.admin)
         except RcrainfoProfile.DoesNotExist:
-            return None
+            return None, None
         else:
             return rcrainfo_profile.rcra_api_id, rcrainfo_profile.rcra_api_key
 

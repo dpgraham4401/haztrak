@@ -78,7 +78,7 @@ class RcraProfileService:
         try:
             if rcrainfo_username is None:
                 rcrainfo_username = self.profile.rcra_username
-            profile_response = self.rcrainfo.get_user_rcrainfo_profile(
+            profile_response = self.rcrainfo.get_user_rcrainfo_profile(  # type: ignore[union-attr]
                 rcrainfo_username=rcrainfo_username,
             )
             permissions = self._parse_rcra_response(rcra_response=profile_response.json())

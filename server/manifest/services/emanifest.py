@@ -102,7 +102,7 @@ class EManifest:
     def submit_quick_signature(self, signature: Mapping) -> dict[str, list]:
         """Submit a quicker signature to RCRAInfo."""
         results: dict[str, list] = {"success": [], "error": []}
-        response = self.rcrainfo.sign_manifest(**signature)
+        response = self.rcrainfo.sign_manifest(**signature)  # type: ignore[union-attr]
         if response.ok:
             for manifest in response.json()["manifestReports"]:
                 pull_manifest_by_mtn_task.delay(
@@ -116,7 +116,7 @@ class EManifest:
     def save(self, manifest: dict) -> dict:
         """Save manifest to e-Manifest."""
         logger.info(f"start save manifest to rcrainfo with arguments {manifest}")
-        create_resp: RcrainfoResponse = self.rcrainfo.save_manifest(manifest)
+        create_resp: RcrainfoResponse = self.rcrainfo.save_manifest(manifest)  # type: ignore[union-attr]
         try:
             if create_resp.ok:
                 logger.info(
@@ -148,7 +148,7 @@ class EManifest:
     def _retrieve_manifest(self, mtn: str):
         """Retrieve a manifest from RCRAInfo."""
         logger.info(f"retrieving manifest from RCRAInfo {mtn}")
-        response = self.rcrainfo.get_manifest(mtn)
+        response = self.rcrainfo.get_manifest(mtn)  # type: ignore[union-attr]
         if response.ok:
             logger.debug(f"manifest pulled {mtn}")
             return response.json()

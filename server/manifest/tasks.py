@@ -18,7 +18,9 @@ def pull_manifest_by_mtn_task(self: Task, *, mtn: list[str], username: str | Non
 
     msg = f"start task: {self.name}, manifest: {mtn}"
     logger.info(msg)
-    task_status = TaskService(task_id=self.request.id, task_name=self.name, status="STARTED")
+    task_status = TaskService(
+        task_id=self.request.id or "default_id", task_name=self.name, status="STARTED"
+    )
     try:
         emanifest = EManifest(username=username)
         results = emanifest.pull(tracking_numbers=mtn)
@@ -61,7 +63,7 @@ def sync_site_manifests_task(self, *, site_id: str, username: str):
         results = sync_manifests(
             site_id=site_id,
             last_sync_date=site.last_rcrainfo_manifest_sync,
-            rcra_client=client,
+            rcra_client=client,  # type: ignore[arg-type]
         )
         update_emanifest_sync_date(site=site)
     except Exception as exc:
