@@ -131,13 +131,10 @@ class TransporterManager(HandlerManager["Transporter"]):
                 e_sig = ESignature.objects.save(manifest_handler=transporter, **e_signature_data)
                 msg = f"ESignature created {e_sig}"
                 logger.debug(msg)
-        except KeyError as exc:
-            msg = f"KeyError while creating rcra_site {exc}"
+        except (KeyError, ValidationError) as exc:
+            msg = "ValidationError while creating rcra_site"
             logger.warning(msg)
-        except ValidationError as exc:
-            msg = f"ValidationError while creating rcra_site {exc}"
-            logger.warning(msg)
-            raise
+            raise ValidationError(message=msg) from exc
         else:
             return transporter
 

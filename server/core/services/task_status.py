@@ -35,6 +35,7 @@ def _get_cached_status(task_id: str) -> dict | None:
         cache_data = cache.get(task_id)
         if cache_data is not None:
             return cache_data
+        return None
     except CacheKeyWarning:
         return None
 
@@ -93,6 +94,7 @@ class TaskService:
             cache_data = cache.get(task_id)
             if cache_data is not None:
                 return cache_data
+            return None
         except CacheKeyWarning:
             return None
 

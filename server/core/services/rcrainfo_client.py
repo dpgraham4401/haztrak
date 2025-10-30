@@ -116,13 +116,8 @@ def get_rcra_client(
     api_key: str | None = None,
     rcrainfo_env: Literal["preprod", "prod"] | None = None,
     **kwargs,
-) -> RcraClient:
+) -> RcraClient | None:
     """RcraClient Constructor for interacting with RCRAInfo web services."""
-    if not username and not (api_id and api_key):
-        raise ValueError(
-            "You must provide either a username or "
-            "both api_id and api_key to instantiate RcraClient"
-        )
     if api_id and api_key:
         return RcraClient(
             api_id=api_id,
@@ -141,9 +136,16 @@ def get_rcra_client(
                 rcrainfo_env=rcrainfo_env,
                 **kwargs,
             )
+
         except Org.DoesNotExist as exc:
             msg = (
-                "If not using an organization with RCRAInfo credentials, "
+                "If not using an organization without RCRAInfo credentials, "
                 "you must provide api_id and api_key"
             )
             raise ValueError(msg) from exc
+    else:
+        msg = (
+            "You must provide either a username or "
+            "both api_id and api_key to instantiate RcraClient"
+        )
+        raise ValueError(msg)

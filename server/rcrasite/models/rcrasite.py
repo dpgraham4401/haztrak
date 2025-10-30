@@ -55,6 +55,7 @@ class RcraSiteManager(Manager["RcraSite"]):
         except KeyError as exc:
             msg = f"Missing required data for {self.model.__class__.__name__}: {exc}"
             logger.exception(msg, exc_info=exc)
+            return None
         else:
             return rcra_site
 
@@ -64,6 +65,7 @@ class RcraSiteManager(Manager["RcraSite"]):
             emergency_phone_data = self.handler_data.pop("emergency_phone")
             if emergency_phone_data is not None:
                 return RcraPhone.objects.create(**emergency_phone_data)
+            return None
         except KeyError as exc:
             logger.debug(exc)
             return None
