@@ -127,7 +127,7 @@ def get_rcra_client(
         )
     elif username:
         try:
-            org: Org = Org.objects.get_by_username(username)
+            org: Org | None = Org.objects.get_by_username(username)
             if org.is_rcrainfo_integrated:
                 api_id, api_key = org.rcrainfo_api_credentials
             return RcraClient(
