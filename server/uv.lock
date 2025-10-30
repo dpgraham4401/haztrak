@@ -674,6 +674,18 @@ dev = [
     { name = "types-pillow" },
     { name = "types-redis" },
 ]
+lint = [
+    { name = "celery-types" },
+    { name = "django-stubs", extra = ["compatible-mypy"] },
+    { name = "django-stubs-ext" },
+    { name = "djangorestframework-stubs" },
+    { name = "mypy" },
+    { name = "mypy-extensions" },
+    { name = "ruff" },
+    { name = "ty" },
+    { name = "types-pillow" },
+    { name = "types-redis" },
+]
 test = [
     { name = "coverage" },
     { name = "faker" },
@@ -685,17 +697,6 @@ test = [
     { name = "pytest-randomly" },
     { name = "pytest-xdist" },
     { name = "responses" },
-]
-type = [
-    { name = "celery-types" },
-    { name = "django-stubs", extra = ["compatible-mypy"] },
-    { name = "django-stubs-ext" },
-    { name = "djangorestframework-stubs" },
-    { name = "mypy" },
-    { name = "mypy-extensions" },
-    { name = "ty" },
-    { name = "types-pillow" },
-    { name = "types-redis" },
 ]
 
 [package.metadata]
@@ -747,6 +748,18 @@ dev = [
     { name = "types-pillow", specifier = ">=10.2.0.20240822" },
     { name = "types-redis", specifier = ">=4.6.0" },
 ]
+lint = [
+    { name = "celery-types", specifier = "==0.23.0" },
+    { name = "django-stubs", extras = ["compatible-mypy"], specifier = ">=5.2.7" },
+    { name = "django-stubs-ext", specifier = ">=5.2.7" },
+    { name = "djangorestframework-stubs", specifier = "==3.16.5" },
+    { name = "mypy", specifier = "==1.18.2" },
+    { name = "mypy-extensions", specifier = ">=1.1.0" },
+    { name = "ruff", specifier = "==0.14.2" },
+    { name = "ty", specifier = ">=0.0.1a24" },
+    { name = "types-pillow", specifier = ">=10.2.0.20240822" },
+    { name = "types-redis", specifier = ">=4.6.0" },
+]
 test = [
     { name = "coverage", specifier = "==7.11.0" },
     { name = "faker", specifier = "==37.11.0" },
@@ -758,17 +771,6 @@ test = [
     { name = "pytest-randomly", specifier = ">=4.0.1" },
     { name = "pytest-xdist", specifier = ">=3.8.0" },
     { name = "responses", specifier = "==0.25.8" },
-]
-type = [
-    { name = "celery-types", specifier = "==0.23.0" },
-    { name = "django-stubs", extras = ["compatible-mypy"], specifier = ">=5.2.7" },
-    { name = "django-stubs-ext", specifier = ">=5.2.7" },
-    { name = "djangorestframework-stubs", specifier = "==3.16.5" },
-    { name = "mypy", specifier = "==1.18.2" },
-    { name = "mypy-extensions", specifier = ">=1.1.0" },
-    { name = "ty", specifier = ">=0.0.1a24" },
-    { name = "types-pillow", specifier = ">=10.2.0.20240822" },
-    { name = "types-redis", specifier = ">=4.6.0" },
 ]
 
 [[package]]

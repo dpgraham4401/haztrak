@@ -42,7 +42,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-type = [
+lint = [
     "celery-types==0.23.0",
     "django-stubs-ext>=5.2.7",
     "django-stubs[compatible-mypy]>=5.2.7",
@@ -52,6 +52,7 @@ type = [
     "ty>=0.0.1a24",
     "types-pillow>=10.2.0.20240822",
     "types-redis>=4.6.0",
+    "ruff==0.14.2",
 ]
 test = [
     "coverage==7.11.0",
@@ -67,8 +68,7 @@ test = [
 ]
 dev = [
     "pre-commit==4.3.0",
-    "ruff==0.14.2",
-    { include-group = "type" },
+    { include-group = "lint" },
     { include-group = "test" },
 ]
 
