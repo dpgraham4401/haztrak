@@ -78,13 +78,14 @@ class RcraProfileService:
         try:
             if rcrainfo_username is None:
                 rcrainfo_username = self.profile.rcra_username
-            profile_response = self.rcrainfo.get_user_rcrainfo_profile(
+            profile_response = self.rcrainfo.get_user_rcrainfo_profile(  # type: ignore[union-attr]
                 rcrainfo_username=rcrainfo_username,
             )
             permissions = self._parse_rcra_response(rcra_response=profile_response.json())
             self._save_rcrainfo_profile_permissions(permissions)
         except (RcrainfoProfile.DoesNotExist, RcraSite.DoesNotExist) as exc:
-            raise RcraProfileServiceError(exc) from exc
+            msg = "RcraProfile or RcraSite does not exist."
+            raise RcraProfileServiceError(msg) from exc
 
     def _save_rcrainfo_profile_permissions(self, permissions: list[dict]) -> None:
         try:

@@ -24,7 +24,7 @@ if TYPE_CHECKING:
     from celery.result import AsyncResult as CeleryTask
 
 
-class ProfileViewSet(GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+class ProfileViewSet(GenericViewSet[Profile], RetrieveModelMixin, UpdateModelMixin):
     """ViewSet for the Profile model."""
 
     lookup_field = "user__id"
@@ -34,7 +34,7 @@ class ProfileViewSet(GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
     serializer_class = ProfileSerializer
 
 
-class ProfileDetailsView(RetrieveAPIView):
+class ProfileDetailsView(RetrieveAPIView[RcrainfoProfile]):
     """Displays a user's HaztrakProfile."""
 
     queryset = Profile.objects.all()
@@ -48,7 +48,7 @@ class ProfileDetailsView(RetrieveAPIView):
         return get_user_profile(user=self.request.user)
 
 
-class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView):
+class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView[RcrainfoProfile]):
     """
     Responsible for Create/Update operations related to the user RcrainfoProfile.
 
@@ -58,7 +58,6 @@ class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView):
 
     queryset = RcrainfoProfile.objects.all()
     serializer_class = RcrainfoProfileSerializer
-    response = Response
     lookup_url_kwarg = "username"
 
     def get_object(self):
@@ -69,16 +68,13 @@ class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView):
 class RcrainfoProfileSyncView(APIView):
     """Launches a task to sync the logged-in user's RCRAInfo profile."""
 
-    queryset = None
-    response = Response
-
     def post(self, request: Request, **kwargs) -> Response:
         """Create a job to sync the user's RCRAInfo profile."""
         try:
             task: CeleryTask = sync_user_rcrainfo_sites_task.delay(str(self.request.user))
-            return self.response({"taskId": task.id})
+            return Response({"taskId": task.id})
         except CeleryError as exc:
-            return self.response(
+            return Response(
                 data={"error": str(exc)},
                 status=HTTPStatus.INTERNAL_SERVER_ERROR,
             )

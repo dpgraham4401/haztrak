@@ -3,6 +3,7 @@
 from typing import TYPE_CHECKING
 from uuid import uuid4
 
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models import QuerySet
@@ -12,15 +13,13 @@ from guardian.shortcuts import get_objects_for_user
 from core.models import TrakUser
 
 if TYPE_CHECKING:
-    from django.contrib.auth.models import User
-
     from org.models import Org
 
 
 class SiteManager(QuerySet):
     """Query interface for the Site model."""
 
-    def filter_by_username(self, username: str) -> QuerySet:
+    def filter_by_username(self, username: str) -> QuerySet["Site"]:
         """Filter a list of sites a user has access to (by username)."""
         return get_objects_for_user(
             TrakUser.objects.get(username=username),
@@ -29,39 +28,37 @@ class SiteManager(QuerySet):
             accept_global_perms=False,
         )
 
-    def get_by_user_and_epa_id(self, user: "User", epa_id: str) -> QuerySet:
+    def get_by_user_and_epa_id(self, user: "AbstractBaseUser", epa_id: str) -> "Site":
         """Get a site by EPA ID number that a user has access to."""
-        combined_filter: QuerySet = self.filter_by_user(user) & self.filter_by_epa_id(epa_id)
+        combined_filter: QuerySet = self.filter_by_user(user) & self.filter_by_epa_ids(epa_id)
         return combined_filter.get()
 
-    def get_by_username_and_epa_id(self, username: str, epa_id: str) -> QuerySet:
+    def get_by_username_and_epa_id(self, username: str, epa_id: str) -> "Site":
         """Get a site by EPA ID number that a user has access to."""
-        combined_filter: QuerySet = self.filter_by_username(username) & self.filter_by_epa_id(
+        combined_filter: QuerySet = self.filter_by_username(username) & self.filter_by_epa_ids(
             epa_id,
         )
         return combined_filter.get()
 
-    def filter_by_user(self, user: "User") -> QuerySet:
+    def filter_by_user(self, user: "AbstractBaseUser") -> QuerySet["Site"]:
         """Filter a list of sites a user has access to (by user object)."""
         return get_objects_for_user(user, "view_site", self.model, accept_global_perms=False)
 
-    def filter_by_epa_id(self, epa_id: str) -> QuerySet:
+    def filter_by_epa_ids(self, epa_ids: list[str] | str) -> QuerySet["Site"]:
         """Filter a sites by EPA ID number."""
-        return self.filter(rcra_site__epa_id=epa_id)
-
-    def filter_by_epa_ids(self, epa_ids: list[str]) -> QuerySet:
-        """Filter a sites by EPA ID number."""
+        if isinstance(epa_ids, str):
+            epa_ids = [epa_ids]
         return self.filter(rcra_site__epa_id__in=epa_ids)
 
-    def get_by_epa_id(self, epa_id: str) -> QuerySet:
+    def get_by_epa_id(self, epa_id: str) -> "Site":
         """Get a site by RCRAInfo EPA ID number. Throws Site.DoesNotExist if not found."""
-        return self.filter_by_epa_id(epa_id).get()
+        return self.filter_by_epa_ids(epa_id).get()
 
-    def filter_by_org(self, org: "Org") -> QuerySet:
+    def filter_by_org(self, org: "Org") -> QuerySet["Site"]:
         """Get a list of sites by organization."""
         return self.filter(org=org)
 
-    def filter_by_id(self, idx: int) -> QuerySet:
+    def filter_by_id(self, idx: int) -> QuerySet["Site"]:
         """Get a list of sites by organization."""
         return self.filter(id=idx)
 

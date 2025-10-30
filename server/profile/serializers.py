@@ -117,13 +117,13 @@ class RcrainfoSitePermissionsSerializer(RcraSitePermissionSerializer):
     BiennialReport = RcraPermissionField(
         source="biennial_report",
     )
-    eManifest = RcraPermissionField(
+    eManifest = RcraPermissionField(  # type: ignore[assignment]
         source="e_manifest",
     )
-    WIETS = RcraPermissionField(
+    WIETS = RcraPermissionField(  # type: ignore[assignment]
         source="wiets",
     )
-    myRCRAid = RcraPermissionField(
+    myRCRAid = RcraPermissionField(  # type: ignore[assignment]
         source="my_rcra_id",
     )
 
@@ -173,7 +173,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class RcrainfoProfileSerializer(serializers.ModelSerializer):
     """Model serializer for marshalling/unmarshalling a user's RcrainfoProfile."""
 
-    user = serializers.StringRelatedField(
+    user = serializers.StringRelatedField(  # type: ignore[var-annotated]
         source="haztrak_profile",
     )
     rcraSites = RcraSitePermissionSerializer(

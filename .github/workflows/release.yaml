@@ -7,7 +7,7 @@ permissions:
 
 on:
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
   test_server:
@@ -20,7 +20,7 @@ jobs:
 
   build_server:
     name: "Build Server Image"
-    needs: [test_server]
+    needs: [ test_server ]
     uses: ./.github/workflows/build_image.yaml
     with:
       context: ./server
@@ -28,7 +28,7 @@ jobs:
 
   build_client:
     name: "Build Client Image"
-    needs: [test_client]
+    needs: [ test_client ]
     uses: ./.github/workflows/build_image.yaml
     with:
       context: ./client

@@ -45,7 +45,7 @@ class RcraClient(RcrainfoClient):
     def has_rcrainfo_credentials(self) -> bool:
         """Returns boolean if the assigned API user has credentials."""
         try:
-            return self.profile.has_rcrainfo_api_id_key
+            return self.profile.has_rcrainfo_api_id_key  # type: ignore[union-attr]
         except AttributeError:
             return self.api_id is not None and self.api_key is not None
 
@@ -56,13 +56,13 @@ class RcraClient(RcrainfoClient):
     def retrieve_id(self, api_id=None) -> str:
         """Override RcrainfoClient method to retrieve API ID for authentication."""
         if self.has_rcrainfo_credentials:
-            return super().retrieve_id(self.api_id or self.profile.rcra_api_id)
+            return super().retrieve_id(self.api_id or self.profile.rcra_api_id)  # type: ignore[union-attr]
         return super().retrieve_key()
 
     def retrieve_key(self, api_key=None) -> str:
         """Override RcrainfoClient method to retrieve API key to authentication."""
         if self.has_rcrainfo_credentials:
-            return super().retrieve_key(self.api_key or self.profile.rcra_api_key)
+            return super().retrieve_key(self.api_key or self.profile.rcra_api_key)  # type: ignore[union-attr]
         return super().retrieve_key()
 
     def get_user_rcrainfo_profile(
@@ -116,28 +116,36 @@ def get_rcra_client(
     api_key: str | None = None,
     rcrainfo_env: Literal["preprod", "prod"] | None = None,
     **kwargs,
-) -> RcraClient:
+) -> RcraClient | None:
     """RcraClient Constructor for interacting with RCRAInfo web services."""
-    if api_id is not None and api_key is not None:
+    if api_id and api_key:
         return RcraClient(
             api_id=api_id,
             api_key=api_key,
             rcrainfo_env=rcrainfo_env,
             **kwargs,
         )
-    try:
-        org: Org = Org.objects.get_by_username(username)
-        if org.is_rcrainfo_integrated:
-            api_id, api_key = org.rcrainfo_api_id_key
-        return RcraClient(
-            api_id=api_id,
-            api_key=api_key,
-            rcrainfo_env=rcrainfo_env,
-            **kwargs,
-        )
-    except Org.DoesNotExist as exc:
+    elif username:
+        try:
+            org: Org | None = Org.objects.get_by_username(username)
+            if org and org.is_rcrainfo_integrated:
+                api_id, api_key = org.rcrainfo_api_credentials
+            return RcraClient(
+                api_id=api_id,
+                api_key=api_key,
+                rcrainfo_env=rcrainfo_env,
+                **kwargs,
+            )
+
+        except Org.DoesNotExist as exc:
+            msg = (
+                "If not using an organization without RCRAInfo credentials, "
+                "you must provide api_id and api_key"
+            )
+            raise ValueError(msg) from exc
+    else:
         msg = (
-            "If not using an organization with RCRAInfo credentials, "
-            "you must provide api_id and api_key"
+            "You must provide either a username or "
+            "both api_id and api_key to instantiate RcraClient"
         )
-        raise ValueError(msg) from exc
+        raise ValueError(msg)

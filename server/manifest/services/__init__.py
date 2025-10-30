@@ -1,4 +1,4 @@
-from .emanifest import EManifest, EManifestError, PullManifestsResult, TaskResponse
+from .emanifest import EManifest, EManifestError, TaskResponse
 from .emanifest_search import (
     CorrectionRequestStatus,
     DateType,
@@ -20,7 +20,6 @@ __all__ = [
     "EManifestError",
     "EmanifestSearch",
     "EmanifestStatus",
-    "PullManifestsResult",
     "SiteType",
     "TaskResponse",
     "create_manifest",

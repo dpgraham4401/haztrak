@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from django.conf import settings
 from django.db import models
-from django.db.models import QuerySet
+from django.db.models import Manager, Model, QuerySet
 from django_extensions.db.fields import AutoSlugField
 from guardian.models import GroupObjectPermissionBase, UserObjectPermissionBase
 from guardian.shortcuts import get_objects_for_user
@@ -14,13 +14,13 @@ from core.models import TrakUser
 from profile.models import RcrainfoProfile
 
 if TYPE_CHECKING:
-    from django.contrib.auth.models import User
+    pass
 
 
-class OrgManager(models.Manager):
+class OrgManager(Manager["Org"]):
     """Organization Repository manager."""
 
-    def get_by_username(self, username: str) -> "Org":
+    def get_by_username(self, username: str) -> "Org | None":
         """Get the organization for a user."""
         user = TrakUser.objects.get(username=username)
         # TODO(David): Currently we are assuming the use only has one org
@@ -57,7 +57,7 @@ class OrgManager(models.Manager):
         return self.model.objects.filter(id=id)
 
 
-class Org(models.Model):
+class Org(Model):
     """Haztrak Organization."""
 
     id = models.UUIDField(
@@ -77,7 +77,7 @@ class Org(models.Model):
         null=False,
         blank=False,
     )
-    admin: "User" = models.ForeignKey(
+    admin = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
@@ -99,12 +99,12 @@ class Org(models.Model):
         return f"{self.name}"
 
     @property
-    def rcrainfo_api_id_key(self) -> tuple[str, str] | None:
+    def rcrainfo_api_credentials(self) -> tuple[str | None, str | None]:
         """Returns the RcraInfo API credentials for the admin user."""
         try:
             rcrainfo_profile = RcrainfoProfile.objects.get(haztrak_profile__user=self.admin)
         except RcrainfoProfile.DoesNotExist:
-            return None
+            return None, None
         else:
             return rcrainfo_profile.rcra_api_id, rcrainfo_profile.rcra_api_key
 

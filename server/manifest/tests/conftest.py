@@ -41,7 +41,7 @@ def manifest_transporter_factory(db, rcra_site_factory, paper_signature_factory)
     def create_manifest_handler(
         rcra_site: RcraSite | None = None,
         paper_signature: PaperSignature | None = None,
-        manifest: Manifest = None,
+        manifest: Manifest | None = None,
         order: int | None = 1,
     ) -> Transporter:
         return Transporter.objects.create(

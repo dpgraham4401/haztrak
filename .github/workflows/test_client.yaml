@@ -7,10 +7,6 @@ on:
     paths:
       - "client/**"
       - ".github/workflows/test_client.yaml"
-  push:
-    paths:
-      - "client/**"
-      - ".github/workflows/test_client.yaml"
   workflow_call:
   workflow_dispatch:
 

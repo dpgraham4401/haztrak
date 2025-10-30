@@ -11,14 +11,16 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task(name="pull manifest", bind=True, acks_late=True)
-def pull_manifest_by_mtn_task(self: Task, *, mtn: list[str], username: str) -> dict:
+def pull_manifest_by_mtn_task(self: Task, *, mtn: list[str], username: str | None) -> dict:
     """This task initiates a call to the EManifest to pull a manifest by MTN."""
     from core.services import TaskService
     from manifest.services import EManifest
 
     msg = f"start task: {self.name}, manifest: {mtn}"
     logger.info(msg)
-    task_status = TaskService(task_id=self.request.id, task_name=self.name, status="STARTED")
+    task_status = TaskService(
+        task_id=self.request.id or "default_id", task_name=self.name, status="STARTED"
+    )
     try:
         emanifest = EManifest(username=username)
         results = emanifest.pull(tracking_numbers=mtn)
@@ -35,7 +37,7 @@ def pull_manifest_by_mtn_task(self: Task, *, mtn: list[str], username: str) -> d
 
 
 @shared_task(name="sign manifests", bind=True, acks_late=True)
-def sign_manifest_task(self: Task, *, username: str, **signature_data: dict) -> dict:
+def sign_manifest_task(self: Task, *, username: str | None, **signature_data: dict) -> dict:
     """A task to Quicker Sign manifest, by MTN, in RCRAInfo."""
     from manifest.services import EManifest
 
@@ -61,7 +63,7 @@ def sync_site_manifests_task(self, *, site_id: str, username: str):
         results = sync_manifests(
             site_id=site_id,
             last_sync_date=site.last_rcrainfo_manifest_sync,
-            rcra_client=client,
+            rcra_client=client,  # type: ignore[arg-type]
         )
         update_emanifest_sync_date(site=site)
     except Exception as exc:

@@ -1,7 +1,8 @@
 """Service class for interacting with the Task model layer and celery tasks."""
 
 import logging
-from typing import TYPE_CHECKING
+from typing import Any
+from uuid import UUID
 
 from django.core.cache import CacheKeyWarning, cache
 from django_celery_results.models import TaskResult
@@ -9,9 +10,6 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.utils.serializer_helpers import ReturnDict
 
 from core.serializers import TaskStatusSerializer
-
-if TYPE_CHECKING:
-    pass
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +35,7 @@ def _get_cached_status(task_id: str) -> dict | None:
         cache_data = cache.get(task_id)
         if cache_data is not None:
             return cache_data
+        return None
     except CacheKeyWarning:
         return None
 
@@ -53,7 +52,7 @@ class TaskService:
 
     def __init__(
         self,
-        task_id: str,
+        task_id: str | UUID,
         task_name: str,
         status: str = "PENDING",
         result: dict | None = None,
@@ -95,10 +94,11 @@ class TaskService:
             cache_data = cache.get(task_id)
             if cache_data is not None:
                 return cache_data
+            return None
         except CacheKeyWarning:
             return None
 
-    def update_task_status(self, status: str, results: dict | None = None) -> object | None:
+    def update_task_status(self, status: str, results: dict | None | Any = None) -> object | None:
         """Updates the status of a long-running celery task in our key-value store.
 
         Returns an error or None.

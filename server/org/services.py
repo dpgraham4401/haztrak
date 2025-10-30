@@ -3,6 +3,7 @@
 from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import transaction
 from django.db.models import QuerySet
 
@@ -11,7 +12,7 @@ from manifest.tasks import sync_site_manifests_task
 from org.models import Org, Site
 
 if TYPE_CHECKING:
-    from django.contrib.auth.models import User
+    pass
 
 
 def get_org_by_id(org_id: str) -> Org:
@@ -24,22 +25,24 @@ def get_org_by_slug(org_slug: str) -> Org:
     return Org.objects.get_by_slug(org_slug)
 
 
-def get_org_rcrainfo_api_credentials(org_id: str) -> tuple[str, str] | None:
+def get_org_rcrainfo_api_credentials(org_id: str) -> tuple[str | None, str | None] | None:
     """Returns a tuple of (rcrainfo_api_id, rcrainfo_api_key)."""
     try:
         org = get_org_by_id(org_id)
         if org.is_rcrainfo_integrated:
-            return org.rcrainfo_api_id_key
+            return org.rcrainfo_api_credentials
+        return None
     except Org.DoesNotExist:
         return None
 
 
-def get_rcrainfo_api_credentials_by_user(user_id: str) -> tuple[str, str] | None:
+def get_rcrainfo_api_credentials_by_user(user_id: str) -> tuple[str | None, str | None] | None:
     """Returns a tuple of (rcrainfo_api_id, rcrainfo_api_key) corresponding to the user's org."""
     try:
-        org = Org.objects.get(user_id=user_id)
+        org = Org.objects.get(admin__id=user_id)
         if org.is_rcrainfo_integrated:
-            return org.rcrainfo_api_id_key
+            return org.rcrainfo_api_credentials
+        return None
     except Org.DoesNotExist:
         return None
 
@@ -76,7 +79,7 @@ def get_site_by_epa_id(epa_id: str) -> Site:
     return Site.objects.get_by_epa_id(epa_id)
 
 
-def find_sites_by_user(user: "User") -> QuerySet[Site]:
+def find_sites_by_user(user: "AbstractBaseUser") -> QuerySet[Site]:
     """Returns a list of Sites associated with a user."""
     return Site.objects.filter_by_user(user)
 
@@ -86,17 +89,17 @@ def filter_sites_by_username(username: str) -> QuerySet[Site]:
     return Site.objects.filter_by_username(username)
 
 
-def filter_sites_by_username_and_epa_id(username: str, epa_ids: [str]) -> [Site]:
+def filter_sites_by_username_and_epa_id(username: str, epa_ids: list[str]) -> list[Site]:
     """Returns a list of Sites associated with a user."""
     sites: QuerySet = Site.objects.filter_by_username(username)
-    other_sites = Site.objects.filter_by_epa_id(epa_ids)
+    other_sites = Site.objects.filter_by_epa_ids(epa_ids)
     return [site for site in sites if site in other_sites]
 
 
 def sync_site_manifest_with_rcrainfo(
     *,
     username: str,
-    site_id: str | None = None,
+    site_id: str,
 ) -> TaskResponse:
     """Launch a batch processing task to sync a site's manifests from RCRAInfo."""
     task = sync_site_manifests_task.delay(site_id=site_id, username=username)

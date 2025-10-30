@@ -58,7 +58,7 @@ class RcraSiteService:
 
     def pull_rcrainfo_site(self, *, site_id: str) -> RcraSite:
         """Retrieve a site/rcra_site from Rcrainfo and return RcraSiteSerializer."""
-        rcra_site_data: dict = self.rcrainfo.get_site(site_id).json()
+        rcra_site_data: dict = self.rcrainfo.get_site(site_id).json()  # type: ignore[union-attr]
         return self._update_or_create_rcra_site_from_json(rcra_site_data=rcra_site_data)
 
     def get_or_pull_rcra_site(self, site_id: str) -> RcraSite:

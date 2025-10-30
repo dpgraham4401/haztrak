@@ -9,9 +9,6 @@ from profile.api import router as profile_router
 from rcrasite.api import router as rcrasite_router
 from wasteline.api import router as wasteline_router
 
-api_auth = []
-
-
 api = NinjaAPI(
     title="Haztrak API",
     description="Access Haztrak through the REST API.",

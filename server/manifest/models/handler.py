@@ -5,6 +5,7 @@ from typing import Optional
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Manager, Model
 
 from rcrasite.models import RcraSite
 
@@ -14,10 +15,10 @@ from .signature import ESignature, PaperSignature
 logger = logging.getLogger(__name__)
 
 
-class HandlerManager(models.Manager):
+class HandlerManager[T: Model](Manager[T]):
     """model manager and query interface for a Handler model."""
 
-    def save(self, instance: Optional["Handler"], **handler_data) -> "Handler":
+    def save(self, instance: T | None, **handler_data) -> T:
         """Save the handler instance to the database."""
         paper_signature = handler_data.pop("paper_signature", None)
         e_signatures = handler_data.pop("e_signatures", [])
@@ -32,8 +33,8 @@ class HandlerManager(models.Manager):
                 rcra_site = RcraSite.objects.get(epa_id=handler_data["rcra_site"]["epa_id"])
                 handler_data.pop("rcra_site")
             else:
-                rcra_site = RcraSite.objects.save(None, **handler_data.pop("rcra_site"))
-            manifest_handler = self.model.objects.create(
+                rcra_site = RcraSite.objects.save(None, **handler_data.pop("rcra_site"))  # type: ignore[assignment]
+            manifest_handler = self.model.objects.create(  # type: ignore[attr-defined]
                 rcra_site=rcra_site,
                 paper_signature=paper_signature,
                 **handler_data,
@@ -58,7 +59,7 @@ class HandlerManager(models.Manager):
             return manifest_handler
 
 
-class Handler(models.Model):
+class Handler(Model):
     """Handler corresponds to a RCRAInfo site that is listed on a manifest."""
 
     rcra_site = models.ForeignKey(
@@ -81,7 +82,7 @@ class Handler(models.Model):
         help_text="The signature associated with hazardous waste custody exchange",
     )
 
-    objects = HandlerManager()
+    objects = HandlerManager["Handler"]()
 
     class Meta:
         """Metaclass."""
@@ -103,20 +104,20 @@ class Handler(models.Model):
         return paper_signature_exists or e_signature_exists
 
 
-class TransporterManager(HandlerManager):
+class TransporterManager(HandlerManager["Transporter"]):
     """Transporter Model database querying interface."""
 
-    def save(self, instance: Optional["Transporter"], **data: dict) -> "Transporter | None":
+    def save(self, instance: Optional["Transporter"], **data: dict) -> "Transporter":
         """Create a Transporter from a manifest instance and rcra_site dict."""
-        e_signatures = data.pop("e_signatures", [])
+        e_signatures: list = data.pop("e_signatures", [])  # type: ignore[assignment]
         if data.get("paper_signature") is not None:
-            data["paper_signature"] = PaperSignature.objects.create(**data.pop("paper_signature"))
+            data["paper_signature"] = PaperSignature.objects.create(**data.pop("paper_signature"))  # type: ignore[assignment]
         try:
             if RcraSite.objects.filter(epa_id=data["rcra_site"]["epa_id"]).exists():
                 rcra_site = RcraSite.objects.get(epa_id=data["rcra_site"]["epa_id"])
                 data.pop("rcra_site")
             else:
-                rcra_site = RcraSite.objects.save(None, **data.pop("rcra_site"))
+                rcra_site: RcraSite | None = RcraSite.objects.save(None, **data.pop("rcra_site"))  # type: ignore[no-redef]
             transporter, _created = self.model.objects.update_or_create(
                 manifest=data.pop("manifest"),
                 order=data.pop("order"),
@@ -130,13 +131,10 @@ class TransporterManager(HandlerManager):
                 e_sig = ESignature.objects.save(manifest_handler=transporter, **e_signature_data)
                 msg = f"ESignature created {e_sig}"
                 logger.debug(msg)
-        except KeyError as exc:
-            msg = f"KeyError while creating rcra_site {exc}"
+        except (KeyError, ValidationError) as exc:
+            msg = "ValidationError while creating rcra_site"
             logger.warning(msg)
-        except ValidationError as exc:
-            msg = f"ValidationError while creating rcra_site {exc}"
-            logger.warning(msg)
-            raise
+            raise ValidationError(message=msg) from exc
         else:
             return transporter
 
@@ -151,7 +149,7 @@ class Transporter(Handler):
     )
     order = models.PositiveIntegerField()
 
-    objects = TransporterManager()
+    objects = TransporterManager()  # type: ignore[misc]
 
     class Meta:
         """Metaclass."""

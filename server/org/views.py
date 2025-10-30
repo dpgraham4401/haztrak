@@ -15,7 +15,7 @@ from org.services import (
 )
 
 
-class OrgDetailsView(RetrieveAPIView):
+class OrgDetailsView(RetrieveAPIView[Org]):
     """Retrieve details for a given Org."""
 
     serializer_class = OrgSerializer
@@ -30,7 +30,7 @@ class OrgDetailsView(RetrieveAPIView):
         return org
 
 
-class OrgListView(ListAPIView):
+class OrgListView(ListAPIView[Org]):
     """that returns all haztrak organization that the user has access to."""
 
     serializer_class = OrgSerializer
@@ -38,7 +38,7 @@ class OrgListView(ListAPIView):
     filter_backends = [ObjectPermissionsFilter]
 
 
-class SiteListView(ListAPIView):
+class SiteListView(ListAPIView[Site]):
     """that returns all haztrak sites that the user has access to."""
 
     serializer_class = SiteSerializer
@@ -52,7 +52,7 @@ class SiteListView(ListAPIView):
         return find_sites_by_user(self.request.user)
 
 
-class SiteDetailsView(RetrieveAPIView):
+class SiteDetailsView(RetrieveAPIView[Site]):
     """View details of a Haztrak Site."""
 
     serializer_class = SiteSerializer

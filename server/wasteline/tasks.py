@@ -17,7 +17,7 @@ def pull_federal_codes_task(self, api_user: str | None = None):
     logger.debug(msg)
     try:
         rcrainfo = get_rcra_client(username=api_user)
-        return rcrainfo.sync_federal_waste_codes()
+        return rcrainfo.sync_federal_waste_codes()  # type: ignore[union-attr]
     except (ConnectionError, TimeoutError) as exc:
         raise Reject from exc
     except Exception as exc:

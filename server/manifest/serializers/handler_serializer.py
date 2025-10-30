@@ -39,7 +39,7 @@ class HandlerSerializer(RcraSiteSerializer):
         source="paper_signature",
         required=False,
     )
-    emergencyPhone = ManifestPhoneSerializer(
+    emergencyPhone = ManifestPhoneSerializer(  # type: ignore[assignment]
         source="emergency_phone",
         required=False,
     )

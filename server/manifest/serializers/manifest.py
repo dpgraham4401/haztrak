@@ -138,7 +138,7 @@ class ManifestSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
     residueNewManifestTrackingNumbers = serializers.JSONField(
         source="residue_new_mtn",
         required=False,
-        default=[],
+        default={},
     )
     # import, see .to_representation() and .to_internal_value() methods
     importInfo = serializers.JSONField(
@@ -204,9 +204,12 @@ class ManifestSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
             data["mtn"] = draft_mtn()
         return super().validate(data)
 
-    # https://www.django-rest-framework.org/api-guide/serializers/#overriding-serialization-and-deserialization-behavior
-    def to_representation(self, instance) -> str:
-        """Replace 'import_flag' with expected Python Keyword 'import' in JSON."""
+    def to_representation(self, instance) -> dict:
+        """Replace 'import_flag' with expected Python Keyword 'import' in JSON.
+
+        See Also:
+           https://www.django-rest-framework.org/api-guide/serializers/#overriding-serialization-and-deserialization-behavior
+        """
         data = super().to_representation(instance)
         data["import"] = instance.import_flag
         return data

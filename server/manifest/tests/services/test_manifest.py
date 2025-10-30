@@ -122,7 +122,7 @@ class TestCreateManifest:
     ):
         # Arrange
         new_mtn = "987654321ELC"
-        user, org = user_with_org_factory(is_rcrainfo_enabled=True)
+        user, _org = user_with_org_factory(is_rcrainfo_enabled=True)
         new_manifest_data = validated_data_factory(
             instance=manifest_factory(mtn="123456789ELC", status="NotAssigned"),
             serializer=ManifestSerializer,

@@ -1,20 +1,18 @@
 """Profile models for the Haztrak application."""
 
-import uuid
-from typing import TYPE_CHECKING
+from uuid import UUID, uuid4
 
 from django.conf import settings
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.exceptions import ValidationError
 from django.db import models
-
-if TYPE_CHECKING:
-    from django.contrib.auth.models import User
+from django.db.models import Manager
 
 
 class ProfileManager(models.QuerySet):
     """Query manager for the TrakProfile model."""
 
-    def get_profile_by_user(self, user: "User") -> "Profile":
+    def get_profile_by_user(self, user: "AbstractBaseUser") -> "Profile":
         """Get a user Haztrak Profile by the user."""
         return self.get(user=user)
 
@@ -36,9 +34,9 @@ class Profile(models.Model):
     id = models.UUIDField(
         primary_key=True,
         editable=False,
-        default=uuid.uuid4,
+        default=uuid4,
     )
-    user: "User" = models.OneToOneField(
+    user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="haztrak_profile",
@@ -67,17 +65,17 @@ class Profile(models.Model):
 
     def __str__(self):
         """Human-readable representation."""
-        return f"{self.user.username}"
+        return f"{self.user.get_username()}"
 
 
-class RcrainfoProfileManager(models.Manager):
+class RcrainfoProfileManager(Manager["RcrainfoProfile"]):
     """Query manager for the RcrainfoProfile model."""
 
     def get_by_trak_username(self, username: str) -> "RcrainfoProfile":
         """Get a RcrainfoProfile by the user's Haztrak username."""
         return self.get(haztrak_profile__user__username=username)
 
-    def get_by_trak_user_id(self, user_id: str) -> "RcrainfoProfile":
+    def get_by_trak_user_id(self, user_id: str | UUID) -> "RcrainfoProfile":
         """Get a RcrainfoProfile by the user's Haztrak user ID.
 
         automatically joins the user's trak profile and user models to avoid N+1 queries.
@@ -98,7 +96,7 @@ class RcrainfoProfile(models.Model):
     id = models.UUIDField(
         primary_key=True,
         editable=False,
-        default=uuid.uuid4,
+        default=uuid4,
     )
     rcra_api_key = models.CharField(
         max_length=128,
@@ -131,7 +129,7 @@ class RcrainfoProfile(models.Model):
 
     def __str__(self):
         """Human-readable representation."""
-        return f"{self.haztrak_profile.user.username}"
+        return f"{self.haztrak_profile.user.get_username()}"
 
     @property
     def has_rcrainfo_api_id_key(self) -> bool:

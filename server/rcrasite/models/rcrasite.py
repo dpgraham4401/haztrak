@@ -5,6 +5,7 @@ from typing import Optional
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
 
 from rcrasite.models import Address, Contact, RcraPhone
@@ -21,11 +22,11 @@ class RcraSiteType(models.TextChoices):
     BROKER = "Broker"
 
 
-class RcraSiteManager(models.Manager):
+class RcraSiteManager(Manager["RcraSite"]):
     """RcraSite Model database querying interface."""
 
-    def __init__(self):
-        self.handler_data = None
+    def __init__(self) -> None:
+        self.handler_data: dict | None = None
         super().__init__()
 
     def get_by_epa_id(self, epa_id: str) -> "RcraSite":
@@ -53,16 +54,18 @@ class RcraSiteManager(models.Manager):
             )
         except KeyError as exc:
             msg = f"Missing required data for {self.model.__class__.__name__}: {exc}"
-            logger.warning(msg)
+            logger.exception(msg, exc_info=exc)
+            return None
         else:
             return rcra_site
 
     def get_emergency_phone(self) -> RcraPhone | None:
         """Check if emergency phone is present and create an RcraPhone row."""
         try:
-            emergency_phone_data = self.handler_data.pop("emergency_phone")
+            emergency_phone_data = self.handler_data.pop("emergency_phone")  # type: ignore[union-attr]
             if emergency_phone_data is not None:
                 return RcraPhone.objects.create(**emergency_phone_data)
+            return None
         except KeyError as exc:
             logger.debug(exc)
             return None
@@ -70,13 +73,14 @@ class RcraSiteManager(models.Manager):
     def get_address(self, key) -> Address:
         """Remove Address data and create if necessary."""
         try:
-            address = self.handler_data.pop(key)
+            address = self.handler_data.pop(key)  # type: ignore[union-attr]
             if isinstance(address, Address):
                 return address
             return Address.objects.create(**address)
         except KeyError as exc:
             logger.warning(exc)
-            raise ValidationError(exc) from exc
+            msg = "missing required key while creating RcraSite address"
+            raise ValidationError(msg) from exc
 
 
 class RcraSite(models.Model):

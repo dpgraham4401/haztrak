@@ -4,11 +4,13 @@ import logging
 from http import HTTPStatus
 
 from drf_spectacular.utils import OpenApiResponse, extend_schema, inline_serializer
-from rest_framework import mixins, serializers, viewsets
+from rest_framework import serializers
 from rest_framework.generics import GenericAPIView, ListAPIView
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 
 from manifest.models import Manifest
 from manifest.serializers import ManifestSerializer, MtnSerializer, QuickerSignSerializer
@@ -25,7 +27,7 @@ from org.services import sync_site_manifest_with_rcrainfo
 logger = logging.getLogger(__name__)
 
 
-class ManifestViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.CreateModelMixin):
+class ManifestViewSet(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
     """Local CRUD operations for HazTrak manifests."""
 
     lookup_field = "mtn"
@@ -40,7 +42,7 @@ class ManifestViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins
         manifest_serializer = self.serializer_class(data=request.data)
         manifest_serializer.is_valid(raise_exception=True)
         manifest = create_manifest(
-            username=request.user.username,
+            username=request.user.get_username(),
             data=manifest_serializer.validated_data,
         )
         data = ManifestSerializer(manifest).data
@@ -72,7 +74,7 @@ class ManifestViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins
 
 
 @extend_schema(request=ManifestSerializer)
-class ElectronicManifestSaveView(GenericAPIView):
+class ElectronicManifestSaveView(GenericAPIView[Manifest]):
     """Save a manifest to RCRAInfo."""
 
     queryset = None
@@ -83,7 +85,7 @@ class ElectronicManifestSaveView(GenericAPIView):
         """Electronic Manifest Save View."""
         manifest_serializer = self.serializer_class(data=request.data)
         manifest_serializer.is_valid(raise_exception=True)
-        data = save_emanifest(username=request.user.username, data=manifest_serializer.data)
+        data = save_emanifest(username=request.user.get_username(), data=manifest_serializer.data)
         return Response(data=data, status=HTTPStatus.CREATED)
 
 
@@ -117,7 +119,7 @@ class ElectronicManifestSignView(GenericAPIView):
         quicker_serializer = self.serializer_class(data=request.data)
         quicker_serializer.is_valid(raise_exception=True)
         signature = quicker_serializer.save()
-        emanifest = EManifest(username=request.user.username)
+        emanifest = EManifest(username=request.user.get_username())
         data: TaskResponse = emanifest.sign(signature=signature)
         return Response(data=data, status=HTTPStatus.OK)
 
@@ -150,7 +152,7 @@ class SiteManifestSyncView(APIView):
         serializer = self.SyncSiteManifestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = sync_site_manifest_with_rcrainfo(
-            username=request.user.username,
+            username=request.user.get_username(),
             **serializer.validated_data,
         )
         return Response(data=data, status=HTTPStatus.OK)

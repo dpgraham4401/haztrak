@@ -73,17 +73,17 @@ class RcraSiteSearch:
             msg = "Invalid site type"
             raise ValueError(msg)
 
-    def site_type(self, site_type: str) -> "RcraSiteSearch":
+    def site_type(self, site_type: str | None) -> "RcraSiteSearch":
         """Set the site type."""
         self._site_type = site_type
         return self
 
-    def state(self, state: str) -> "RcraSiteSearch":
+    def state(self, state: str | None) -> "RcraSiteSearch":
         """Set the state."""
         self._state = state
         return self
 
-    def epa_id(self, epa_id: str) -> "RcraSiteSearch":
+    def epa_id(self, epa_id: str | None) -> "RcraSiteSearch":
         """Set the EPA ID."""
         self._epa_id = epa_id
         return self
