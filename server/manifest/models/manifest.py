@@ -114,8 +114,8 @@ class ManifestManager(Manager["Manifest"]):
     @classmethod
     def save(cls, instance: Optional["Manifest"], **manifest_data: dict) -> "Manifest":
         """Update or Create a manifest with its related models instances."""
-        waste_data: list[dict] = manifest_data.pop("wastes", [])
-        transporter_data: list[dict] = manifest_data.pop("transporters", [])
+        waste_data = manifest_data.pop("wastes", [])
+        transporter_data = manifest_data.pop("transporters", [])
         if instance:
             manifest = cls.update_manifest(instance, **manifest_data)
         else:

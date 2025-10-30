@@ -69,6 +69,8 @@ class EManifest:
     @property
     def is_available(self) -> bool:
         """Check if e-Manifest is available."""
+        if not self.rcrainfo:
+            return False
         return self.rcrainfo.has_rcrainfo_credentials
 
     def pull(self, tracking_numbers: list[str]) -> dict[str, list]:
@@ -91,7 +93,7 @@ class EManifest:
         signature.mtn = self._filter_mtn(
             mtn=signature.mtn,
             site_id=signature.site_id,
-            site_type=signature.site_type,
+            site_type=signature.site_type,  # type: ignore[arg-type]
         )
         signature_serializer = QuickerSignSerializer(signature)
         task = sign_manifest_task.delay(username=self.username, **signature_serializer.data)

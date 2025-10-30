@@ -35,8 +35,8 @@ class EmanifestSearch:
         self.status: EmanifestStatus | None = None
         self.site_type: SiteType | None = None
         self.date_type: DateType | None = None
-        self.start_date: datetime | None = None
-        self.end_date: datetime | None = None
+        self.start_date: datetime | str | None = None
+        self.end_date: datetime | str | None = None
         self.correction_request_status: CorrectionRequestStatus | None = None
 
     @property

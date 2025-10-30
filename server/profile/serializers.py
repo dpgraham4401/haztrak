@@ -117,13 +117,13 @@ class RcrainfoSitePermissionsSerializer(RcraSitePermissionSerializer):
     BiennialReport = RcraPermissionField(
         source="biennial_report",
     )
-    eManifest = RcraPermissionField(
+    eManifest = RcraPermissionField(  # type: ignore[assignment]
         source="e_manifest",
     )
-    WIETS = RcraPermissionField(
+    WIETS = RcraPermissionField(  # type: ignore[assignment]
         source="wiets",
     )
-    myRCRAid = RcraPermissionField(
+    myRCRAid = RcraPermissionField(  # type: ignore[assignment]
         source="my_rcra_id",
     )
 
