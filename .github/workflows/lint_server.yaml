@@ -37,7 +37,7 @@ jobs:
           cache-dependency-glob: "**/pyproject.toml"
 
       - name: "Install Python dependencies"
-        run: uv sync --locked --all-extras --lint
+        run: uv sync --locked --group lint
 
       - name: "Lint Python"
         run: uv run ruff check . -e
