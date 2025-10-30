@@ -11,11 +11,7 @@ env:
 
 on:
   pull_request:
-    branches: ["main"]
-    paths:
-      - "server/**"
-      - ".github/workflows/test_server.yaml"
-  push:
+    branches: [ "main" ]
     paths:
       - "server/**"
       - ".github/workflows/test_server.yaml"
@@ -36,7 +32,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: [ "3.12" ]
 
     services:
       postgres:

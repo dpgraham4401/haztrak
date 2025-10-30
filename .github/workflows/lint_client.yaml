@@ -1,8 +1,10 @@
 name: "Lint Client"
 
 on:
-  push:
   pull_request:
+    paths:
+      - "client/**"
+      - ".github/workflows/*"
 
 permissions:
   contents: read

@@ -6,10 +6,6 @@ on:
     paths:
       - "server/**"
       - ".github/workflows/*"
-  push:
-    paths:
-      - "server/**"
-      - ".github/workflows/*"
   workflow_call:
   workflow_dispatch:
 
