@@ -1,8 +1,9 @@
 """API schemas for the Core app."""
 
 from datetime import datetime
+from typing import Any, Literal
 
-from ninja import ModelSchema
+from ninja import ModelSchema, Schema
 from pydantic import ConfigDict, Field
 
 from core.models import TrakUser
@@ -30,3 +31,26 @@ class TrakUserSchema(ModelSchema):
             "username",
             "email",
         ]
+
+
+class ErrorSchema(Schema):
+    """Generic error response schema."""
+
+    error: str
+
+
+class TaskStatusSchema(Schema):
+    """Schema representing the status of a long-running task."""
+
+    task_id: str
+    task_name: str
+    status: Literal["PENDING", "STARTED", "SUCCESS", "FAILURE", "NOT FOUND"]
+    created_date: datetime | None = None
+    done_date: datetime | None = None
+    result: dict[str, Any] | list[Any] | None = None
+
+
+class TaskUnknownSchema(Schema):
+    """Schema used when a taskId is unknown."""
+
+    task_id: str
