@@ -154,6 +154,15 @@ plugins = [
     "mypy_drf_plugin.main",
     "pydantic.mypy"
 ]
+packages = [
+    "haztrak",
+    "core",
+    "org",
+    "rcrasite",
+    "wasteline",
+    "manifest",
+    "profile",
+]
 exclude = [
     '/migrations\/.*.py',
     '.*\/tests\/.*\.py',
