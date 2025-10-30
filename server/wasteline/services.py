@@ -1,5 +1,7 @@
 """Use case services for the wasteline app."""
 
+from django.db.models import QuerySet
+
 from wasteline.models import DotLookup, WasteCode
 
 
@@ -25,7 +27,7 @@ def filter_dot_id_numbers(query: str | None) -> list[str]:
     return [option.value for option in queryset]
 
 
-def get_state_waste_codes(state_code: str) -> list[str]:
+def get_state_waste_codes(state_code: str) -> QuerySet[WasteCode]:
     """Get a list of state waste codes for a given state."""
     state_code_length = 2
     if len(state_code) != state_code_length:

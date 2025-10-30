@@ -5,6 +5,7 @@ from re import match
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Manager
 from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
@@ -202,7 +203,7 @@ class Address(models.Model):
         return f" {self.address1}"
 
 
-class ContactManager(models.Manager):
+class ContactManager(Manager["Contact"]):
     """Contact Model database querying interface."""
 
     def save(self, **contact_data) -> "Contact":

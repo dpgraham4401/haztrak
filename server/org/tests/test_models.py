@@ -24,7 +24,7 @@ class TestOrgModel:
         profile_factory(user=admin, rcrainfo_profile=rcra_profile)
         org = org_factory(admin=admin)
         # Act
-        api_id, api_key = org.rcrainfo_api_id_key
+        api_id, api_key = org.rcrainfo_api_credentials
         # Assert
         assert api_id == mock_api_id
         assert api_key == mock_api_key

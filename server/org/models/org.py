@@ -99,7 +99,7 @@ class Org(Model):
         return f"{self.name}"
 
     @property
-    def rcrainfo_api_id_key(self) -> tuple[str | None, str | None]:
+    def rcrainfo_api_credentials(self) -> tuple[str | None, str | None]:
         """Returns the RcraInfo API credentials for the admin user."""
         try:
             rcrainfo_profile = RcrainfoProfile.objects.get(haztrak_profile__user=self.admin)

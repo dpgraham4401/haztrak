@@ -25,23 +25,23 @@ def get_org_by_slug(org_slug: str) -> Org:
     return Org.objects.get_by_slug(org_slug)
 
 
-def get_org_rcrainfo_api_credentials(org_id: str) -> tuple[str, str] | None:
+def get_org_rcrainfo_api_credentials(org_id: str) -> tuple[str | None, str | None] | None:
     """Returns a tuple of (rcrainfo_api_id, rcrainfo_api_key)."""
     try:
         org = get_org_by_id(org_id)
         if org.is_rcrainfo_integrated:
-            return org.rcrainfo_api_id_key
+            return org.rcrainfo_api_credentials
         return None
     except Org.DoesNotExist:
         return None
 
 
-def get_rcrainfo_api_credentials_by_user(user_id: str) -> tuple[str, str] | None:
+def get_rcrainfo_api_credentials_by_user(user_id: str) -> tuple[str | None, str | None] | None:
     """Returns a tuple of (rcrainfo_api_id, rcrainfo_api_key) corresponding to the user's org."""
     try:
         org = Org.objects.get(admin__id=user_id)
         if org.is_rcrainfo_integrated:
-            return org.rcrainfo_api_id_key
+            return org.rcrainfo_api_credentials
         return None
     except Org.DoesNotExist:
         return None

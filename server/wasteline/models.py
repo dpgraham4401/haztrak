@@ -5,6 +5,7 @@ from typing import ClassVar, Optional
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Manager, Model, QuerySet, TextChoices
 from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
@@ -104,7 +105,7 @@ class WasteLine(models.Model):
         return f"{self.manifest} line {self.line_number}"
 
 
-class FederalWasteCodeManager(models.Manager):
+class FederalWasteCodeManager(Manager["WasteCode"]):
     """WasteCode model manager for dealing with Federal Waste Codes."""
 
     def get_queryset(self):
@@ -112,10 +113,10 @@ class FederalWasteCodeManager(models.Manager):
         return super().get_queryset().filter(code_type=WasteCode.CodeType.FEDERAL)
 
 
-class StateWasteCodeManager(models.Manager):
+class StateWasteCodeManager(Manager["WasteCode"]):
     """WasteCode model manager for dealing with State Waste Codes."""
 
-    def filter_by_state_id(self, state_id: str) -> models.QuerySet:
+    def filter_by_state_id(self, state_id: str) -> QuerySet:
         """Get a list of state waste codes by state id."""
         return self.filter(state_id=state_id)
 
@@ -124,10 +125,10 @@ class StateWasteCodeManager(models.Manager):
         return super().get_queryset().filter(code_type=WasteCode.CodeType.STATE)
 
 
-class WasteCode(models.Model):
+class WasteCode(Model):
     """Manifest Federal and state waste codes."""
 
-    class CodeType(models.TextChoices):
+    class CodeType(TextChoices):
         """Waste code type."""
 
         STATE = "ST", _("State")
@@ -280,7 +281,7 @@ class WasteCode(models.Model):
         return f"{self.code}"
 
 
-class DotLookupType(models.TextChoices):
+class DotLookupType(TextChoices):
     """DOT Lookup value types."""
 
     ID = ("ID", _("Id"))  # DOT ID number
@@ -289,7 +290,7 @@ class DotLookupType(models.TextChoices):
     CLASS = ("CLASS", _("Class"))  # DOT Hazard class
 
 
-class DotLookupBaseManager(models.Manager):
+class DotLookupBaseManager(Manager["DotLookup"]):
     """Base Model manager for DOT lookup options."""
 
     def filter_by_value(self, value: str | None) -> models.QuerySet:
@@ -333,7 +334,7 @@ class HazardClass(DotLookupBaseManager):
         return super().get_queryset().filter(value_type=DotLookupType.CLASS)
 
 
-class DotLookup(models.Model):
+class DotLookup(Model):
     """data used to construct Department of Transportation (DOT) shipping descriptions."""
 
     objects = models.Manager()
