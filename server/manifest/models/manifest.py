@@ -37,7 +37,7 @@ class ManifestHandlerFilter(ABC):
     """Interface for filtering manifests by handler."""
 
     @abstractmethod
-    def filter_by_epa_id(self, epa_id: str) -> QuerySet:
+    def filter_by_epa_id(self, epa_id: str) -> Q:
         """Filter manifests by handler epa_id."""
 
 
