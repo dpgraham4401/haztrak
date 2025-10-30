@@ -117,7 +117,7 @@ class TransporterManager(HandlerManager["Transporter"]):
                 rcra_site = RcraSite.objects.get(epa_id=data["rcra_site"]["epa_id"])
                 data.pop("rcra_site")
             else:
-                rcra_site: RcraSite | None = RcraSite.objects.save(None, **data.pop("rcra_site"))
+                rcra_site: RcraSite | None = RcraSite.objects.save(None, **data.pop("rcra_site"))  # type: ignore[no-redef]
             transporter, _created = self.model.objects.update_or_create(
                 manifest=data.pop("manifest"),
                 order=data.pop("order"),

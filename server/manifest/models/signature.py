@@ -204,10 +204,10 @@ class QuickerSign:
         # If it's a string, it should be in the appropriate ISO format
         elif isinstance(printed_date, str):
             try:
-                self.printed_date: datetime = datetime.fromisoformat(printed_date)
+                self.printed_date: datetime = datetime.fromisoformat(printed_date)  # type: ignore[no-redef]
             # If error, default to current time
             except ValueError:
-                self.printed_date: datetime = datetime.utcnow().replace(tzinfo=UTC)
+                self.printed_date: datetime = datetime.utcnow().replace(tzinfo=UTC)  # type: ignore[no-redef]
         else:
             msg = f"printed_date must be string or datetime, received {type(printed_date)}"
             raise TypeError(
