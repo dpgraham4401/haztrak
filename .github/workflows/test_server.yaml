@@ -30,13 +30,9 @@ jobs:
       run:
         working-directory: ./server
 
-    strategy:
-      matrix:
-        python-version: [ "3.12" ]
-
     services:
       postgres:
-        image: postgres:16
+        image: postgres:17
         env:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
@@ -50,16 +46,23 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v3
+      - name: 'Checkout repository'
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup Python'
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "./server/.python-version"
 
       - name: "Install uv"
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
         with:
-          python-version: 3.12
-          pyproject-file: "./pyproject.toml"
+          cache-dependency-glob: "**/pyproject.toml"
 
       - name: "Install Python dependencies"
-        run: uv sync --all-extras --dev
+        run: uv sync --locked --group test
 
       - name: "Run Tests"
         env:
