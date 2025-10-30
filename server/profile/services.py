@@ -29,7 +29,7 @@ def get_or_create_profile(*, username: str) -> tuple[Profile, bool]:
 
 def get_user_profile(*, user: "AbstractBaseUser") -> Profile:
     """Retrieve a user's Profile."""
-    return Profile.objects.get_profile_by_user(user=user)  # type: ignore[attr-defined]
+    return Profile.objects.get_profile_by_user(user=user)
 
 
 def get_user_rcrainfo_profile(*, user: "User") -> RcrainfoProfile:

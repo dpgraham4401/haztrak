@@ -129,7 +129,7 @@ def get_rcra_client(
         try:
             org: Org = Org.objects.get_by_username(username)
             if org.is_rcrainfo_integrated:
-                api_id, api_key = org.rcrainfo_api_credentials  # type: ignore[misc]
+                api_id, api_key = org.rcrainfo_api_credentials
             return RcraClient(
                 api_id=api_id,
                 api_key=api_key,
