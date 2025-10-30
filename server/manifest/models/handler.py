@@ -109,7 +109,7 @@ class TransporterManager(HandlerManager["Transporter"]):
 
     def save(self, instance: Optional["Transporter"], **data: dict) -> "Transporter":
         """Create a Transporter from a manifest instance and rcra_site dict."""
-        e_signatures = data.pop("e_signatures", [])
+        e_signatures: list = data.pop("e_signatures", [])
         if data.get("paper_signature") is not None:
             data["paper_signature"] = PaperSignature.objects.create(**data.pop("paper_signature"))  # type: ignore[assignment]
         try:

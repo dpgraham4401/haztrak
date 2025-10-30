@@ -173,7 +173,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class RcrainfoProfileSerializer(serializers.ModelSerializer):
     """Model serializer for marshalling/unmarshalling a user's RcrainfoProfile."""
 
-    user = serializers.StringRelatedField(
+    user = serializers.StringRelatedField(  # type: ignore[var-annotated]
         source="haztrak_profile",
     )
     rcraSites = RcraSitePermissionSerializer(
