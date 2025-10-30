@@ -1,6 +1,8 @@
 name: Lint Python files
+
 permissions:
   contents: read
+
 on:
   pull_request:
     paths:
@@ -8,6 +10,9 @@ on:
       - ".github/workflows/*"
   workflow_call:
   workflow_dispatch:
+
+env:
+  UV_SYSTEM_PYTHON: 1
 
 jobs:
   lint:
@@ -23,14 +28,15 @@ jobs:
         with:
           python-version: 3.13
 
+
       - name: "Install Python dependencies"
         run: uv sync --all-extras --dev
 
       - name: "Lint Python"
-        run: uv run ruff check . -e
+        run: ruff check . -e
 
       - name: "Format Python"
-        run: uv run ruff format . --check
+        run: ruff format . --check
 
       - name: "Type Check Python"
         run: mypy
