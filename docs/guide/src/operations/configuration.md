@@ -54,7 +54,7 @@ The follow variables are required, haztrak will exit if not present.
   - Description: the URL that the server will serve from,
     see [Django's ALLOWED_HOSTS documentation](https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts)
     - Haztrak currently only accepts one value
-- `HT_TIMEZONE`
+- `TRAK_TIMEZONE`
   - Value: one of the approved names from
     the [TZ Database list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
   - Default: 'UTC'

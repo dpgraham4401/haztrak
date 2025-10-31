@@ -20,7 +20,7 @@ services:
       HT_SECRET_KEY: ${HT_SECRET_KEY}
       TRAK_DEBUG: true
       HT_LOG_LEVEL: ${HT_LOG_LEVEL}
-      HT_TIMEZONE: ${HT_TIMEZONE}
+      TRAK_TIMEZONE: ${TRAK_TIMEZONE}
       HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}
       HT_CORS_DOMAIN: "http://localhost"
       REDIS_URL: ${REDIS_URL}

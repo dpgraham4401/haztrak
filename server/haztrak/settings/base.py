@@ -11,9 +11,8 @@ env = Env()
 # Globals
 HAZTRAK_VERSION = "0.7.2"
 DEBUG = env.bool("TRAK_DEBUG", False)
-
+TIME_ZONE = env.str("TRAK_TIMEZONE", "America/New_York")
 # Environment variable mappings
-TIMEZONE_ENV = "HT_TIMEZONE"
 TEST_DB_NAME_ENV = "HT_TEST_DB_NAME"
 HT_LOG_LEVEL = os.getenv("HT_LOG_LEVEL", "INFO")
 HT_SIGNING_KEY = os.getenv(
@@ -133,7 +132,6 @@ SOCIALACCOUNT_PROVIDERS = {"google": {"EMAIL_AUTHENTICATION": True}}
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = os.getenv(TIMEZONE_ENV, "UTC")
 USE_I18N = False
 USE_TZ = True
 
