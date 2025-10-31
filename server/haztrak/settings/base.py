@@ -36,9 +36,11 @@ INSTALLED_APPS = [
     "guardian",
     "rest_framework",
     "rest_framework.authtoken",
+    "allauth",
     "allauth.account",
     "allauth.headless",
     "allauth.socialaccount",
+    "allauth.mfa",
     "allauth.usersessions",
     "corsheaders",
     "django_extensions",
@@ -191,6 +193,7 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE": "_auth",
     "JWT_AUTH_RETURN_EXPIRATION": True,
 }
+SITE_ID = 1
 
 # AllAuth
 HEADLESS_ONLY = True
@@ -201,7 +204,6 @@ HEADLESS_FRONTEND_URLS = {
     "account_signup": "/account/signup",
     "socialaccount_login_error": "/account/provider/callback",
 }
-SITE_ID = 1
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
