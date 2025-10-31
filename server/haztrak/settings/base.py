@@ -204,6 +204,8 @@ HEADLESS_FRONTEND_URLS = {
     "account_signup": "/account/signup",
     "socialaccount_login_error": "/account/provider/callback",
 }
+HEADLESS_SERVE_SPECIFICATION = True
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = DEBUG
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),

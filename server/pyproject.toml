@@ -39,6 +39,7 @@ dependencies = [
     "uvicorn-worker>=0.4.0",
     "django-ninja>=1.4.5",
     "pydantic>=2.12.3",
+    "environs[django]>=14.4.0",
 ]
 
 [dependency-groups]

@@ -290,6 +290,27 @@ wheels = [
 ]
 
 [[package]]
+name = "dj-database-url"
+version = "3.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/75/05/2ec51009f4ce424877dbd8ad95868faec0c3494ed0ff1635f9ab53d9e0ee/dj_database_url-3.0.1.tar.gz", hash = "sha256:8994961efb888fc6bf8c41550870c91f6f7691ca751888ebaa71442b7f84eff8", size = 12556, upload-time = "2025-07-02T09:40:11.424Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/aa/5e/86a43c6fdaa41c12d58e4ff3ebbfd6b71a7cb0360a08614e3754ef2e9afb/dj_database_url-3.0.1-py3-none-any.whl", hash = "sha256:43950018e1eeea486bf11136384aec0fe55b29fe6fd8a44553231b85661d9383", size = 8808, upload-time = "2025-07-02T09:40:26.326Z" },
+]
+
+[[package]]
+name = "dj-email-url"
+version = "1.0.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/14/ef/8eb478accd9b0369d46a98d1b43027ee0c254096149265c78e6b2e2fa3b0/dj-email-url-1.0.6.tar.gz", hash = "sha256:55ffe3329e48f54f8a75aa36ece08f365e09d61f8a209773ef09a1d4760e699a", size = 15590, upload-time = "2022-09-24T11:04:50.281Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8a/f9/fcb9745099d821f9a26092d3d6f4df8f10049885045c3a93ff726d2e40a6/dj_email_url-1.0.6-py2.py3-none-any.whl", hash = "sha256:cbd08327fbb08b104eac160fb4703f375532e4c0243eb230f5b960daee7a96db", size = 6296, upload-time = "2022-09-24T11:04:47.191Z" },
+]
+
+[[package]]
 name = "django"
 version = "5.2.7"
 source = { registry = "https://pypi.org/simple" }
@@ -322,6 +343,15 @@ socialaccount = [
     { name = "oauthlib" },
     { name = "pyjwt", extra = ["crypto"] },
     { name = "requests" },
+]
+
+[[package]]
+name = "django-cache-url"
+version = "3.4.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/20/28/d420aaa89028d2ec0cf17c1510d06ff6a8ed0bf1abfb7f33c999e1c5befa/django-cache-url-3.4.5.tar.gz", hash = "sha256:eb9fb194717524348c95cad9905b70b647452741c1d9e481fac6d2125f0ad917", size = 7230, upload-time = "2023-12-04T17:19:46.21Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/48/90/01755e4a42558b763f7021e9369aa6aa94c2ede7313deed56cb7483834ab/django_cache_url-3.4.5-py2.py3-none-any.whl", hash = "sha256:5f350759978483ab85dc0e3e17b3d53eed3394a28148f6bf0f53d11d0feb5b3c", size = 4760, upload-time = "2023-12-04T17:19:44.355Z" },
 ]
 
 [[package]]
@@ -524,6 +554,26 @@ wheels = [
 ]
 
 [[package]]
+name = "environs"
+version = "14.4.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "marshmallow" },
+    { name = "python-dotenv" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/81/2f/e5b6f9a260165328edccd773e38923f71da5862bab2402630d8cb82cd29d/environs-14.4.0.tar.gz", hash = "sha256:7d9151d0710fc1b02f68bec6863d804ed10121925fb658bbdcb9fc7ddf704f62", size = 35070, upload-time = "2025-10-29T16:48:35.63Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f0/e9/da61e470fb463bbc244ea76a26a0f4afa5e86b4aa5697d816cdd1b90708a/environs-14.4.0-py3-none-any.whl", hash = "sha256:fcd1b0259a2ac1f9ce6e2d2bdbbd51483b83533c37cea1524d5d4abde611270a", size = 17104, upload-time = "2025-10-29T16:48:34.206Z" },
+]
+
+[package.optional-dependencies]
+django = [
+    { name = "dj-database-url" },
+    { name = "dj-email-url" },
+    { name = "django-cache-url" },
+]
+
+[[package]]
 name = "execnet"
 version = "2.1.1"
 source = { registry = "https://pypi.org/simple" }
@@ -604,6 +654,7 @@ dependencies = [
     { name = "djangorestframework" },
     { name = "drf-spectacular" },
     { name = "emanifest" },
+    { name = "environs", extra = ["django"] },
     { name = "gunicorn" },
     { name = "pillow" },
     { name = "psycopg", extra = ["binary"] },
@@ -678,6 +729,7 @@ requires-dist = [
     { name = "djangorestframework", specifier = "==3.16.1" },
     { name = "drf-spectacular", specifier = "==0.28.0" },
     { name = "emanifest", specifier = "==4.0.3" },
+    { name = "environs", extras = ["django"], specifier = ">=14.4.0" },
     { name = "gunicorn", specifier = "==23.0.0" },
     { name = "pillow", specifier = "==12.0.0" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.2.12" },
@@ -827,6 +879,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/60/0a/128b65651ed8120460fc5af754241ad595eac74993115ec0de4f2d7bc459/kombu-5.5.3.tar.gz", hash = "sha256:021a0e11fcfcd9b0260ef1fb64088c0e92beb976eb59c1dfca7ddd4ad4562ea2", size = 461784, upload-time = "2025-04-16T12:46:17.014Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5d/35/1407fb0b2f5b07b50cbaf97fce09ad87d3bfefbf64f7171a8651cd8d2f68/kombu-5.5.3-py3-none-any.whl", hash = "sha256:5b0dbceb4edee50aa464f59469d34b97864be09111338cfb224a10b6a163909b", size = 209921, upload-time = "2025-04-16T12:46:15.139Z" },
+]
+
+[[package]]
+name = "marshmallow"
+version = "4.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/cc/ff/8f092fe402ef12aa71b7f4ceba0c557ce4d5876a9cf421e01a67b7210560/marshmallow-4.0.1.tar.gz", hash = "sha256:e1d860bd262737cb2d34e1541b84cb52c32c72c9474e3fe6f30f137ef8b0d97f", size = 220453, upload-time = "2025-08-28T15:01:37.044Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cc/18/297efc62b3539b9cd379fc49be3740a02e4c8a43e486f50322cfe0b9568a/marshmallow-4.0.1-py3-none-any.whl", hash = "sha256:72f14ef346f81269dbddee891bac547dda1501e9e08b6a809756ea3dbb7936a1", size = 48414, upload-time = "2025-08-28T15:01:35.221Z" },
 ]
 
 [[package]]
