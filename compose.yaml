@@ -23,7 +23,7 @@ services:
       HT_TIMEZONE: ${HT_TIMEZONE}
       HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}
       HT_CORS_DOMAIN: "http://localhost"
-      HT_CACHE_URL: ${HT_CACHE_URL}
+      REDIS_URL: ${REDIS_URL}
       HT_DB_ENGINE: ${HT_DB_ENGINE}
       HT_DB_NAME: ${HT_DB_NAME}
       HT_DB_USER: ${HT_DB_USER}

@@ -10,11 +10,9 @@ env = Env()
 
 # Globals
 HAZTRAK_VERSION = "0.7.2"
-
 DEBUG = env.bool("TRAK_DEBUG", False)
 
 # Environment variable mappings
-CACHE_URL = "HT_CACHE_URL"
 TIMEZONE_ENV = "HT_TIMEZONE"
 TEST_DB_NAME_ENV = "HT_TEST_DB_NAME"
 HT_LOG_LEVEL = os.getenv("HT_LOG_LEVEL", "INFO")
@@ -178,13 +176,13 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
+REDIS_URL = env.str("REDIS_URL", "redis://redis:6379")
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": os.getenv(CACHE_URL, "redis://redis:6379"),
+        "LOCATION": REDIS_URL,
     },
 }
-REDIS_URL = os.getenv(CACHE_URL, "redis://redis:6379")  # used for Health Checks
 
 # Celery
 CELERY_TASK_TRACK_STARTED = True

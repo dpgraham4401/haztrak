@@ -71,7 +71,7 @@ The follow variables are required, haztrak will exit if not present.
     deployed
   - Example for local development: should be something like
     `http://localhost:3000` or `http://localhost`
-- `HT_CACHE_URL`
+- `REDIS_URL`
   - URL that points to the cache, in this instance Redis
   - Example for local development: should be something like
     `redis://localhost:6379`
