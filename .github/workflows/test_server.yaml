@@ -71,7 +71,7 @@ jobs:
           HT_TIMEZONE: America/New_York
           HT_HOST: localhost
           HT_RCRAINFO_ENV: preprod
-          HT_DEBUG: true
+          TRAK_DEBUG: true
           HT_DB_ENGINE: django.db.backends.postgresql
           HT_DB_HOST: localhost
           HT_DB_USER: ${{ env.POSTGRES_USER }}

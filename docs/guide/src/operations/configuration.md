@@ -43,7 +43,7 @@ The follow variables are required, haztrak will exit if not present.
 
 ### Optional (server)
 
-- `HT_DEBUG`
+- `TRAK_DEBUG`
   - Value: `True` or `False`
   - Default: `False`
   -

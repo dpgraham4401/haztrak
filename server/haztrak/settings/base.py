@@ -4,8 +4,14 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from environs import Env
+
+env = Env()
+
 # Globals
 HAZTRAK_VERSION = "0.7.2"
+
+DEBUG = env.bool("TRAK_DEBUG", False)
 
 # Environment variable mappings
 CACHE_URL = "HT_CACHE_URL"

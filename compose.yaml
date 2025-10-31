@@ -18,7 +18,7 @@ services:
       CELERY_BROKER_URL: "redis://redis:6379"
       HT_HOST: "http://localhost"
       HT_SECRET_KEY: ${HT_SECRET_KEY}
-      HT_DEBUG: true
+      TRAK_DEBUG: true
       HT_LOG_LEVEL: ${HT_LOG_LEVEL}
       HT_TIMEZONE: ${HT_TIMEZONE}
       HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}
