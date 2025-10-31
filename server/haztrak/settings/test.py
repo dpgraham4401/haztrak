@@ -29,6 +29,3 @@ DATABASES = {
     },
 }
 FIXTURE_DIRS = ["fixtures"]
-
-# Haztrak settings
-os.environ["HT_RCRAINFO_ENV"] = "PREPROD"

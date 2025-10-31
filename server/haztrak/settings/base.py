@@ -20,6 +20,13 @@ class LogLevel(StrEnum):
     CRITICAL = "CRITICAL"
 
 
+class RcrainfoEnv(StrEnum):
+    """RCRAInfo environment enumeration."""
+
+    PROD = "prod"
+    PREPROD = "preprod"
+
+
 # Globals
 HAZTRAK_VERSION = "0.7.2"
 with env.prefixed("TRAK_"):
@@ -28,6 +35,7 @@ with env.prefixed("TRAK_"):
     LOG_LEVEL = env.enum("LOG_LEVEL", default=LogLevel.INFO, enum=LogLevel)
     SIGNING_KEY = env.str("SIGNING_KEY")
     SECRET_KEY = env.str("SECRET_KEY")
+    RCRAINFO_ENV = env.enum("RCRAINFO_ENV", enum=RcrainfoEnv, default=RcrainfoEnv.PREPROD)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent

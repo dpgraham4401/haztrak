@@ -21,7 +21,7 @@ services:
       TRAK_DEBUG: true
       TRAK_LOG_LEVEL: ${TRAK_LOG_LEVEL}
       TRAK_TIMEZONE: ${TRAK_TIMEZONE}
-      HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}
+      TRAK_RCRAINFO_ENV: ${TRAK_RCRAINFO_ENV}
       HT_CORS_DOMAIN: "http://localhost"
       REDIS_URL: ${REDIS_URL}
       HT_DB_ENGINE: ${HT_DB_ENGINE}
@@ -66,7 +66,7 @@ services:
       DJANGO_SETTINGS_MODULE: "haztrak.settings.dev"
       CELERY_BROKER_URL: "redis://redis:6379"
       CELERY_LOG_LEVEL: ${CELERY_LOG_LEVEL}
-      HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}
+      TRAK_RCRAINFO_ENV: ${TRAK_RCRAINFO_ENV}
       HT_DB_ENGINE: ${HT_DB_ENGINE}
       HT_DB_NAME: ${HT_DB_NAME}
       HT_DB_USER: ${HT_DB_USER}
@@ -93,7 +93,7 @@ services:
       DJANGO_SETTINGS_MODULE: "haztrak.settings.dev"
       CELERY_BROKER_URL: "redis://redis:6379"
       CELERY_LOG_LEVEL: ${CELERY_LOG_LEVEL}
-      HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}
+      TRAK_RCRAINFO_ENV: ${TRAK_RCRAINFO_ENV}
       HT_DB_ENGINE: ${HT_DB_ENGINE}
       HT_DB_NAME: ${HT_DB_NAME}
       HT_DB_USER: ${HT_DB_USER}

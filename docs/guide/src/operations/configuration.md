@@ -61,7 +61,7 @@ The follow variables are required, haztrak will exit if not present.
   - Description: see Django's documentation
     on [TIME_ZONE](https://docs.djangoproject.com/en/stable/ref/settings/#time-zone-1)
     - In the future, `USE_TZ` will be enabled by default
-- `HT_RCRAINFO_ENV`
+- `TRAK_RCRAINFO_ENV`
   - Value: `preprod`, `prod`, or the base url of the target RCRAInfo environment
   - Default: `preprod` (for now in the current development phase)
   - Description: RCRAInfo environment that Haztrak will interface with per

@@ -5,7 +5,7 @@ metadata:
 data:
   HT_SECRET_KEY: "{{ .Values.env.secretKey }}"
   HT_CORS_DOMAINS: "{{ .Values.env.corsDomains }}"
-  HT_RCRAINFO_ENV: "{{ .Values.env.rcraInfoEnv }}"
+  TRAK_RCRAINFO_ENV: "{{ .Values.env.rcraInfoEnv }}"
   CELERY_BROKER_URL: "{{ .Values.env.cache.url }}"
   CELERY_RESULT_BACKEND: "django-db"
   HT_DB_HOST: "{{ .Values.env.db.host }}"

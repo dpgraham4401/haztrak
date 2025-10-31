@@ -6,7 +6,6 @@ from .base import *  # noqa: F403
 
 # General
 DEBUG = False
-SECRET_KEY = os.getenv("HT_SECRET_KEY")
 ALLOWED_HOSTS = [os.getenv("HT_HOST")]
 CORS_ORIGIN_WHITELIST = [os.getenv("HT_CORS_DOMAIN", "http://*")]
 
@@ -22,6 +21,3 @@ DATABASES = {
         "PORT": os.environ.get("HT_DB_PORT", "5432"),
     },
 }
-
-# Haztrak settings
-os.environ["HT_RCRAINFO_ENV"] = "PROD"
