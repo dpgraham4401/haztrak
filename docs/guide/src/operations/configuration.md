@@ -100,9 +100,6 @@ may not be recommended for production, but this is an example web application.
 - `HT_DB_PORT`
   - default: `5432`
   - [default for postgres is 5342](https://www.postgresql.org/docs/current/app-postgres.html)
-- `HT_TEST_DB_NAME`
-  - [Name of database used for testing](https://docs.djangoproject.com/en/stable/ref/settings/#test)
-    defaults to `test` if not present
 
 #### Celery
 
@@ -132,7 +129,7 @@ python standard library logging module, levels can be found in their
 documentation here
 https://docs.python.org/3/library/logging.html#logging-levels
 
-- `HT_LOG_LEVEL`
+- `TRAK_LOG_LEVEL`
   - default: `INFO`
 - `CELERY_LOG_LEVEL`
   - default: `INFO`

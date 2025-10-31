@@ -2,19 +2,30 @@
 
 import os
 from datetime import timedelta
+from enum import StrEnum
 from pathlib import Path
 
 from environs import Env
 
 env = Env()
 
+
+class LogLevel(StrEnum):
+    """Log level enumeration."""
+
+    DEBUG = "DEBUG"
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+    CRITICAL = "CRITICAL"
+
+
 # Globals
 HAZTRAK_VERSION = "0.7.2"
 DEBUG = env.bool("TRAK_DEBUG", False)
 TIME_ZONE = env.str("TRAK_TIMEZONE", "America/New_York")
 # Environment variable mappings
-TEST_DB_NAME_ENV = "HT_TEST_DB_NAME"
-HT_LOG_LEVEL = os.getenv("HT_LOG_LEVEL", "INFO")
+TRAK_LOG_LEVEL = env.enum("TRAK_LOG_LEVEL", default=LogLevel.INFO, enum=LogLevel)
 HT_SIGNING_KEY = os.getenv(
     "HT_SIGNING_KEY",
     "0dd3f4e68730bedfb07e6bc2e8f00a56c4db2d4a4b37e64ac0a83b8c97ec55dd",

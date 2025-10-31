@@ -19,7 +19,7 @@ services:
       HT_HOST: "http://localhost"
       HT_SECRET_KEY: ${HT_SECRET_KEY}
       TRAK_DEBUG: true
-      HT_LOG_LEVEL: ${HT_LOG_LEVEL}
+      TRAK_LOG_LEVEL: ${TRAK_LOG_LEVEL}
       TRAK_TIMEZONE: ${TRAK_TIMEZONE}
       HT_RCRAINFO_ENV: ${HT_RCRAINFO_ENV}
       HT_CORS_DOMAIN: "http://localhost"
