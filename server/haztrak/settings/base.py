@@ -22,14 +22,12 @@ class LogLevel(StrEnum):
 
 # Globals
 HAZTRAK_VERSION = "0.7.2"
-DEBUG = env.bool("TRAK_DEBUG", False)
-TIME_ZONE = env.str("TRAK_TIMEZONE", "America/New_York")
-# Environment variable mappings
-TRAK_LOG_LEVEL = env.enum("TRAK_LOG_LEVEL", default=LogLevel.INFO, enum=LogLevel)
-HT_SIGNING_KEY = os.getenv(
-    "HT_SIGNING_KEY",
-    "0dd3f4e68730bedfb07e6bc2e8f00a56c4db2d4a4b37e64ac0a83b8c97ec55dd",
-)
+with env.prefixed("TRAK_"):
+    DEBUG = env.bool("DEBUG", False)
+    TIME_ZONE = env.str("TIMEZONE", "America/New_York")
+    LOG_LEVEL = env.enum("LOG_LEVEL", default=LogLevel.INFO, enum=LogLevel)
+    SIGNING_KEY = env.str("SIGNING_KEY")
+    SECRET_KEY = env.str("SECRET_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -223,7 +221,7 @@ MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = DEBUG
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "SIGNING_KEY": HT_SIGNING_KEY,
+    "SIGNING_KEY": SIGNING_KEY,
     "JWT_AUTH_COOKIE": "auth",
 }
 
