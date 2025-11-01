@@ -40,12 +40,12 @@ jobs:
       - name: "Configure env"
         run: |
           mv ../configs/.env.test .env
-          echo "VITE_HT_ENV=TEST" >> .env
+          echo "VITE_TRAK_ENV=TEST" >> .env
 
       - name: Test Node.js-${{ matrix.node-version }}
         run: npm test
         env:
-          VITE_HT_ENV: "TEST"
+          VITE_TRAK_ENV: "TEST"
 
   test_client_build:
     name: "Test Build Client"

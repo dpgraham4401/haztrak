@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { createMockOrg } from '~/mocks/fixtures/mockUser';
 import { createMockHandler, createMockSite } from '../fixtures';
 
-export const API_BASE_URL = import.meta.env.VITE_HT_API_URL;
+export const API_BASE_URL = import.meta.env.VITE_TRAK_API_URL;
 const mockSites = [createMockSite(), createMockSite()];
 const mockOrgs = [
   createMockOrg(),
@@ -30,7 +30,7 @@ export const mockSiteEndpoints = [
           epaSiteId: siteId,
         },
       }),
-      { status: 200 }
+      { status: 200 },
     );
   }),
   /** Org list*/

@@ -36,27 +36,27 @@ export interface HtApiError extends AxiosError {
  */
 export const htApiBaseQuery =
   (
-    { baseUrl }: { baseUrl: string } = { baseUrl: '/' }
+    { baseUrl }: { baseUrl: string } = { baseUrl: '/' },
   ): BaseQueryFn<
     HtApiQueryArgs, // Args
     unknown, // Result
     HtApiError
     // Meta
   > =>
-  async ({ url, method, data, params, headers }) => {
-    return htApi({ url: baseUrl + url, method, data, params, headers })
-      .then((response) => {
-        return { data: response.data };
-      })
-      .catch((err: AxiosError) => {
-        return {
-          error: {
-            statusText: err.response?.statusText,
-            data: err.response?.data || err.message,
-          } as HtApiError,
-        };
-      });
-  };
+    async ({ url, method, data, params, headers }) => {
+      return htApi({ url: baseUrl + url, method, data, params, headers })
+        .then((response) => {
+          return { data: response.data };
+        })
+        .catch((err: AxiosError) => {
+          return {
+            error: {
+              statusText: err.response?.statusText,
+              data: err.response?.data || err.message,
+            } as HtApiError,
+          };
+        });
+    };
 
 export interface TaskStatus {
   status: 'PENDING' | 'STARTED' | 'SUCCESS' | 'FAILURE' | 'NOT FOUND';
@@ -76,7 +76,7 @@ export const haztrakApi = createApi({
   tagTypes: ['user', 'auth', 'profile', 'rcrainfoProfile', 'site', 'code', 'manifest', 'org'],
   reducerPath: 'haztrakApi',
   baseQuery: htApiBaseQuery({
-    baseUrl: `${import.meta.env.VITE_HT_API_URL}/api/`,
+    baseUrl: `${import.meta.env.VITE_TRAK_API_URL}/api/`,
   }),
   endpoints: (build) => ({
     // Note: build.query<ReturnType, ArgType>

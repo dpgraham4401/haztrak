@@ -41,7 +41,7 @@ const MOCK_TASK_ID = '10043946-9fcb-4ca2-82a4-f1ba2fa9f928';
 const MOCK_BAD_TASK_ID = 'ac9e57dd-07b6-4568-bb42-99a2d6518f97';
 
 /** mock Rest API*/
-const API_BASE_URL = import.meta.env.VITE_HT_API_URL;
+const API_BASE_URL = import.meta.env.VITE_TRAK_API_URL;
 const handlers = [
   http.get(`${API_BASE_URL}/api/task/${MOCK_TASK_ID}`, function* f() {
     let requestCount = 0;

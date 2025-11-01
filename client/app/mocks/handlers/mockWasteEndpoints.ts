@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { mockDotIdNumbers, mockFederalWasteCodes } from '~/mocks/fixtures/mockWaste';
 
 /** mock Rest API*/
-const API_BASE_URL = import.meta.env.VITE_HT_API_URL;
+const API_BASE_URL = import.meta.env.VITE_TRAK_API_URL;
 export const mockWasteEndpoints = [
   /** GET User */
   http.get(`${API_BASE_URL}/api/waste/code/federal`, () => {

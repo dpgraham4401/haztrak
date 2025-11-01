@@ -1,7 +1,5 @@
 """Settings for development environment."""
 
-import os
-
 from .base import *  # noqa: F403, S105, RUF100
 from .base import env
 
@@ -19,12 +17,12 @@ REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [  # noqa: F405
 # https://docs.djangoproject.com/en/stable/ref/settings/#databases
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("HT_DB_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("HT_DB_NAME", "db.sqlite3"),
-        "USER": os.environ.get("HT_DB_USER", "admin"),
-        "PASSWORD": os.environ.get("HT_DB_PASSWORD", "password"),
-        "HOST": os.environ.get("HT_DB_HOST", "localhost"),
-        "PORT": os.environ.get("HT_DB_PORT", "5432"),
+        "ENGINE": env.str("TRAK_DB_ENGINE", "django.db.backends.postgresql"),
+        "NAME": env.str("TRAK_DB_NAME", "db.sqlite3"),
+        "USER": env.str("TRAK_DB_USER", "admin"),
+        "PASSWORD": env.str("TRAK_DB_PASSWORD", "password"),
+        "HOST": env.str("TRAK_DB_HOST", "localhost"),
+        "PORT": env.str("TRAK_DB_PORT", "5432"),
     },
 }
 FIXTURE_DIRS = ["fixtures"]

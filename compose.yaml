@@ -16,20 +16,20 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: "haztrak.settings.dev"
       CELERY_BROKER_URL: "redis://redis:6379"
-      HT_HOST: "http://localhost"
+      TRAK_HOST: "http://localhost"
       TRAK_SECRET_KEY: ${TRAK_SECRET_KEY}
       TRAK_DEBUG: true
       TRAK_LOG_LEVEL: ${TRAK_LOG_LEVEL}
       TRAK_TIMEZONE: ${TRAK_TIMEZONE}
       TRAK_RCRAINFO_ENV: ${TRAK_RCRAINFO_ENV}
       TRAK_CORS_DOMAIN: "http://localhost"
-      REDIS_URL: ${REDIS_URL}
-      HT_DB_ENGINE: ${HT_DB_ENGINE}
-      HT_DB_NAME: ${HT_DB_NAME}
-      HT_DB_USER: ${HT_DB_USER}
-      HT_DB_PASSWORD: ${HT_DB_PASSWORD}
-      HT_DB_HOST: db
-      HT_DB_PORT: ${HT_DB_PORT}
+      TRAK_REDIS_URL: ${TRAK_REDIS_URL}
+      TRAK_DB_ENGINE: ${TRAK_DB_ENGINE}
+      TRAK_DB_NAME: ${TRAK_DB_NAME}
+      TRAK_DB_USER: ${TRAK_DB_USER}
+      TRAK_DB_PASSWORD: ${TRAK_DB_PASSWORD}
+      TRAK_DB_HOST: db
+      TRAK_DB_PORT: ${TRAK_DB_PORT}
     command: |
       sh -c "
       python manage.py makemigrations &&
@@ -67,12 +67,12 @@ services:
       CELERY_BROKER_URL: "redis://redis:6379"
       CELERY_LOG_LEVEL: ${CELERY_LOG_LEVEL}
       TRAK_RCRAINFO_ENV: ${TRAK_RCRAINFO_ENV}
-      HT_DB_ENGINE: ${HT_DB_ENGINE}
-      HT_DB_NAME: ${HT_DB_NAME}
-      HT_DB_USER: ${HT_DB_USER}
-      HT_DB_PASSWORD: ${HT_DB_PASSWORD}
-      HT_DB_HOST: db
-      HT_DB_PORT: ${HT_DB_PORT}
+      TRAK_DB_ENGINE: ${TRAK_DB_ENGINE}
+      TRAK_DB_NAME: ${TRAK_DB_NAME}
+      TRAK_DB_USER: ${TRAK_DB_USER}
+      TRAK_DB_PASSWORD: ${TRAK_DB_PASSWORD}
+      TRAK_DB_HOST: db
+      TRAK_DB_PORT: ${TRAK_DB_PORT}
     command: python manage.py celery_worker
 
   celery-beat:
@@ -94,12 +94,12 @@ services:
       CELERY_BROKER_URL: "redis://redis:6379"
       CELERY_LOG_LEVEL: ${CELERY_LOG_LEVEL}
       TRAK_RCRAINFO_ENV: ${TRAK_RCRAINFO_ENV}
-      HT_DB_ENGINE: ${HT_DB_ENGINE}
-      HT_DB_NAME: ${HT_DB_NAME}
-      HT_DB_USER: ${HT_DB_USER}
-      HT_DB_PASSWORD: ${HT_DB_PASSWORD}
-      HT_DB_HOST: db
-      HT_DB_PORT: ${HT_DB_PORT}
+      TRAK_DB_ENGINE: ${TRAK_DB_ENGINE}
+      TRAK_DB_NAME: ${TRAK_DB_NAME}
+      TRAK_DB_USER: ${TRAK_DB_USER}
+      TRAK_DB_PASSWORD: ${TRAK_DB_PASSWORD}
+      TRAK_DB_HOST: db
+      TRAK_DB_PORT: ${TRAK_DB_PORT}
     command: python manage.py celery_beat
 
   db:
@@ -107,13 +107,13 @@ services:
     container_name: db
     image: "postgres:17.5"
     environment:
-      POSTGRES_DB: ${HT_DB_NAME}
-      POSTGRES_USER: ${HT_DB_USER}
-      POSTGRES_PASSWORD: ${HT_DB_PASSWORD}
+      POSTGRES_DB: ${TRAK_DB_NAME}
+      POSTGRES_USER: ${TRAK_DB_USER}
+      POSTGRES_PASSWORD: ${TRAK_DB_PASSWORD}
     ports:
       - "5432:5432"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $HT_DB_USER -d $HT_DB_NAME" ]
+      test: [ "CMD-SHELL", "pg_isready -U $TRAK_DB_USER -d $TRAK_DB_NAME" ]
       interval: 3s
       timeout: 3s
       retries: 5
@@ -133,8 +133,8 @@ services:
       - ./client/nginx.conf:/app/nginx.conf
       - ./client/index.html:/app/index.html
     environment:
-      VITE_HT_API_URL: ${VITE_HT_API_URL}
-      VITE_HT_ENV: ${VITE_HT_ENV}
+      VITE_TRAK_API_URL: ${VITE_TRAK_API_URL}
+      VITE_TRAK_ENV: ${VITE_TRAK_ENV}
       VITE_GITHUB_URL: ${VITE_GITHUB_URL}
     command: sh -c "cd /app; npm install; npm start"
 

@@ -37,6 +37,7 @@ with env.prefixed("TRAK_"):
     SECRET_KEY = env.str("SECRET_KEY")
     RCRAINFO_ENV = env.enum("RCRAINFO_ENV", enum=RcrainfoEnv, default=RcrainfoEnv.PREPROD)
     ALLOWED_HOSTS = env.list("HOST")
+    REDIS_URL = env.str("REDIS_URL", "redis://redis:6379")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -192,7 +193,6 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-REDIS_URL = env.str("REDIS_URL", "redis://redis:6379")
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",

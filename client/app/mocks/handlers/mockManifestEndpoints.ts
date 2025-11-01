@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { Manifest } from '~/components/Manifest';
 import { createMockManifest } from '../fixtures';
 
-export const API_BASE_URL = import.meta.env.VITE_HT_API_URL;
+export const API_BASE_URL = import.meta.env.VITE_TRAK_API_URL;
 
 const generateRandomMTN = (): string => {
   return Math.floor(100000000 + Math.random() * 900000000).toString();
@@ -18,7 +18,7 @@ export const mockManifestEndpoints = [
       ],
       {
         status: 200,
-      }
+      },
     );
   }),
   /** mock GET Manifests By Site*/
@@ -32,7 +32,7 @@ export const mockManifestEndpoints = [
       ],
       {
         status: 200,
-      }
+      },
     );
   }),
   /** mock GET Manifest*/

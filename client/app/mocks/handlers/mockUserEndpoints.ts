@@ -8,7 +8,7 @@ import {
 import { AuthSuccessResponse, HaztrakUser } from '~/store/userApi/userApi';
 
 /** mock Rest API*/
-const API_BASE_URL = import.meta.env.VITE_HT_API_URL;
+const API_BASE_URL = import.meta.env.VITE_TRAK_API_URL;
 export const mockUserEndpoints = [
   /** GET User */
   http.get(`${API_BASE_URL}/api/user/current-user`, () => {
@@ -52,7 +52,7 @@ export const mockUserEndpoints = [
       {
         ...body,
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
   /** Logout */
@@ -70,7 +70,7 @@ export const mockUserEndpoints = [
       {
         ...rcrainfoProfile,
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
   /** POST RCRAInfo profile Sync*/
@@ -80,7 +80,7 @@ export const mockUserEndpoints = [
       {
         ...mockTask,
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
   /** PUT RCRAInfo profile */
@@ -97,7 +97,7 @@ export const mockUserEndpoints = [
       {
         ...rcrainfoProfile,
       },
-      { status: 200 }
+      { status: 200 },
     );
   }),
 ];

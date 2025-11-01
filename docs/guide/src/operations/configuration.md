@@ -38,7 +38,7 @@ docker-compose --env-file configs/.env.dev up --build
 ### Required (server)
 
 The follow variables are required, haztrak will exit if not present.
-`HT_SECRET_KEY`: Salt for cryptographic hashing,
+`TRAK_SECRET_KEY`: Salt for cryptographic hashing,
 [required by Django](https://docs.djangoproject.com/en/stable/ref/settings/#secret-key)
 
 ### Optional (server)
@@ -48,7 +48,7 @@ The follow variables are required, haztrak will exit if not present.
   - Default: `False`
   -
   Description: [Django's DEBUG value](https://docs.djangoproject.com/en/stable/ref/settings/#debug)
-- `HT_HOST`
+- `TRAK_HOST`
   - Value: host/domain names that Django will serve
   - Default: ['localhost']
   - Description: the URL that the server will serve from,
@@ -66,12 +66,12 @@ The follow variables are required, haztrak will exit if not present.
   - Default: `preprod` (for now in the current development phase)
   - Description: RCRAInfo environment that Haztrak will interface with per
     the [e-Manifest API Client Library](https://github.com/USEPA/e-manifest/tree/master/emanifest-py)
-- `HT_CORS_DOMAIN`
+- `TRAK_CORS_DOMAIN`
   - Value for cross-origin resource sharing, the domain that the React app is
     deployed
   - Example for local development: should be something like
     `http://localhost:3000` or `http://localhost`
-- `REDIS_URL`
+- `TRAK_REDIS_URL`
   - URL that points to the cache, in this instance Redis
   - Example for local development: should be something like
     `redis://localhost:6379`
@@ -84,20 +84,20 @@ to a [SQLite3](https://www.sqlite.org/index.html) database in the [server](/)
 directory, which
 may not be recommended for production, but this is an example web application.
 
-- `HT_DB_ENGINE`
+- `TRAK_DB_ENGINE`
   - [The server driver](https://docs.djangoproject.com/en/stable/ref/settings/#engine)
     used by
     django's ORM (e.g., `django.db.backends.postgresql_psycopg2`)
   - default: `django.db.backends.sqlite3`
-- `HT_DB_NAME`
+- `TRAK_DB_NAME`
   - default: `db.sqlite3`
-- `HT_DB_USER`
+- `TRAK_DB_USER`
   - default: `user`
-- `HT_DB_PASSWORD`
+- `TRAK_DB_PASSWORD`
   - default: `password`
-- `HT_DB_HOST`
+- `TRAK_DB_HOST`
   - default: `localhost`
-- `HT_DB_PORT`
+- `TRAK_DB_PORT`
   - default: `5432`
   - [default for postgres is 5342](https://www.postgresql.org/docs/current/app-postgres.html)
 
@@ -118,7 +118,7 @@ or [RabbitMQ](https://www.rabbitmq.com/).
 These configurations control the format and level of logging for our task queue
 and http server.
 
-- `HT_LOG_FORMAT`
+- `TRAK_LOG_FORMAT`
   - Value: string corresponding to a formatter, `simple`, `verbose`,
     `superverbose`. See `server/haztrak/settings.py`
     LOGGING section for details.
@@ -138,10 +138,10 @@ https://docs.python.org/3/library/logging.html#logging-levels
 
 ### Required (client)
 
-- `VITE_HT_API_URL`
+- `VITE_TRAK_API_URL`
   - Value: host/domain name of the haztrak back end
   - Default: `http://localhost`
-- `VITE_HT_ENV`
+- `VITE_TRAK_ENV`
   - Default: `PROD`
   - Options: `PROD`, `DEV`, `TEST`
   - Description: The deployment environments, `TEST` mock service worker that
