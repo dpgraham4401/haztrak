@@ -17,12 +17,12 @@ services:
       DJANGO_SETTINGS_MODULE: "haztrak.settings.dev"
       CELERY_BROKER_URL: "redis://redis:6379"
       HT_HOST: "http://localhost"
-      HT_SECRET_KEY: ${HT_SECRET_KEY}
+      TRAK_SECRET_KEY: ${TRAK_SECRET_KEY}
       TRAK_DEBUG: true
       TRAK_LOG_LEVEL: ${TRAK_LOG_LEVEL}
       TRAK_TIMEZONE: ${TRAK_TIMEZONE}
       TRAK_RCRAINFO_ENV: ${TRAK_RCRAINFO_ENV}
-      HT_CORS_DOMAIN: "http://localhost"
+      TRAK_CORS_DOMAIN: "http://localhost"
       REDIS_URL: ${REDIS_URL}
       HT_DB_ENGINE: ${HT_DB_ENGINE}
       HT_DB_NAME: ${HT_DB_NAME}

@@ -36,6 +36,7 @@ with env.prefixed("TRAK_"):
     SIGNING_KEY = env.str("SIGNING_KEY")
     SECRET_KEY = env.str("SECRET_KEY")
     RCRAINFO_ENV = env.enum("RCRAINFO_ENV", enum=RcrainfoEnv, default=RcrainfoEnv.PREPROD)
+    ALLOWED_HOSTS = env.list("HOST")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent

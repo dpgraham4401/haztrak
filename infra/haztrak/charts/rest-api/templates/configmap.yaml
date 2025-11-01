@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: "{{ include "rest-api.fullname" .}}-configmap"
 data:
-  HT_SECRET_KEY: "{{ .Values.env.secretKey }}"
-  HT_CORS_DOMAINS: "{{ .Values.env.corsDomains }}"
+  TRAK_SECRET_KEY: "{{ .Values.env.secretKey }}"
+  TRAK_CORS_DOMAINS: "{{ .Values.env.corsDomains }}"
   TRAK_RCRAINFO_ENV: "{{ .Values.env.rcraInfoEnv }}"
   CELERY_BROKER_URL: "{{ .Values.env.cache.url }}"
   CELERY_RESULT_BACKEND: "django-db"

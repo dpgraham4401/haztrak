@@ -2,12 +2,15 @@
 
 import os
 
+from django.conf.global_settings import ALLOWED_HOSTS
+
 from .base import *  # noqa: F403
+from .base import env
 
 # General
 DEBUG = False
-ALLOWED_HOSTS = [os.getenv("HT_HOST")]
-CORS_ORIGIN_WHITELIST = [os.getenv("HT_CORS_DOMAIN", "http://*")]
+ALLOWED_HOSTS = env.list("TRAK_HOSTS")  # noqa
+CORS_ORIGIN_WHITELIST = env.list("TRAK_CORS_DOMAIN")
 
 # Database
 # https://docs.djangoproject.com/en/stable/ref/settings/#databases
