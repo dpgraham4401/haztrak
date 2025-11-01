@@ -1,7 +1,8 @@
+# isort: skip_file
 import pytest
-from conftest import SiteIDProvider
 from faker import Faker
 
+from conftest import SiteIDProvider
 from profile.models import RcrainfoProfile, RcrainfoSiteAccess
 
 

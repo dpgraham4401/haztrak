@@ -103,7 +103,10 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-select = [
+extend-ignore = [
+    "RUF012",
+]
+extend-select = [
     "F", # pyflakes
     "E", # pycodestyle
     "I", # isort
@@ -119,9 +122,6 @@ select = [
     "PD", # pandas-vet
     "SIM", # flake8-simplify
     "TID", # flake8-tidy-imports
-]
-extend-ignore = [
-    "RUF012",
 ]
 [tool.ruff.lint.per-file-ignores]
 "**/migrations/**.py" = ["D100", "D101", "D102", "D103", "E501", "RUF012"]
@@ -157,7 +157,6 @@ addopts = [
 PYTHONDONTWRITEBYTECODE = "1"
 PYTHONUTF8 = "1"
 DJANGO_ALLOW_ASYNC_UNSAFE = "true"
-
 
 [tool.mypy]
 plugins = [

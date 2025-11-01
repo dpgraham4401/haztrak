@@ -33,10 +33,7 @@ with env.prefixed("TRAK_"):
     DEBUG = env.bool("DEBUG", False)
     TIME_ZONE = env.str("TIMEZONE", "America/New_York")
     LOG_LEVEL = env.enum("LOG_LEVEL", default=LogLevel.INFO, enum=LogLevel)
-    SIGNING_KEY = env.str("SIGNING_KEY")
-    SECRET_KEY = env.str("SECRET_KEY")
     RCRAINFO_ENV = env.enum("RCRAINFO_ENV", enum=RcrainfoEnv, default=RcrainfoEnv.PREPROD)
-    ALLOWED_HOSTS = env.list("HOST")
     REDIS_URL = env.str("REDIS_URL", "redis://redis:6379")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -230,7 +227,6 @@ MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = DEBUG
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "SIGNING_KEY": SIGNING_KEY,
     "JWT_AUTH_COOKIE": "auth",
 }
 

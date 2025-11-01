@@ -1,14 +1,15 @@
 """Settings for prod."""
 
-from django.conf.global_settings import ALLOWED_HOSTS
-
 from .base import *  # noqa: F403
-from .base import env
+from .base import SIMPLE_JWT, env
 
 # General
 DEBUG = False
-ALLOWED_HOSTS = env.list("TRAK_HOSTS")  # noqa
-CORS_ORIGIN_WHITELIST = env.list("TRAK_CORS_DOMAIN")
+with env.prefixed("TRAK_"):
+    SECRET_KEY = env.str("SECRET_KEY")
+    ALLOWED_HOSTS = env.list("HOSTS")
+    CORS_ORIGIN_WHITELIST = env.list("CORS_DOMAIN")
+    SIGNING_KEY = env.str("SIGNING_KEY")
 
 # Database
 # https://docs.djangoproject.com/en/stable/ref/settings/#databases
@@ -21,4 +22,10 @@ DATABASES = {
         "HOST": env.str("TRAK_DB_HOST"),
         "PORT": env.str("TRAK_DB_PORT", "5432"),
     },
+}
+
+
+SIMPLE_JWT = {
+    **SIMPLE_JWT,
+    "SIGNING_KEY": SIGNING_KEY,
 }
