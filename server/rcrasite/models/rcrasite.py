@@ -70,7 +70,7 @@ class RcraSiteManager(Manager["RcraSite"]):
             logger.debug(exc)
             return None
 
-    def get_address(self, key) -> Address:
+    def get_address(self, key: str) -> Address:
         """Remove Address data and create if necessary."""
         try:
             address = self.handler_data.pop(key)  # type: ignore[union-attr]

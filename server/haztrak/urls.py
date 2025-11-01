@@ -51,6 +51,7 @@ urlpatterns = [
                 ),
                 path(r"health/", include("health_check.urls")),
                 path("", include("allauth.headless.urls")),
+                path("accounts/", include("allauth.urls")),
             ],
         ),
     ),

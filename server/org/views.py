@@ -1,5 +1,6 @@
 """Views for the org app."""
 
+from django.db.models import QuerySet
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 
@@ -23,7 +24,7 @@ class OrgDetailsView(RetrieveAPIView[Org]):
     lookup_url_kwarg = "org_slug"
     permission_classes = [OrgObjectPermissions, IsAuthenticated]
 
-    def get_object(self):
+    def get_object(self) -> Org:
         """Get organization."""
         org = get_org_by_slug(self.kwargs["org_slug"])
         self.check_object_permissions(self.request, org)
@@ -45,11 +46,11 @@ class SiteListView(ListAPIView[Site]):
     queryset = Site.objects.all()
     filter_backends = [ObjectPermissionsFilter]
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Site]:
         """Get org sites."""
         if "org_slug" in self.kwargs:
             return filter_sites_by_org(self.kwargs["org_slug"])
-        return find_sites_by_user(self.request.user)
+        return find_sites_by_user(self.request.user)  # type: ignore[arg-type]
 
 
 class SiteDetailsView(RetrieveAPIView[Site]):
@@ -60,7 +61,7 @@ class SiteDetailsView(RetrieveAPIView[Site]):
     queryset = Site.objects.all()
     permission_classes = [SiteObjectPermissions, IsAuthenticated]
 
-    def get_object(self):
+    def get_object(self) -> Site:
         """Get the object."""
         site = get_site_by_epa_id(epa_id=self.kwargs["epa_id"])
         self.check_object_permissions(self.request, site)

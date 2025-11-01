@@ -55,7 +55,7 @@ class SiteServiceError(Exception):
 
 
 @transaction.atomic
-def update_emanifest_sync_date(site: Site, last_sync_date: datetime | None = None):
+def update_emanifest_sync_date(site: Site, last_sync_date: datetime | None = None) -> None:
     """Update the last sync date for a site. Defaults to now if no date is provided."""
     if last_sync_date is not None:
         site.last_rcrainfo_manifest_sync = last_sync_date

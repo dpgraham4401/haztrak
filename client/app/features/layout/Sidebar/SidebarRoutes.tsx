@@ -82,7 +82,7 @@ export const routes: (Route | RoutesSection)[] = [
         id: 'openApi',
         icon: LuFileCode2,
         text: 'OpenAPI Docs',
-        url: `${import.meta.env.VITE_HT_API_URL}/api/schema/swagger-ui`,
+        url: `${import.meta.env.VITE_TRAK_API_URL}/api/schema/swagger-ui`,
         description: 'API Documentation',
         external: true,
       },

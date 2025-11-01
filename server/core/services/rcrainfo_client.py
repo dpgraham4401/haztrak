@@ -53,13 +53,13 @@ class RcraClient(RcrainfoClient):
         """Machine representation."""
         return f"<{self.__class__.__name__}rcrainfo_env='{self.rcrainfo_env}')>"
 
-    def retrieve_id(self, api_id=None) -> str:
+    def retrieve_id(self, api_id: str | None = None) -> str:
         """Override RcrainfoClient method to retrieve API ID for authentication."""
         if self.has_rcrainfo_credentials:
             return super().retrieve_id(self.api_id or self.profile.rcra_api_id)  # type: ignore[union-attr]
         return super().retrieve_key()
 
-    def retrieve_key(self, api_key=None) -> str:
+    def retrieve_key(self, api_key: str | None = None) -> str:
         """Override RcrainfoClient method to retrieve API key to authentication."""
         if self.has_rcrainfo_credentials:
             return super().retrieve_key(self.api_key or self.profile.rcra_api_key)  # type: ignore[union-attr]
@@ -77,7 +77,7 @@ class RcraClient(RcrainfoClient):
         """
         return self.search_users(userId=rcrainfo_username)
 
-    def sync_federal_waste_codes(self):
+    def sync_federal_waste_codes(self) -> None:
         """
         Pull all federal waste codes from RCRAInfo and save.
 
@@ -91,7 +91,7 @@ class RcraClient(RcrainfoClient):
                 # If a waste code already exists
                 WasteCode.federal.update(code_type=WasteCode.CodeType.FEDERAL, **federal_code)
 
-    def sign_manifest(self, **sign_data):
+    def sign_manifest(self, **sign_data) -> RcrainfoResponse:
         """Sign the manifest using the Quicker Sign endpoint.
 
         Utilizes RcraInfo's Quicker Sign endpoint to electronically sign manifest(s)

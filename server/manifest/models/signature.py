@@ -91,7 +91,7 @@ class Signer(models.Model):
 class ESignatureManager(models.Manager):
     """ESignature Model database querying interface."""
 
-    def save(self, **e_signature_data):
+    def save(self, **e_signature_data) -> "ESignature":
         """Electronic signature save method.
 
         Create Contact instance in a database, create related phone instance if applicable,
@@ -99,7 +99,7 @@ class ESignatureManager(models.Manager):
         """
         if "signer" in e_signature_data:
             e_signature_data["signer"] = Signer.objects.create(**e_signature_data.pop("signer"))
-        return super().create(**e_signature_data)
+        return super().create(**e_signature_data)  # type: ignore[return-value]
 
 
 class ESignature(models.Model):

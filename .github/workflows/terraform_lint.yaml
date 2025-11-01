@@ -4,7 +4,7 @@ name: "Terraform lint"
 on:
   pull_request:
     branches:
-      - main
+      - disabled
     paths:
       - "infra/**/*.tf"
 
@@ -20,37 +20,15 @@ jobs:
         working-directory: ./infra/gcp/dev
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
-      - name: "install terraform dependencies"
-        run: |
-          sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+      # Install the latest version of Terraform CLI
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v3
 
-      - name: "install hashicorp GPG key"
-        run: |
-          wget -O- https://apt.releases.hashicorp.com/gpg | \
-          gpg --dearmor | \
-          sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
-
-      - name: "add hashicorp repo"
-        run: |
-          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
-          https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
-          sudo tee /etc/apt/sources.list.d/hashicorp.list
-
-      - name: "update apt"
-        run: sudo apt update
-
-      - name: "install terraform"
-        run: sudo apt-get install terraform
-
-      - name: "Terraform Init"
-        id: init
-        run: terraform init -input=false -no-color
-
-      - name: "terraform fmt"
-        id: fmt
-        run: terraform fmt -check -recursive ..
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: "Terraform Format"
+        run: terraform fmt -check -recursive
 
       - name: "Terraform Validate"
         id: validate

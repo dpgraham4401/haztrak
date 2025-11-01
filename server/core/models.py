@@ -4,6 +4,7 @@ import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import Model
 from guardian.mixins import GuardianUserMixin
 
 
@@ -23,6 +24,6 @@ class TrakUser(GuardianUserMixin, AbstractUser):
         verbose_name_plural = "Users"
         ordering = ["username"]
 
-    def has_perm(self, perm, obj=None):
+    def has_perm(self, perm: str, obj: Model | None = None) -> bool:
         """Check if user has permission."""
         return super().has_perm(perm, obj)

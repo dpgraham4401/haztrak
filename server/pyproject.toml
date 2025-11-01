@@ -33,12 +33,13 @@ dependencies = [
     "drf-spectacular==0.28.0",
     "django-health-check==3.20.0",
     "django-guardian==3.2.0",
-    "django-allauth[socialaccount]>=65.12.1,<66.0.0",
+    "django-allauth[socialaccount,mfa]>=65.12.1,<66.0.0",
     "uvicorn[standard]>=0.37.0",
     "pillow==12.0.0",
     "uvicorn-worker>=0.4.0",
     "django-ninja>=1.4.5",
     "pydantic>=2.12.3",
+    "environs[django]>=14.4.0",
 ]
 
 [dependency-groups]
@@ -64,7 +65,11 @@ test = [
     "pytest-env>=1.2.0",
     "pytest-randomly>=4.0.1",
     "pytest-xdist>=3.8.0",
+    "pytest-asyncio==1.1.0",
+    "pytest-celery==1.2.1",
+    "pytest-playwright==0.7.0",
     "responses==0.25.8",
+    "playwright==1.55.0",
 ]
 dev = [
     "pre-commit==4.3.0",
@@ -98,7 +103,10 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-select = [
+extend-ignore = [
+    "RUF012",
+]
+extend-select = [
     "F", # pyflakes
     "E", # pycodestyle
     "I", # isort
@@ -114,17 +122,18 @@ select = [
     "PD", # pandas-vet
     "SIM", # flake8-simplify
     "TID", # flake8-tidy-imports
-]
-extend-ignore = [
-    "RUF012",
+    "ANN201", # flake8-annotations
+    "ANN001", # flake8-annotations
 ]
 [tool.ruff.lint.per-file-ignores]
 "**/migrations/**.py" = ["D100", "D101", "D102", "D103", "E501", "RUF012"]
-"**/tests/**/*.py" = ["S101", "E501", "PLR0917", "ISC001", "D100", "D101", "D102", "PLR0913", "PLR2004"]
+"**/tests/**/*.py" = ["S101", "E501", "PLR0917", "ISC001", "D100", "D101", "D102", "PLR0913", "PLR2004", "ANN"]
 "**/*serializer*.py" = ["N815"]
 "**/views.py" = ["N815"]
 "**/__init__.py" = ["D104"]
 "**/models.py" = ["COM819"]
+"**/admin.py" = ["ANN"]
+"**conftest.py" = ["ANN"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["haztrak", "profile", "wasteline", "rcrasite", "org", "manifest", "core"]
@@ -147,6 +156,11 @@ addopts = [
     "--no-migrations",
     "--maxprocesses=4"
 ]
+
+[tool.pytest_env]
+PYTHONDONTWRITEBYTECODE = "1"
+PYTHONUTF8 = "1"
+DJANGO_ALLOW_ASYNC_UNSAFE = "true"
 
 [tool.mypy]
 plugins = [

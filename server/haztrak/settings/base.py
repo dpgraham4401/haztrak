@@ -2,20 +2,41 @@
 
 import os
 from datetime import timedelta
+from enum import StrEnum
 from pathlib import Path
+
+from environs import Env
+
+env = Env()
+
+
+class LogLevel(StrEnum):
+    """Log level enumeration."""
+
+    DEBUG = "DEBUG"
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+    CRITICAL = "CRITICAL"
+
+
+class RcrainfoEnv(StrEnum):
+    """RCRAInfo environment enumeration."""
+
+    PROD = "prod"
+    PREPROD = "preprod"
+
 
 # Globals
 HAZTRAK_VERSION = "0.7.2"
-
-# Environment variable mappings
-CACHE_URL = "HT_CACHE_URL"
-TIMEZONE_ENV = "HT_TIMEZONE"
-TEST_DB_NAME_ENV = "HT_TEST_DB_NAME"
-HT_LOG_LEVEL = os.getenv("HT_LOG_LEVEL", "INFO")
-HT_SIGNING_KEY = os.getenv(
-    "HT_SIGNING_KEY",
-    "0dd3f4e68730bedfb07e6bc2e8f00a56c4db2d4a4b37e64ac0a83b8c97ec55dd",
-)
+with env.prefixed("TRAK_"):
+    DEBUG = env.bool("DEBUG", False)
+    TIME_ZONE = env.str("TIMEZONE", "America/New_York")
+    LOG_LEVEL = env.enum("LOG_LEVEL", default=LogLevel.INFO, enum=LogLevel)
+    RCRAINFO_ENV = env.enum(
+        "RCRAINFO_ENV", enum=RcrainfoEnv, default=RcrainfoEnv.PREPROD, by_value=True
+    )
+    REDIS_URL = env.str("REDIS_URL", "redis://redis:6379")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -36,9 +57,11 @@ INSTALLED_APPS = [
     "guardian",
     "rest_framework",
     "rest_framework.authtoken",
+    "allauth",
     "allauth.account",
     "allauth.headless",
     "allauth.socialaccount",
+    "allauth.mfa",
     "allauth.usersessions",
     "corsheaders",
     "django_extensions",
@@ -127,7 +150,6 @@ SOCIALACCOUNT_PROVIDERS = {"google": {"EMAIL_AUTHENTICATION": True}}
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = os.getenv(TIMEZONE_ENV, "UTC")
 USE_I18N = False
 USE_TZ = True
 
@@ -173,10 +195,9 @@ SPECTACULAR_SETTINGS = {
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": os.getenv(CACHE_URL, "redis://redis:6379"),
+        "LOCATION": REDIS_URL,
     },
 }
-REDIS_URL = os.getenv(CACHE_URL, "redis://redis:6379")  # used for Health Checks
 
 # Celery
 CELERY_TASK_TRACK_STARTED = True
@@ -191,6 +212,7 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE": "_auth",
     "JWT_AUTH_RETURN_EXPIRATION": True,
 }
+SITE_ID = 1
 
 # AllAuth
 HEADLESS_ONLY = True
@@ -201,12 +223,12 @@ HEADLESS_FRONTEND_URLS = {
     "account_signup": "/account/signup",
     "socialaccount_login_error": "/account/provider/callback",
 }
-SITE_ID = 1
+HEADLESS_SERVE_SPECIFICATION = True
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = DEBUG
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "SIGNING_KEY": HT_SIGNING_KEY,
     "JWT_AUTH_COOKIE": "auth",
 }
 

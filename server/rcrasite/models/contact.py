@@ -2,6 +2,7 @@
 
 import logging
 from re import match
+from typing import Any
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -112,7 +113,7 @@ class RcraStates(models.TextChoices):
 class RcraPhoneNumber(models.CharField):
     """RcraPhoneNumber encapsulates RCRAInfo's representation of a phone."""
 
-    def validate(self, value, model_instance):
+    def validate(self, value: str, model_instance: Any) -> None:
         """Ensure the phone number is in the format ###-###-####."""
         if not match(r"^\d{3}-\d{3}-\d{4}$", value):
             raise ValidationError(

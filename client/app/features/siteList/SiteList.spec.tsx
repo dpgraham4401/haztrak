@@ -24,9 +24,9 @@ describe('SiteList component', () => {
   });
   test('displays all sites a user has access to', async () => {
     server.use(
-      http.get(`${import.meta.env.VITE_HT_API_URL}/api/site`, () => {
+      http.get(`${import.meta.env.VITE_TRAK_API_URL}/api/site`, () => {
         return HttpResponse.json(mockSites, { status: 200 });
-      })
+      }),
     );
     renderWithProviders(<SiteList />);
     const numIds = await screen.findAllByRole('listitem');

@@ -193,7 +193,7 @@ class RcrainfoSiteAccess(models.Model):
         """Human-readable representation."""
         return f"{self.site}"
 
-    def clean(self):
+    def clean(self) -> None:
         """Validates the model instance."""
         if self.site_manager:
             fields = ["annual_report", "biennial_report", "e_manifest", "my_rcra_id", "wiets"]

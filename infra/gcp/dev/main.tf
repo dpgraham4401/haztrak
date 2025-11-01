@@ -66,7 +66,7 @@ module "sql" {
   region      = var.region
   databases = [
     {
-      "name" = "haztrak_db"
+      "name" = "trak_db"
     }
   ]
 }

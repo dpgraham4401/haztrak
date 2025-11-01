@@ -7,7 +7,7 @@ permissions:
 env:
   POSTGRES_USER: admin
   POSTGRES_PASSWORD: password1
-  POSTGRES_DB: haztrak_db
+  POSTGRES_DB: trak_db
 
 on:
   pull_request:
@@ -66,16 +66,16 @@ jobs:
 
       - name: "Run Tests"
         env:
-          HT_SECRET_KEY: "django-insecure-%btjqoun@6ps$e@8bw$48s+!x1e4aiz&5p2nrf6cmiw4)jsx5d"
-          HT_CORS_DOMAIN: http://localhost:3000
-          HT_TIMEZONE: America/New_York
-          HT_HOST: localhost
-          HT_RCRAINFO_ENV: preprod
-          HT_DEBUG: true
-          HT_DB_ENGINE: django.db.backends.postgresql
-          HT_DB_HOST: localhost
-          HT_DB_USER: ${{ env.POSTGRES_USER }}
-          HT_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          HT_DB_NAME: ${{ env.POSTGRES_DB }}
-          HT_DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          TRAK_SECRET_KEY: "django-insecure-%btjqoun@6ps$e@8bw$48s+!x1e4aiz&5p2nrf6cmiw4)jsx5d"
+          TRAK_CORS_DOMAIN: http://localhost:3000
+          TRAK_TIMEZONE: America/New_York
+          TRAK_HOST: localhost
+          TRAK_RCRAINFO_ENV: preprod
+          TRAK_DEBUG: true
+          TRAK_DB_ENGINE: django.db.backends.postgresql
+          TRAK_DB_HOST: localhost
+          TRAK_DB_USER: ${{ env.POSTGRES_USER }}
+          TRAK_DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          TRAK_DB_NAME: ${{ env.POSTGRES_DB }}
+          TRAK_DB_PORT: ${{ job.services.postgres.ports[5432] }}
         run: uv run pytest -n auto

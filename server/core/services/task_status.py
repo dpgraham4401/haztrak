@@ -63,7 +63,7 @@ class TaskService:
         self.result = result
 
     @classmethod
-    def get_task_status(cls, task_id) -> ReturnDict:
+    def get_task_status(cls, task_id: str) -> ReturnDict:
         """Gets the status of a long-running celery task from the cache or the database."""
         cache_data = cls._get_cached_status(task_id)
         if cache_data is not None:

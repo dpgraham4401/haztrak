@@ -52,7 +52,7 @@ def sign_manifest_task(self: Task, *, username: str | None, **signature_data: di
 
 
 @shared_task(name="sync site manifests", bind=True)
-def sync_site_manifests_task(self, *, site_id: str, username: str):
+def sync_site_manifests_task(self: Task, *, site_id: str, username: str) -> dict:
     """Asynchronous task to sync an EPA site's manifests."""
     from manifest.services.emanifest import sync_manifests
     from org.services import get_user_site, update_emanifest_sync_date
@@ -69,14 +69,14 @@ def sync_site_manifests_task(self, *, site_id: str, username: str):
     except Exception as exc:
         msg = f"failed to sync {site_id} manifest: {exc}"
         logger.exception(msg)
-        self.update_state(state=states.FAILURE, meta={f"error: {exc}"})
+        self.update_state(state=states.FAILURE, meta={"error": f"{exc}"})
         raise Ignore from exc
     else:
         return results
 
 
 @shared_task(name="save RCRAInfo manifests", bind=True)
-def save_to_emanifest_task(self, *, manifest_data: dict, username: str):
+def save_to_emanifest_task(self: Task, *, manifest_data: dict, username: str) -> dict | None:
     """Save manifest data to the EManifest.
 
     Asynchronous task to use the RCRAInfo web services to create an electronic (RCRA) manifest
@@ -88,7 +88,9 @@ def save_to_emanifest_task(self, *, manifest_data: dict, username: str):
 
     msg = f"start task: {self.name}"
     logger.info(msg)
-    task_status = TaskService(task_id=self.request.id, task_name=self.name, status="STARTED")
+    task_status = TaskService(
+        task_id=self.request.id or "default_id", task_name=self.name, status="STARTED"
+    )
     try:
         emanifest = EManifest(username=username)
         new_manifest = emanifest.save(manifest=manifest_data)

@@ -4,7 +4,7 @@
 // https://vitejs.dev/guide/env-and-mode.html#intellisense-for-typescript
 
 interface ImportMetaEnv {
-  readonly VITE_HT_API_URL: string;
+  readonly VITE_TRAK_API_URL: string;
   readonly VITE_GITHUB_URL: string;
 }
 

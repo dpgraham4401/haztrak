@@ -108,7 +108,7 @@ class WasteLine(models.Model):
 class FederalWasteCodeManager(Manager["WasteCode"]):
     """WasteCode model manager for dealing with Federal Waste Codes."""
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """Return only federal waste codes."""
         return super().get_queryset().filter(code_type=WasteCode.CodeType.FEDERAL)
 
@@ -120,7 +120,7 @@ class StateWasteCodeManager(Manager["WasteCode"]):
         """Get a list of state waste codes by state id."""
         return self.filter(state_id=state_id)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """Return only state waste codes."""
         return super().get_queryset().filter(code_type=WasteCode.CodeType.STATE)
 
@@ -303,7 +303,7 @@ class DotLookupBaseManager(Manager["DotLookup"]):
 class IdNumbers(DotLookupBaseManager):
     """DOT Option model manager for dealing with DOT ID numbers."""
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """Return only DOT ID number options."""
         return super().get_queryset().filter(value_type=DotLookupType.ID)
 
@@ -311,7 +311,7 @@ class IdNumbers(DotLookupBaseManager):
 class PackingGroups(DotLookupBaseManager):
     """DOT Option model manager for dealing with DOT ID numbers."""
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """Return only DOT Packing Group options."""
         return super().get_queryset().filter(value_type=DotLookupType.GROUP)
 
@@ -323,7 +323,7 @@ class ShippingNames(DotLookupBaseManager):
         """Filter by value."""
         return self.filter(value__icontains=value)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """Return only DOT Proper Shipping Name options."""
         return super().get_queryset().filter(value_type=DotLookupType.NAME)
 
@@ -331,7 +331,7 @@ class ShippingNames(DotLookupBaseManager):
 class HazardClass(DotLookupBaseManager):
     """DOT Option model manager for dealing with DOT ID numbers."""
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """Return only DOT Hazard Class options."""
         return super().get_queryset().filter(value_type=DotLookupType.CLASS)
 
