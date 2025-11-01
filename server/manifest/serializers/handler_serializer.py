@@ -45,7 +45,7 @@ class HandlerSerializer(RcraSiteSerializer):
     )
     signed = serializers.ReadOnlyField()
 
-    def update(self, instance: Handler, validated_data: dict) -> Handler:
+    def update(self, instance, validated_data: dict):  # noqa: ANN001, ANN201
         """Update an existing handler."""
         return self.Meta.model.objects.save(instance, **validated_data)
 

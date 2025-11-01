@@ -69,7 +69,7 @@ def sync_site_manifests_task(self: Task, *, site_id: str, username: str) -> dict
     except Exception as exc:
         msg = f"failed to sync {site_id} manifest: {exc}"
         logger.exception(msg)
-        self.update_state(state=states.FAILURE, meta={f"error: {exc}"})
+        self.update_state(state=states.FAILURE, meta={"error": f"{exc}"})
         raise Ignore from exc
     else:
         return results
@@ -88,7 +88,9 @@ def save_to_emanifest_task(self: Task, *, manifest_data: dict, username: str) ->
 
     msg = f"start task: {self.name}"
     logger.info(msg)
-    task_status = TaskService(task_id=self.request.id, task_name=self.name, status="STARTED")
+    task_status = TaskService(
+        task_id=self.request.id or "default_id", task_name=self.name, status="STARTED"
+    )
     try:
         emanifest = EManifest(username=username)
         new_manifest = emanifest.save(manifest=manifest_data)

@@ -34,7 +34,7 @@ class ProfileViewSet(GenericViewSet[Profile], RetrieveModelMixin, UpdateModelMix
     serializer_class = ProfileSerializer
 
 
-class ProfileDetailsView(RetrieveAPIView[RcrainfoProfile]):
+class ProfileDetailsView(RetrieveAPIView[Profile]):
     """Displays a user's HaztrakProfile."""
 
     queryset = Profile.objects.all()

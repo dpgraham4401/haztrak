@@ -50,7 +50,7 @@ class SiteListView(ListAPIView[Site]):
         """Get org sites."""
         if "org_slug" in self.kwargs:
             return filter_sites_by_org(self.kwargs["org_slug"])
-        return find_sites_by_user(self.request.user)
+        return find_sites_by_user(self.request.user)  # type: ignore[arg-type]
 
 
 class SiteDetailsView(RetrieveAPIView[Site]):

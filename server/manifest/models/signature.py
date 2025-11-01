@@ -99,7 +99,7 @@ class ESignatureManager(models.Manager):
         """
         if "signer" in e_signature_data:
             e_signature_data["signer"] = Signer.objects.create(**e_signature_data.pop("signer"))
-        return super().create(**e_signature_data)
+        return super().create(**e_signature_data)  # type: ignore[return-value]
 
 
 class ESignature(models.Model):

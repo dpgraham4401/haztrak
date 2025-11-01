@@ -27,7 +27,7 @@ REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [  # noqa: F405
 DATABASES = {
     "default": {
         "ENGINE": env.str("TRAK_DB_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": env.str("TRAK_DB_NAME", Path(BASE_DIR) / "db.sqlite3"),  # noqa: F405
+        "NAME": env.str("TRAK_DB_NAME", str(Path(BASE_DIR) / "db.sqlite3")),  # noqa: F405
         "USER": env.str("TRAK_DB_USER", "user"),
         "PASSWORD": env.str("TRAK_DB_PASSWORD", "password"),
         "HOST": env.str("TRAK_DB_HOST", "localhost"),

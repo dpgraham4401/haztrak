@@ -7,8 +7,8 @@ from .base import SIMPLE_JWT, env
 DEBUG = False
 with env.prefixed("TRAK_"):
     SECRET_KEY = env.str("SECRET_KEY")
-    ALLOWED_HOSTS = env.list("HOSTS")
-    CORS_ORIGIN_WHITELIST = env.list("CORS_DOMAIN")
+    ALLOWED_HOSTS: list[str] = env.list("HOSTS")
+    CORS_ORIGIN_WHITELIST: list[str] = env.list("CORS_DOMAIN")
     SIGNING_KEY = env.str("SIGNING_KEY")
 
 # Database

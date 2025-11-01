@@ -52,13 +52,13 @@ class Command(BaseCommand):
         ]
 
         for periodic_task in periodic_tasks_data:
-            logger.info(f"Setting up {periodic_task['task'].name}")
+            logger.info(f"Setting up {periodic_task['task'].name}")  # type: ignore[attr-defined]
 
             cron = CrontabSchedule.objects.create(**periodic_task["cron"])
 
             PeriodicTask.objects.create(
                 name=periodic_task["name"],
-                task=periodic_task["task"].name,
+                task=periodic_task["task"].name,  # type: ignore[attr-defined]
                 crontab=cron,
                 enabled=periodic_task["enabled"],
             )

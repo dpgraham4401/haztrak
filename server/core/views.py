@@ -47,4 +47,4 @@ class GetCurrentTrakUserView(RetrieveAPIView):
 
     def get_object(self) -> TrakUser:
         """Get the current user."""
-        return self.request.user  # type: ignore
+        return self.request.user  # type: ignore[return-value]

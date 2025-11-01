@@ -2,10 +2,10 @@
 
 from typing import Any
 
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
 
-class SitesBaseSerializer(serializers.ModelSerializer):
+class SitesBaseSerializer(ModelSerializer):
     """
     The app base serializers class.
 
@@ -22,7 +22,7 @@ class SitesBaseSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance: Any) -> dict:
         """Remove empty fields when serializing."""
-        data = super().to_representation(instance)
+        data: dict = super().to_representation(instance)
         for field in self.fields:
             try:
                 if data[field] is None:

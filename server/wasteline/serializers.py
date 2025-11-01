@@ -20,7 +20,7 @@ class WasteBaseSerializer(serializers.ModelSerializer[WasteLine]):
 
     def to_representation(self, instance: WasteLine) -> dict:
         """Remove empty fields when serializing."""
-        data = super().to_representation(instance)
+        data: dict = super().to_representation(instance)
         for field in self.fields:
             try:
                 if data[field] is None:
