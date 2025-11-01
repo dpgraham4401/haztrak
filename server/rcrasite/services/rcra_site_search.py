@@ -26,7 +26,7 @@ class RcraSiteSearch:
         return self._rcra_client
 
     @rcra_client.setter
-    def rcra_client(self, value) -> None:
+    def rcra_client(self, value: RcraClient) -> None:
         self._rcra_client = value
 
     def get_search_attributes(self) -> dict:

@@ -1,7 +1,7 @@
 """Emanifest search service."""
 
 from datetime import UTC, datetime, timedelta
-from typing import Literal, Self, get_args
+from typing import Any, Literal, Self, get_args
 
 from emanifest import RcrainfoResponse
 
@@ -49,15 +49,15 @@ class EmanifestSearch:
         return self._rcra_client
 
     @rcra_client.setter
-    def rcra_client(self, value):
+    def rcra_client(self, value: RcraClient) -> None:
         self._rcra_client = value
 
     @staticmethod
-    def __validate_literal(value, literal) -> bool:
+    def __validate_literal(value: str, literal: Any) -> bool:
         return value in get_args(literal)
 
     @staticmethod
-    def _valid_state_code(state_code) -> bool:
+    def _valid_state_code(state_code: str) -> bool:
         state_code_len = 2
         return len(state_code) == state_code_len and state_code.isalpha()
 
@@ -67,19 +67,21 @@ class EmanifestSearch:
         return len(site_id) > state_code_len and site_id.isalnum()
 
     @classmethod
-    def _emanifest_status(cls, status) -> bool:
+    def _emanifest_status(cls, status: EmanifestStatus) -> bool:
         return cls.__validate_literal(status, EmanifestStatus)
 
     @classmethod
-    def _emanifest_site_type(cls, site_type) -> bool:
+    def _emanifest_site_type(cls, site_type: SiteType) -> bool:
         return cls.__validate_literal(site_type, SiteType)
 
     @classmethod
-    def _emanifest_date_type(cls, date_type) -> bool:
+    def _emanifest_date_type(cls, date_type: DateType) -> bool:
         return cls.__validate_literal(date_type, DateType)
 
     @classmethod
-    def _emanifest_correction_request_status(cls, correction_request_status) -> bool:
+    def _emanifest_correction_request_status(
+        cls, correction_request_status: CorrectionRequestStatus
+    ) -> bool:
         return cls.__validate_literal(correction_request_status, CorrectionRequestStatus)
 
     def _date_or_three_years_past(self, start_date: datetime | None) -> str:

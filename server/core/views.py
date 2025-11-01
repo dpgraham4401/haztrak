@@ -20,7 +20,7 @@ class TaskStatusView(APIView):
 
     queryset = TaskResult.objects.all()
 
-    def get(self, request: Request, task_id) -> Response:
+    def get(self, request: Request, task_id: str) -> Response:
         """Retrieve the status of a task."""
         try:
             data = get_task_status(task_id)

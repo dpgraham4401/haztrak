@@ -2,6 +2,7 @@
 
 from collections import OrderedDict
 
+from celery import Task
 from django_celery_results.models import TaskResult
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
@@ -108,7 +109,7 @@ class TaskStatusSerializer(serializers.Serializer):
         allow_null=True,
     )
 
-    def to_representation(self, instance) -> dict:
+    def to_representation(self, instance: Task) -> dict:
         """Convert model instance to JSON."""
         result = super().to_representation(instance)
         return OrderedDict([(key, result[key]) for key in result if result[key] is not None])

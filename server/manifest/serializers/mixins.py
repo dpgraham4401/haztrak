@@ -1,12 +1,14 @@
 """Mixins for serializers."""
 
+from typing import Any
+
 from rest_framework import serializers
 
 
 class RemoveEmptyFieldsMixin(serializers.Serializer):
     """Mixin to remove empty fields when serializing."""
 
-    def remove_empty_fields(self, data) -> dict:
+    def remove_empty_fields(self, data: dict) -> dict:
         """Remove empty fields when serializing."""
         for field in self.fields:
             try:
@@ -16,7 +18,7 @@ class RemoveEmptyFieldsMixin(serializers.Serializer):
                 pass
         return data
 
-    def to_representation(self, instance) -> dict:
+    def to_representation(self, instance: Any) -> dict:
         """Remove empty fields when serializing."""
         data = super().to_representation(instance)
         return self.remove_empty_fields(data)

@@ -1,16 +1,20 @@
 """Model for phone numbers on a manifest."""
 
 from re import match
+from typing import TYPE_CHECKING
 
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+if TYPE_CHECKING:
+    from manifest.models import Manifest
+
 
 class ManifestPhoneNumber(models.CharField):
     """RCRAInfo's representation of a phone."""
 
-    def validate(self, value, model_instance) -> None:
+    def validate(self, value: str, model_instance: "Manifest") -> None:
         """Ensure that the phone number is in the format ###-###-####."""
         if not match(r"^\d{3}-\d{3}-\d{4}$", value):
             raise ValidationError(

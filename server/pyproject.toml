@@ -123,16 +123,17 @@ extend-select = [
     "SIM", # flake8-simplify
     "TID", # flake8-tidy-imports
     "ANN201", # flake8-annotations
+    "ANN001", # flake8-annotations
 ]
 [tool.ruff.lint.per-file-ignores]
 "**/migrations/**.py" = ["D100", "D101", "D102", "D103", "E501", "RUF012"]
-"**/tests/**/*.py" = ["S101", "E501", "PLR0917", "ISC001", "D100", "D101", "D102", "PLR0913", "PLR2004", "ANN201"]
+"**/tests/**/*.py" = ["S101", "E501", "PLR0917", "ISC001", "D100", "D101", "D102", "PLR0913", "PLR2004", "ANN"]
 "**/*serializer*.py" = ["N815"]
 "**/views.py" = ["N815"]
 "**/__init__.py" = ["D104"]
 "**/models.py" = ["COM819"]
-"**/admin.py" = ["ANN201"]
-"**conftest.py" = ["ANN201"]
+"**/admin.py" = ["ANN"]
+"**conftest.py" = ["ANN"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["haztrak", "profile", "wasteline", "rcrasite", "org", "manifest", "core"]

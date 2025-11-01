@@ -52,7 +52,7 @@ def sign_manifest_task(self: Task, *, username: str | None, **signature_data: di
 
 
 @shared_task(name="sync site manifests", bind=True)
-def sync_site_manifests_task(self, *, site_id: str, username: str) -> dict:
+def sync_site_manifests_task(self: Task, *, site_id: str, username: str) -> dict:
     """Asynchronous task to sync an EPA site's manifests."""
     from manifest.services.emanifest import sync_manifests
     from org.services import get_user_site, update_emanifest_sync_date
@@ -76,7 +76,7 @@ def sync_site_manifests_task(self, *, site_id: str, username: str) -> dict:
 
 
 @shared_task(name="save RCRAInfo manifests", bind=True)
-def save_to_emanifest_task(self, *, manifest_data: dict, username: str) -> dict | None:
+def save_to_emanifest_task(self: Task, *, manifest_data: dict, username: str) -> dict | None:
     """Save manifest data to the EManifest.
 
     Asynchronous task to use the RCRAInfo web services to create an electronic (RCRA) manifest

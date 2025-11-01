@@ -7,7 +7,7 @@ from rest_framework import serializers
 from wasteline.models import DotLookup, WasteCode, WasteLine
 
 
-class WasteBaseSerializer(serializers.ModelSerializer):
+class WasteBaseSerializer(serializers.ModelSerializer[WasteLine]):
     """Base WasteLine model serializer for interfacing with RCRAInfo."""
 
     def __str__(self):
@@ -18,7 +18,7 @@ class WasteBaseSerializer(serializers.ModelSerializer):
         """Machine representation of the WasteBaseSerializer."""
         return f"<{self.__class__.__name__}({self.data})>"
 
-    def to_representation(self, instance) -> dict:
+    def to_representation(self, instance: WasteLine) -> dict:
         """Remove empty fields when serializing."""
         data = super().to_representation(instance)
         for field in self.fields:

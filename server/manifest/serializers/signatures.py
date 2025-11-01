@@ -1,6 +1,7 @@
 """Serializers for manifest signatures."""
 
 import datetime
+from collections.abc import Mapping
 
 from rest_framework import serializers
 
@@ -52,11 +53,11 @@ class QuickerSignSerializer(serializers.Serializer):
             )
         return data
 
-    def update(self, instance, validated_data) -> QuickerSign:
+    def update(self, instance: QuickerSign, validated_data: Mapping) -> QuickerSign:
         """Update a QuickerSign object."""
         return self.Meta.model(**validated_data)
 
-    def create(self, validated_data) -> QuickerSign:
+    def create(self, validated_data: Mapping) -> QuickerSign:
         """Create a new QuickerSign object."""
         return self.Meta.model(**validated_data)
 
@@ -156,7 +157,7 @@ class ESignatureSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
         required=False,
     )
 
-    def update(self, instance, validated_data) -> ESignature:
+    def update(self, instance: ESignature, validated_data: dict) -> ESignature:
         """Update an ESignature object."""
         return super().update(instance, validated_data)
 
@@ -193,7 +194,7 @@ class PaperSignatureSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializ
         required=False,
     )
 
-    def update(self, instance, validated_data: dict) -> PaperSignature:
+    def update(self, instance: PaperSignature, validated_data: dict) -> PaperSignature:
         """Update a PaperSignature object."""
         return super().update(instance, **validated_data)
 

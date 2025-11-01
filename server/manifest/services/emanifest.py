@@ -173,7 +173,9 @@ class EManifest:
         return manifest
 
 
-def get_updated_mtn(site_id: str, last_sync_date: datetime | None, rcra_client) -> list[str]:
+def get_updated_mtn(
+    site_id: str, last_sync_date: datetime | None, rcra_client: RcraClient
+) -> list[str]:
     """Use the last sync date for a site to get a list of updated MTNs from RCRAInfo."""
     logger.info(f"retrieving updated MTN for site {site_id}")
     response = (

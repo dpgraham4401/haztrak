@@ -3,7 +3,7 @@
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -24,7 +24,7 @@ def draft_mtn() -> str:
     return f"{str(mtn_count).zfill(9)}DFT"
 
 
-def validate_mtn(value) -> None:
+def validate_mtn(value: str) -> None:
     """Validate manifest tracking number format."""
     if not re.match(r"[0-9]{9}[A-Z]{3}", value):
         raise ValidationError(
@@ -147,7 +147,7 @@ class ManifestManager(Manager["Manifest"]):
             raise ValidationError(msg) from exc
 
     @staticmethod
-    def update_manifest(instance, **data: dict):
+    def update_manifest(instance: "Manifest", **data: dict):
         """Update a manifest instance with a dictionary of data."""
         if "generator" in data:
             instance.generator = Handler.objects.save(instance.generator, **data.pop("generator"))
@@ -161,7 +161,9 @@ class ManifestManager(Manager["Manifest"]):
         return instance
 
 
-def manifest_factory(mtn: str | None = None, generator=None, tsdf=None, **kwargs) -> "Manifest":
+def manifest_factory(
+    mtn: str | None = None, generator: Any | None = None, tsdf: Any | None = None, **kwargs
+) -> "Manifest":
     """Simple factory to create a Manifest instance with default values."""
     return Manifest(mtn=mtn, generator=generator, tsdf=tsdf, **kwargs)
 

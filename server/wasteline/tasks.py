@@ -2,14 +2,14 @@
 
 import logging
 
-from celery import shared_task, states
+from celery import Task, shared_task, states
 from celery.exceptions import Ignore, Reject
 
 logger = logging.getLogger(__name__)
 
 
 @shared_task(name="pull_federal_code", bind=True)
-def pull_federal_codes_task(self, api_user: str | None = None) -> None:
+def pull_federal_codes_task(self: Task, api_user: str | None = None) -> None:
     """Pull federal waste codes from the EPA API."""
     from core.services import get_rcra_client
 
@@ -21,5 +21,5 @@ def pull_federal_codes_task(self, api_user: str | None = None) -> None:
     except (ConnectionError, TimeoutError) as exc:
         raise Reject from exc
     except Exception as exc:
-        self.update_state(state=states.FAILURE, meta=f"unknown error: {exc}")
+        self.update_state(state=states.FAILURE, meta={"error": "unknown error: {exc}"})
         raise Ignore from exc

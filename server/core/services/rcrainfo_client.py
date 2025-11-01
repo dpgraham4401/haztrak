@@ -53,13 +53,13 @@ class RcraClient(RcrainfoClient):
         """Machine representation."""
         return f"<{self.__class__.__name__}rcrainfo_env='{self.rcrainfo_env}')>"
 
-    def retrieve_id(self, api_id=None) -> str:
+    def retrieve_id(self, api_id: str | None = None) -> str:
         """Override RcrainfoClient method to retrieve API ID for authentication."""
         if self.has_rcrainfo_credentials:
             return super().retrieve_id(self.api_id or self.profile.rcra_api_id)  # type: ignore[union-attr]
         return super().retrieve_key()
 
-    def retrieve_key(self, api_key=None) -> str:
+    def retrieve_key(self, api_key: str | None = None) -> str:
         """Override RcrainfoClient method to retrieve API key to authentication."""
         if self.has_rcrainfo_credentials:
             return super().retrieve_key(self.api_key or self.profile.rcra_api_key)  # type: ignore[union-attr]

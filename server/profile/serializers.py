@@ -6,6 +6,7 @@ from rest_framework.exceptions import ValidationError
 from core.serializers import TrakUserSerializer
 from manifest.serializers.mixins import RemoveEmptyFieldsMixin
 from profile.models import Profile, RcrainfoProfile, RcrainfoSiteAccess
+from rcrasite.models import RcraSite
 
 
 class RcraSitePermissionSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
@@ -47,7 +48,7 @@ class RcraSitePermissionSerializer(RemoveEmptyFieldsMixin, serializers.ModelSeri
         source="my_rcra_id",
     )
 
-    def to_representation(self, instance) -> dict:
+    def to_representation(self, instance: RcraSite) -> dict:
         """To JSON."""
         representation = super().to_representation(instance)
         representation["permissions"] = {}
@@ -73,13 +74,13 @@ class RcraSitePermissionSerializer(RemoveEmptyFieldsMixin, serializers.ModelSeri
 class RcraPermissionField(serializers.Field):
     """Serializer for communicating with RCRAInfo, translates internal to RCRAInfo field names."""
 
-    def to_representation(self, value) -> dict:
+    def to_representation(self, value: str) -> dict:
         """Convert to JSON."""
         value = "Active" if value else "InActive"
         # RcraInfo gives us an array of object with module and level keys
         return {"module": f"{self.field_name}", "level": value}
 
-    def to_internal_value(self, data) -> bool:
+    def to_internal_value(self, data: dict) -> bool:
         """Convert to Python."""
         try:
             passed_value = data["level"]

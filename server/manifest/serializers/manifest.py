@@ -199,13 +199,13 @@ class ManifestSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
         """Create a new Manifest instance."""
         return self.Meta.model.objects.save(None, **validated_data)
 
-    def validate(self, data) -> Any:
+    def validate(self, data: dict) -> Any:
         """Ensure that 'mtn' is not empty when 'status' is 'NotAssigned'."""
         if data["mtn"] == "" and data["status"] == "NotAssigned":
             data["mtn"] = draft_mtn()
         return super().validate(data)
 
-    def to_representation(self, instance) -> dict:
+    def to_representation(self, instance: Manifest) -> dict:
         """Replace 'import_flag' with expected Python Keyword 'import' in JSON.
 
         See Also:
@@ -215,7 +215,7 @@ class ManifestSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
         data["import"] = instance.import_flag
         return data
 
-    def to_internal_value(self, data) -> dict:
+    def to_internal_value(self, data: dict) -> dict:
         """Replace 'import_flag' with expected Python Keyword 'import' in JSON."""
         instance = super().to_internal_value(data)
         try:

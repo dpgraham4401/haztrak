@@ -21,7 +21,7 @@ class InternalServer500(APIException):
     default_code = "internal_server_error"
 
 
-def exception_handler(exc, context) -> Any:
+def exception_handler(exc: Any, context: Any) -> Any:
     """
     This maps exceptions that are not directly handled by our handler functions.
 

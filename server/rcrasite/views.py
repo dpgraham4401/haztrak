@@ -31,7 +31,7 @@ class RcraSiteDetailsView(RetrieveAPIView):
     lookup_url_kwarg = "epa_id"
 
     @method_decorator(cache_page(60 * 15))
-    def get(self, request, *args, **kwargs) -> Response:
+    def get(self, request: Request, *args, **kwargs) -> Response:
         """Retrieve a site by their EPA ID."""
         return super().get(request, *args, **kwargs)
 
@@ -62,7 +62,7 @@ class RcraSiteSearchView(APIView):
     queryset = RcraSite.objects.all()
     serializer_class = RcraSiteSerializer
 
-    def get(self, request, *args, **kwargs) -> Response:
+    def get(self, request: Request, *args, **kwargs) -> Response:
         """Search for hazardous waste sites."""
         query_params = request.query_params
         serializer = RcraSiteSearchSerializer(data=query_params)

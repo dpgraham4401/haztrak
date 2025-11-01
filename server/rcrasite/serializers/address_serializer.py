@@ -22,11 +22,11 @@ class LocalityField(serializers.ChoiceField):
     }.
     """
 
-    def to_representation(self, obj) -> dict:
+    def to_representation(self, obj: str) -> dict:
         """Convert the internal value to the JSON representation of a locality."""
         return {"code": obj, "name": dict(self.choices).get(obj)}
 
-    def to_internal_value(self, data) -> str:
+    def to_internal_value(self, data: dict) -> str:
         """Convert the JSON representation of a locality to the internal value."""
         try:
             return data["code"]

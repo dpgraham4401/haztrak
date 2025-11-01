@@ -45,7 +45,7 @@ class HandlerSerializer(RcraSiteSerializer):
     )
     signed = serializers.ReadOnlyField()
 
-    def update(self, instance, validated_data: dict) -> Handler:
+    def update(self, instance: Handler, validated_data: dict) -> Handler:
         """Update an existing handler."""
         return self.Meta.model.objects.save(instance, **validated_data)
 
@@ -53,7 +53,7 @@ class HandlerSerializer(RcraSiteSerializer):
         """Create a new handler."""
         return self.Meta.model.objects.save(None, **validated_data)
 
-    def to_representation(self, instance) -> dict:
+    def to_representation(self, instance: Handler) -> dict:
         """Convert model instance to JSON."""
         representation = super().to_representation(instance)
         handler_rep = representation.pop("rcra_site")
