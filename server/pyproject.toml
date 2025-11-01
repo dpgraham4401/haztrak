@@ -65,7 +65,11 @@ test = [
     "pytest-env>=1.2.0",
     "pytest-randomly>=4.0.1",
     "pytest-xdist>=3.8.0",
+    "pytest-asyncio==1.1.0",
+    "pytest-celery==1.2.1",
+    "pytest-playwright==0.7.0",
     "responses==0.25.8",
+    "playwright==1.55.0",
 ]
 dev = [
     "pre-commit==4.3.0",
@@ -148,6 +152,12 @@ addopts = [
     "--no-migrations",
     "--maxprocesses=4"
 ]
+
+[tool.pytest_env]
+PYTHONDONTWRITEBYTECODE = "1"
+PYTHONUTF8 = "1"
+DJANGO_ALLOW_ASYNC_UNSAFE = "true"
+
 
 [tool.mypy]
 plugins = [
