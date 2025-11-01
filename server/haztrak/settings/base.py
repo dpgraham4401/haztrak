@@ -33,7 +33,9 @@ with env.prefixed("TRAK_"):
     DEBUG = env.bool("DEBUG", False)
     TIME_ZONE = env.str("TIMEZONE", "America/New_York")
     LOG_LEVEL = env.enum("LOG_LEVEL", default=LogLevel.INFO, enum=LogLevel)
-    RCRAINFO_ENV = env.enum("RCRAINFO_ENV", enum=RcrainfoEnv, default=RcrainfoEnv.PREPROD)
+    RCRAINFO_ENV = env.enum(
+        "RCRAINFO_ENV", enum=RcrainfoEnv, default=RcrainfoEnv.PREPROD, by_value=True
+    )
     REDIS_URL = env.str("REDIS_URL", "redis://redis:6379")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
