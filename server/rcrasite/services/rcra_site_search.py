@@ -92,7 +92,7 @@ class RcraSiteSearch:
         """Return the search arguments."""
         return self.build_search_args()
 
-    def validate(self):
+    def validate(self) -> bool:
         """Validate the search arguments."""
         search_args = self.get_search_attributes()
         for key, value in search_args.items():

@@ -63,11 +63,11 @@ class RcraSiteSerializer(SitesBaseSerializer):
         default=False,
     )
 
-    def update(self, instance, validated_data):
+    def update(self, instance, validated_data) -> RcraSite:
         """Update an existing RcraSite instance."""
         return self.Meta.model.objects.save(instance, **validated_data)
 
-    def create(self, validated_data):
+    def create(self, validated_data) -> RcraSite:
         """Create a new RcraSite instance."""
         return self.Meta.model.objects.save(None, **validated_data)
 

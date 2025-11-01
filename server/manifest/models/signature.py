@@ -91,7 +91,7 @@ class Signer(models.Model):
 class ESignatureManager(models.Manager):
     """ESignature Model database querying interface."""
 
-    def save(self, **e_signature_data):
+    def save(self, **e_signature_data) -> "ESignature":
         """Electronic signature save method.
 
         Create Contact instance in a database, create related phone instance if applicable,

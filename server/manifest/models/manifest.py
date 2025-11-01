@@ -24,7 +24,7 @@ def draft_mtn() -> str:
     return f"{str(mtn_count).zfill(9)}DFT"
 
 
-def validate_mtn(value):
+def validate_mtn(value) -> None:
     """Validate manifest tracking number format."""
     if not re.match(r"[0-9]{9}[A-Z]{3}", value):
         raise ValidationError(
@@ -161,7 +161,7 @@ class ManifestManager(Manager["Manifest"]):
         return instance
 
 
-def manifest_factory(mtn=None, generator=None, tsdf=None, **kwargs):
+def manifest_factory(mtn: str | None = None, generator=None, tsdf=None, **kwargs) -> "Manifest":
     """Simple factory to create a Manifest instance with default values."""
     return Manifest(mtn=mtn, generator=generator, tsdf=tsdf, **kwargs)
 

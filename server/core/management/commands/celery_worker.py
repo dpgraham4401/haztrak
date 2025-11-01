@@ -12,7 +12,7 @@ CELERY_LOG_LEVEL = os.getenv("CELERY_LOG_LEVEL", "INFO")
 logger = logging.getLogger(name=__name__)
 
 
-def restart_celery_worker():
+def restart_celery_worker() -> None:
     """Restarts the celery worker."""
     celery_worker_cmd = f"celery -A haztrak worker -l {CELERY_LOG_LEVEL} -E"
     subprocess.call(shlex.split(f"{celery_worker_cmd}"))
@@ -21,7 +21,7 @@ def restart_celery_worker():
 class Command(BaseCommand):
     """Starts a celery worker with autoreload."""
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options) -> None:
         """Starts a celery worker with autoreload."""
         logger.info("Starting celery worker with autoreload...")
         autoreload.run_with_reloader(restart_celery_worker)

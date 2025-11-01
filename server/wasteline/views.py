@@ -32,7 +32,7 @@ class FederalWasteCodesView(ListAPIView):
     queryset = WasteCode.federal.all()
 
     @method_decorator(cache_page(60 * 15 * 24))
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> Response:
         """Retrieve a list EPA Federal waste codes."""
         return super().get(request, *args, **kwargs)
 
@@ -45,7 +45,7 @@ class StateWasteCodesView(ListAPIView):
     lookup_url_kwarg = "state_id"
 
     @method_decorator(cache_page(60 * 15 * 24))
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> Response:
         """Retrieve a list state waste codes by state ID."""
         try:
             state_id = self.kwargs["state_id"]
@@ -81,7 +81,7 @@ class DotIdNumberView(APIView):
     queryset = DotLookup.id_numbers.all()
 
     @method_decorator(cache_page(60 * 15 * 24))
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> Response:
         """Return a list of DOT ID numbers, optionally filtered by a query parameter."""
         query = request.query_params.get("q", "")
         id_numbers = filter_dot_id_numbers(query)
@@ -111,7 +111,7 @@ class DotShippingNameView(APIView):
     queryset = DotLookup.shipping_names.all()
 
     @method_decorator(cache_page(60 * 15 * 24))
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> Response:
         """Return a list of DOT Proper Shipping Names, optionally filtered by a query parameter."""
         query = request.query_params.get("q", "")
         shipping_names = filter_dot_shipping_names(query)
@@ -141,7 +141,7 @@ class DotHazardClassView(APIView):
     queryset = DotLookup.hazard_classes.all()
 
     @method_decorator(cache_page(60 * 15 * 24))
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> Response:
         """Return a list of DOT Hazard classes, optionally filtered by a query parameter."""
         query = request.query_params.get("q", "")
         dot_classes = filter_dot_hazard_classes(query)

@@ -23,6 +23,6 @@ class TrakUser(GuardianUserMixin, AbstractUser):
         verbose_name_plural = "Users"
         ordering = ["username"]
 
-    def has_perm(self, perm, obj=None):
+    def has_perm(self, perm, obj=None) -> bool:
         """Check if user has permission."""
         return super().has_perm(perm, obj)

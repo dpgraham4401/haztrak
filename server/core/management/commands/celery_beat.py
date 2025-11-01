@@ -15,7 +15,7 @@ CELERY_LOG_LEVEL = os.getenv("CELERY_LOG_LEVEL", "INFO")
 logger = logging.getLogger(__name__)
 
 
-def restart_celery_beat():
+def restart_celery_beat() -> None:
     """Restart Celery Beat."""
     celery_beat_cmd = f"celery -A haztrak beat -l {CELERY_LOG_LEVEL}"
     subprocess.call(shlex.split(f"{celery_beat_cmd}"))
@@ -24,7 +24,7 @@ def restart_celery_beat():
 class Command(BaseCommand):
     """Command for periodic tasks."""
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **options) -> None:
         """
         See HackSoftware's explanation here.
 

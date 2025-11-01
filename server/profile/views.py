@@ -40,7 +40,7 @@ class ProfileDetailsView(RetrieveAPIView[RcrainfoProfile]):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-    def get_object(self):
+    def get_object(self) -> Profile:
         """Get object."""
         if self.request.user.is_anonymous:
             msg = "You must be logged in to view this page"
@@ -60,7 +60,7 @@ class RcrainfoProfileRetrieveUpdateView(RetrieveUpdateAPIView[RcrainfoProfile]):
     serializer_class = RcrainfoProfileSerializer
     lookup_url_kwarg = "username"
 
-    def get_object(self):
+    def get_object(self) -> RcrainfoProfile:
         """Get the object."""
         return RcrainfoProfile.objects.get_by_trak_username(self.kwargs.get(self.lookup_url_kwarg))
 

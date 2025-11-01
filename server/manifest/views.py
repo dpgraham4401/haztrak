@@ -3,6 +3,7 @@
 import logging
 from http import HTTPStatus
 
+from django.db.models import QuerySet
 from drf_spectacular.utils import OpenApiResponse, extend_schema, inline_serializer
 from rest_framework import serializers
 from rest_framework.generics import GenericAPIView, ListAPIView
@@ -68,7 +69,7 @@ class ManifestViewSet(GenericViewSet, RetrieveModelMixin, CreateModelMixin):
             ),
         },
     )
-    def retrieve(self, request, *args, **kwargs):
+    def retrieve(self, request: Request, *args, **kwargs) -> Response:
         """Retrieve a HazTrak hazardous waste manifest."""
         return super().retrieve(request, *args, **kwargs)
 
@@ -95,7 +96,7 @@ class MtnListView(ListAPIView):
     serializer_class = MtnSerializer
     queryset = Manifest.objects.all()
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Manifest]:
         """Get a list of manifest tracking numbers."""
         return get_manifests(
             username=self.request.user.username,

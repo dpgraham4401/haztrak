@@ -112,7 +112,7 @@ class RcraStates(models.TextChoices):
 class RcraPhoneNumber(models.CharField):
     """RcraPhoneNumber encapsulates RCRAInfo's representation of a phone."""
 
-    def validate(self, value, model_instance):
+    def validate(self, value, model_instance) -> None:
         """Ensure the phone number is in the format ###-###-####."""
         if not match(r"^\d{3}-\d{3}-\d{4}$", value):
             raise ValidationError(

@@ -108,7 +108,7 @@ class TaskStatusSerializer(serializers.Serializer):
         allow_null=True,
     )
 
-    def to_representation(self, instance):
+    def to_representation(self, instance) -> dict:
         """Convert model instance to JSON."""
         result = super().to_representation(instance)
         return OrderedDict([(key, result[key]) for key in result if result[key] is not None])

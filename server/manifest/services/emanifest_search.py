@@ -1,7 +1,9 @@
 """Emanifest search service."""
 
 from datetime import UTC, datetime, timedelta
-from typing import Literal, get_args
+from typing import Literal, Self, get_args
+
+from emanifest import RcrainfoResponse
 
 from core.services import RcraClient
 
@@ -40,7 +42,7 @@ class EmanifestSearch:
         self.correction_request_status: CorrectionRequestStatus | None = None
 
     @property
-    def rcra_client(self):
+    def rcra_client(self) -> RcraClient:
         """Return the RCRA client."""
         if not self._rcra_client:
             self._rcra_client = RcraClient()
@@ -108,7 +110,7 @@ class EmanifestSearch:
     def __format_rcrainfo_date_string(str_date: str) -> str:
         return str_date[:-8] + "Z"
 
-    def build_search_args(self):
+    def build_search_args(self) -> dict:
         """Build the search parameters for the manifest search."""
         search_params = {
             "stateCode": self.state_code,
@@ -121,7 +123,7 @@ class EmanifestSearch:
         }
         return {k: v for k, v in search_params.items() if v is not None}
 
-    def add_state_code(self, state: str):
+    def add_state_code(self, state: str) -> Self:
         """Add state code to search."""
         if not self._valid_state_code(state):
             msg = "Invalid State code"
@@ -129,7 +131,7 @@ class EmanifestSearch:
         self.state_code = state
         return self
 
-    def add_site_id(self, site_id: str):
+    def add_site_id(self, site_id: str) -> Self:
         """Add site ID to search."""
         if not self._valid_site_id(site_id):
             msg = "Invalid Site ID"
@@ -137,7 +139,7 @@ class EmanifestSearch:
         self.site_id = site_id
         return self
 
-    def add_status(self, status: EmanifestStatus):
+    def add_status(self, status: EmanifestStatus) -> Self:
         """Add status to search."""
         if not self._emanifest_status(status):
             msg = "Invalid Status"
@@ -145,7 +147,7 @@ class EmanifestSearch:
         self.status = status
         return self
 
-    def add_site_type(self, site_type: SiteType):
+    def add_site_type(self, site_type: SiteType) -> Self:
         """Add site type to search."""
         if not self._emanifest_site_type(site_type):
             msg = "Invalid Site Type"
@@ -153,7 +155,7 @@ class EmanifestSearch:
         self.site_type = site_type
         return self
 
-    def add_date_type(self, date_type: DateType):
+    def add_date_type(self, date_type: DateType) -> Self:
         """Add Date Type."""
         if not self._emanifest_date_type(date_type):
             msg = "Invalid Date Type"
@@ -161,7 +163,9 @@ class EmanifestSearch:
         self.date_type = date_type
         return self
 
-    def add_correction_request_status(self, correction_request_status: CorrectionRequestStatus):
+    def add_correction_request_status(
+        self, correction_request_status: CorrectionRequestStatus
+    ) -> Self:
         """Correction Request Status."""
         if not self._emanifest_correction_request_status(correction_request_status):
             msg = "Invalid Correction Request Status"
@@ -169,21 +173,21 @@ class EmanifestSearch:
         self.correction_request_status = correction_request_status
         return self
 
-    def add_start_date(self, start_date: datetime | None = None):
+    def add_start_date(self, start_date: datetime | None = None) -> Self:
         """Start of date range for manifest search. Default to three years ago."""
         self.start_date = self._date_or_three_years_past(start_date)
         return self
 
-    def add_end_date(self, end_date: datetime | None = None):
+    def add_end_date(self, end_date: datetime | None = None) -> Self:
         """End of date range for manifest search. Default to now."""
         self.end_date = self._date_or_now(end_date)
         return self
 
-    def output(self):
+    def output(self) -> dict:
         """Return the current search parameters."""
         return self.build_search_args()
 
-    def execute(self):
+    def execute(self) -> RcrainfoResponse:
         """Execute the search with the current search parameters."""
         search_args = self.build_search_args()
         return self._rcra_client.search_mtn(**search_args)

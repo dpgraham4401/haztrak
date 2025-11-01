@@ -10,6 +10,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from core.models import TrakUser
 from core.serializers import TrakUserSerializer
 from core.services import get_task_status
 
@@ -19,7 +20,7 @@ class TaskStatusView(APIView):
 
     queryset = TaskResult.objects.all()
 
-    def get(self, request: Request, task_id):
+    def get(self, request: Request, task_id) -> Response:
         """Retrieve the status of a task."""
         try:
             data = get_task_status(task_id)
@@ -44,6 +45,6 @@ class GetCurrentTrakUserView(RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = TrakUserSerializer
 
-    def get_object(self):
+    def get_object(self) -> TrakUser:
         """Get the current user."""
-        return self.request.user
+        return self.request.user  # type: ignore

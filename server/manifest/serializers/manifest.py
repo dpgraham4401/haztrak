@@ -1,6 +1,7 @@
 """Serializers for Manifest models."""
 
 import logging
+from typing import Any
 
 from rest_framework import serializers
 
@@ -198,7 +199,7 @@ class ManifestSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
         """Create a new Manifest instance."""
         return self.Meta.model.objects.save(None, **validated_data)
 
-    def validate(self, data):
+    def validate(self, data) -> Any:
         """Ensure that 'mtn' is not empty when 'status' is 'NotAssigned'."""
         if data["mtn"] == "" and data["status"] == "NotAssigned":
             data["mtn"] = draft_mtn()
@@ -214,7 +215,7 @@ class ManifestSerializer(RemoveEmptyFieldsMixin, serializers.ModelSerializer):
         data["import"] = instance.import_flag
         return data
 
-    def to_internal_value(self, data):
+    def to_internal_value(self, data) -> dict:
         """Replace 'import_flag' with expected Python Keyword 'import' in JSON."""
         instance = super().to_internal_value(data)
         try:

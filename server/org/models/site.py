@@ -110,7 +110,7 @@ class Site(models.Model):
         return f"{self.rcra_site.epa_id}"
 
     @property
-    def epa_id(self):
+    def epa_id(self) -> str:
         """EPA ID number of the site."""
         return self.rcra_site.epa_id
 

@@ -1,5 +1,6 @@
 """Guardian object level permission filter backend."""
 
+from django.db.models import QuerySet
 from guardian.shortcuts import get_objects_for_user
 from rest_framework.filters import BaseFilterBackend
 
@@ -16,7 +17,7 @@ class ObjectPermissionsFilter(BaseFilterBackend):
         "accept_global_perms": False,
     }
 
-    def filter_queryset(self, request, queryset, view):
+    def filter_queryset(self, request, queryset, view) -> QuerySet:
         """Filter the queryset."""
         user = request.user
         permission = self.perm_format % {

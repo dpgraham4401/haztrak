@@ -45,15 +45,15 @@ class HandlerSerializer(RcraSiteSerializer):
     )
     signed = serializers.ReadOnlyField()
 
-    def update(self, instance, validated_data: dict):
+    def update(self, instance, validated_data: dict) -> Handler:
         """Update an existing handler."""
         return self.Meta.model.objects.save(instance, **validated_data)
 
-    def create(self, validated_data: dict):
+    def create(self, validated_data: dict) -> Handler:
         """Create a new handler."""
         return self.Meta.model.objects.save(None, **validated_data)
 
-    def to_representation(self, instance):
+    def to_representation(self, instance) -> dict:
         """Convert model instance to JSON."""
         representation = super().to_representation(instance)
         handler_rep = representation.pop("rcra_site")
@@ -61,7 +61,7 @@ class HandlerSerializer(RcraSiteSerializer):
             representation[key] = handler_rep[key]
         return representation
 
-    def to_internal_value(self, data: dict):
+    def to_internal_value(self, data: dict) -> dict:
         """Convert JSON data to internal value."""
         instance = {}
         if "electronicSignaturesInfo" in data:

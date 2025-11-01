@@ -47,7 +47,7 @@ class RcraSitePermissionSerializer(RemoveEmptyFieldsMixin, serializers.ModelSeri
         source="my_rcra_id",
     )
 
-    def to_representation(self, instance):
+    def to_representation(self, instance) -> dict:
         """To JSON."""
         representation = super().to_representation(instance)
         representation["permissions"] = {}
@@ -73,13 +73,13 @@ class RcraSitePermissionSerializer(RemoveEmptyFieldsMixin, serializers.ModelSeri
 class RcraPermissionField(serializers.Field):
     """Serializer for communicating with RCRAInfo, translates internal to RCRAInfo field names."""
 
-    def to_representation(self, value):
+    def to_representation(self, value) -> dict:
         """Convert to JSON."""
         value = "Active" if value else "InActive"
         # RcraInfo gives us an array of object with module and level keys
         return {"module": f"{self.field_name}", "level": value}
 
-    def to_internal_value(self, data):
+    def to_internal_value(self, data) -> bool:
         """Convert to Python."""
         try:
             passed_value = data["level"]
@@ -127,7 +127,7 @@ class RcrainfoSitePermissionsSerializer(RcraSitePermissionSerializer):
         source="my_rcra_id",
     )
 
-    def to_internal_value(self, data):
+    def to_internal_value(self, data: dict) -> dict:
         """Converts a RCRAInfo permissions into Haztrak's internal representation."""
         try:
             data.pop("siteName")

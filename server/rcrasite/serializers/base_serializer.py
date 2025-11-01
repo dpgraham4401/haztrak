@@ -18,7 +18,7 @@ class SitesBaseSerializer(serializers.ModelSerializer):
         """Machine-readable string representation of the class."""
         return f"<{self.__class__.__name__}({self.data})>"
 
-    def to_representation(self, instance):
+    def to_representation(self, instance) -> dict:
         """Remove empty fields when serializing."""
         data = super().to_representation(instance)
         for field in self.fields:

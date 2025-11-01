@@ -77,7 +77,7 @@ class RcraClient(RcrainfoClient):
         """
         return self.search_users(userId=rcrainfo_username)
 
-    def sync_federal_waste_codes(self):
+    def sync_federal_waste_codes(self) -> None:
         """
         Pull all federal waste codes from RCRAInfo and save.
 
@@ -91,7 +91,7 @@ class RcraClient(RcrainfoClient):
                 # If a waste code already exists
                 WasteCode.federal.update(code_type=WasteCode.CodeType.FEDERAL, **federal_code)
 
-    def sign_manifest(self, **sign_data):
+    def sign_manifest(self, **sign_data) -> RcrainfoResponse:
         """Sign the manifest using the Quicker Sign endpoint.
 
         Utilizes RcraInfo's Quicker Sign endpoint to electronically sign manifest(s)
